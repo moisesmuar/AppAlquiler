@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@id/loginFragment">
+
+    <fragment
+        android:id="@+id/calendarDetalleFagment"
+        android:name="com.example.appalquiler.Fragmentos.CalendarDetalleFragment"
+        android:label="fragment_calendar_detalle"
+        tools:layout="@layout/fragment_calendar_detalle" />
+    <fragment
+        android:id="@+id/alquileresFragment"
+        android:name="com.example.appalquiler.Fragmentos.AlquileresFragment"
+        android:label="fragment_alquileres"
+        tools:layout="@layout/fragment_alquileres" />
+    <fragment
+        android:id="@+id/clientesFragment"
+        android:name="com.example.appalquiler.Fragmentos.ClientesFragment"
+        android:label="fragment_clientes"
+        tools:layout="@layout/fragment_clientes" />
+    <fragment
+        android:id="@+id/inmueblesFragment"
+        android:name="com.example.appalquiler.Fragmentos.InmueblesFragment"
+        android:label="fragment_inmuebles"
+        tools:layout="@layout/fragment_inmuebles" />
+    <fragment
+        android:id="@+id/alquileresFormFragment"
+        android:name="com.example.appalquiler.Fragmentos.AlquileresFormFragment"
+        android:label="fragment_alquileres_form"
+        tools:layout="@layout/fragment_alquileres_form" />
+    <fragment
+        android:id="@+id/clientesFormFragment"
+        android:name="com.example.appalquiler.Fragmentos.ClientesFormFragment"
+        android:label="fragment_clientes_form"
+        tools:layout="@layout/fragment_clientes_form" />
+    <fragment
+        android:id="@+id/inmueblesFormFragment"
+        android:name="com.example.appalquiler.Fragmentos.InmueblesFormFragment"
+        android:label="fragment_inmuebles_form"
+        tools:layout="@layout/fragment_inmuebles_form" />
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="com.example.appalquiler.Fragmentos.LoginFragment"
+        android:label="LoginFragment"
+        tools:layout="@layout/fragment_login" />
+    <fragment
+        android:id="@+id/registroFragment"
+        android:name="com.example.appalquiler.Fragmentos.RegistroFragment"
+        android:label="RegistroFragment"
+        tools:layout="@layout/fragment_registro" />
+    <fragment
+        android:id="@+id/calendarHorizontalFragment"
+        android:name="com.example.appalquiler.Fragmentos.CalendarHorizontalFragment"
+        android:label="CalendarHorizontalFragment"
+        tools:layout="@layout/fragment_calendar_horizontal"/>
+    <fragment
+        android:id="@+id/logOutFragment"
+        android:name="com.example.appalquiler.Fragmentos.LogOutFragment"
+        android:label="fragment_log_out"
+        tools:layout="@layout/fragment_log_out" />
+    <fragment
+        android:id="@+id/configuracionFragment"
+        android:name="com.example.appalquiler.Fragmentos.ConfiguracionFragment"
+        android:label="fragment_configuracion"
+        tools:layout="@layout/fragment_configuracion" />
+
+</navigation>

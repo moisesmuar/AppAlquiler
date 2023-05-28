@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+
+        <item android:title="Pricipal">
+            <menu>
+            <item
+                android:id="@+id/calendarHorizontalFragment"
+                android:icon="@drawable/calendar_today_black_24dp"
+                android:title="Calendario Horizontal" />
+            <item
+                android:id="@+id/alquileresFragment"
+                android:icon="@drawable/list_alt_black_24dp"
+                android:title="Alquileres" />
+            <item
+                android:id="@+id/inmueblesFragment"
+                android:icon="@drawable/home_black_24dp"
+                android:title="Inmuebles" />
+            <item
+                android:id="@+id/clientesFragment"
+                android:icon="@drawable/contacts_black_24dp"
+                android:title="Clientes" />
+            </menu>
+        </item>
+
+        <item android:title="Otros">
+            <menu>
+                <item
+                    android:id="@+id/logOutFragment"
+                    android:icon="@drawable/logout_black_24dp"
+                    android:title="Logout" />
+
+                <item
+                    android:id="@+id/configuracionFragment"
+                    android:icon="@drawable/settings_black_24dp"
+                    android:title="Configuración" />
+            </menu>
+        </item>
+
+    </group>
+
+</menu>

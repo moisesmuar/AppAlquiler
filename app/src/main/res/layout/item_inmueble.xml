@@ -1,0 +1,178 @@
+<androidx.cardview.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    card_view:cardCornerRadius="4dp"
+    card_view:cardElevation="2dp"
+    card_view:cardUseCompatPadding="true"
+    card_view:contentPadding="5dp"
+    android:layout_margin="10dp"
+    tools:ignore="NamespaceTypo">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/imageView3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            card_view:layout_constraintStart_toStartOf="parent"
+            card_view:layout_constraintTop_toTopOf="parent"
+            card_view:srcCompat="@drawable/home_black_24dp" />
+
+        <TextView
+            android:id="@+id/tvNombre"
+            android:layout_width="wrap_content"
+            android:layout_height="24dp"
+            android:layout_marginStart="28dp"
+            card_view:layout_constraintStart_toStartOf="parent"
+            card_view:layout_constraintTop_toTopOf="parent"
+            tools:text="nombre" />
+
+        <ImageView
+            android:id="@+id/imageView4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            card_view:layout_constraintStart_toStartOf="parent"
+            card_view:layout_constraintTop_toBottomOf="@+id/imageView3"
+            card_view:srcCompat="@drawable/streetview_black_24dp" />
+
+        <TextView
+            android:id="@+id/tvCalleInmueble"
+            android:layout_width="wrap_content"
+            android:layout_height="24dp"
+            android:layout_marginStart="28dp"
+            android:layout_marginTop="4dp"
+            card_view:layout_constraintStart_toStartOf="parent"
+            card_view:layout_constraintTop_toBottomOf="@+id/tvNombre"
+            tools:text="calle" />
+
+        <ImageView
+            android:id="@+id/imageView5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            card_view:layout_constraintStart_toStartOf="parent"
+            card_view:layout_constraintTop_toBottomOf="@+id/imageView4"
+            card_view:srcCompat="@drawable/location_city_black_24dp" />
+
+        <TextView
+            android:id="@+id/tvCiudadInmueble"
+            android:layout_width="wrap_content"
+            android:layout_height="24dp"
+            android:layout_marginStart="28dp"
+            android:layout_marginTop="4dp"
+            card_view:layout_constraintStart_toStartOf="parent"
+            card_view:layout_constraintTop_toBottomOf="@+id/tvCalleInmueble"
+            tools:text="ciudad" />
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/idConstrUno"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvCiudadInmueble"
+            >
+
+            <ImageView
+                android:id="@+id/imageView6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                card_view:layout_constraintStart_toStartOf="parent"
+                card_view:layout_constraintTop_toTopOf="parent"
+                card_view:srcCompat="@drawable/person_black_24dp" />
+
+            <TextView
+                android:id="@+id/tvNumPersonas"
+                android:layout_width="wrap_content"
+                android:layout_height="24dp"
+                android:layout_marginStart="28dp"
+                android:layout_marginTop="4dp"
+                card_view:layout_constraintStart_toStartOf="parent"
+                card_view:layout_constraintTop_toTopOf="parent"
+                tools:text="num personas" />
+
+            <ImageView
+                android:id="@+id/imageView7"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:layout_marginEnd="172dp"
+                card_view:layout_constraintEnd_toEndOf="parent"
+                card_view:layout_constraintTop_toTopOf="parent"
+                card_view:srcCompat="@drawable/bedroom_child_black_24dp" />
+
+            <TextView
+                android:id="@+id/tvNumHabitaciones"
+                android:layout_width="wrap_content"
+                android:layout_height="24dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="4dp"
+                card_view:layout_constraintStart_toEndOf="@+id/imageView7"
+                card_view:layout_constraintTop_toTopOf="parent"
+                tools:text="num Habitaciones" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/idConstrDos"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/idConstrUno"
+        >
+
+            <ImageView
+                android:id="@+id/imageView8"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                card_view:layout_constraintStart_toStartOf="parent"
+                card_view:layout_constraintTop_toTopOf="parent"
+                card_view:srcCompat="@drawable/bathtub_black_24dp"
+                />
+
+            <TextView
+                android:id="@+id/tvNumBanos"
+                android:layout_width="wrap_content"
+                android:layout_height="24dp"
+                android:layout_marginStart="28dp"
+                android:layout_marginTop="4dp"
+                card_view:layout_constraintStart_toStartOf="parent"
+                card_view:layout_constraintTop_toTopOf="parent"
+                tools:text="num Baños" />
+
+        <ImageView
+            android:id="@+id/imageView9"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="172dp"
+            card_view:layout_constraintEnd_toEndOf="parent"
+            card_view:layout_constraintTop_toTopOf="parent"
+            card_view:srcCompat="@drawable/clean_hands_black_24dp" />
+
+        <TextView
+            android:id="@+id/tvNumAseos"
+            android:layout_width="wrap_content"
+            android:layout_height="24dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="4dp"
+            card_view:layout_constraintStart_toEndOf="@+id/imageView9"
+            card_view:layout_constraintTop_toTopOf="parent"
+            tools:text="num Aseos" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.cardview.widget.CardView>
