@@ -16,6 +16,8 @@ import android.widget.Toast;
 import com.example.appalquiler.API.RetrofitClient;
 import com.example.appalquiler.Clases.Alquiler;
 import com.example.appalquiler.APIInterfaces.APIServiceAlquiler;
+import com.example.appalquiler.Clases.Empresa;
+import com.example.appalquiler.Clases.Portal;
 import com.example.appalquiler.R;
 import com.example.appalquiler.SharedPreferencesManager;
 import com.example.appalquiler.databinding.FragmentAlquileresFormBinding;
@@ -100,7 +102,9 @@ public class AlquileresFormFragment extends Fragment {
                         binding.editTextFhInicio.getText().toString(),
                         binding.editTextFhFin.getText().toString(),
                         alquiler.getInmueble(),
-                        alquiler.getCliente()
+                        alquiler.getCliente(),
+                        new Portal(1, "Booking", "#003B95"),
+                        new Empresa(1, "Empresa TIPO")
                     );
                     editar( alquiler.getIdAlquiler() , alquilerMod );
 
@@ -112,7 +116,9 @@ public class AlquileresFormFragment extends Fragment {
                         binding.editTextFhInicio.getText().toString(),
                         binding.editTextFhFin.getText().toString(),
                         alquiler.getInmueble(),
-                        alquiler.getCliente()
+                        alquiler.getCliente(),
+                        new Portal(1, "Booking", "#003B95"),
+                        new Empresa(1, "Empresa TIPO")
                     );
                     guardar( alquilerNuevo );
 

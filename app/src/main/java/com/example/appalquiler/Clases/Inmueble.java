@@ -22,8 +22,13 @@ public class Inmueble implements Serializable  {
     private int numBanos;
     @SerializedName("numAseos")
     private int numAseos;
+    @SerializedName("empresa")
+    private Empresa empresa;
 
-    public Inmueble( String nombre, String calle, String ciudad, int numPersonas, int numHabitaciones, int numBanos, int numAseos) {
+    public Inmueble( String nombre, String calle,
+                     String ciudad, int numPersonas,
+                     int numHabitaciones, int numBanos,
+                     int numAseos, Empresa empresa) {
 
         this.nombre = nombre;
         this.calle = calle;
@@ -32,20 +37,7 @@ public class Inmueble implements Serializable  {
         this.numHabitaciones = numHabitaciones;
         this.numBanos = numBanos;
         this.numAseos = numAseos;
-    }
-
-    @Override
-    public String toString() {
-        return "Inmueble{" +
-                "idInmueble=" + idInmueble +
-                ", nombre='" + nombre + '\'' +
-                ", calle='" + calle + '\'' +
-                ", ciudad='" + ciudad + '\'' +
-                ", numPersonas=" + numPersonas +
-                ", numHabitaciones=" + numHabitaciones +
-                ", numBanos=" + numBanos +
-                ", numAseos=" + numAseos +
-                '}';
+        this.empresa = empresa;
     }
 
     public int getIdInmueble() {
@@ -112,4 +104,11 @@ public class Inmueble implements Serializable  {
         this.numAseos = numAseos;
     }
 
+    public Empresa getEmpresa() {
+        return empresa;
+    }
+
+    public void setEmpresa(Empresa empresa) {
+        this.empresa = empresa;
+    }
 }

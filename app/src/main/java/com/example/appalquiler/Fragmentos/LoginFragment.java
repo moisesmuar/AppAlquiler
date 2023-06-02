@@ -5,6 +5,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -59,6 +60,9 @@ public class LoginFragment extends Fragment {
         super.onCreate(savedInstanceState);
         // setContentView(R.layout.activity_login);
 
+        // Ocultar barra de navegación botón de retroceso actividad actual
+        // ((AppCompatActivity) requireActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         etUsername = binding.etUserName;
         etPassword = binding.etPassword;
 
@@ -81,12 +85,12 @@ public class LoginFragment extends Fragment {
         final String userName = etUsername.getText().toString().trim();
         String password = etPassword.getText().toString().trim();
 
-        if (userName.isEmpty()) {
-            etUsername.setError("Username is required");
+        if ( userName.isEmpty() ) {
+            etUsername.setError("Usuario requerido");
             etUsername.requestFocus();
             return;
-        } else if (password.isEmpty()) {
-            etPassword.setError("Password is required");
+        } else if ( password.isEmpty() ) {
+            etPassword.setError("Contraseña requerida");
             etPassword.requestFocus();
             return;
         }
@@ -109,7 +113,7 @@ public class LoginFragment extends Fragment {
                     }
                     Log.d("String response.body", "Retorno de API : " + s );
                     if ( s.equals(userName) ) {
-                        Toast.makeText( getContext(), "User logged in!", Toast.LENGTH_LONG).show();
+                        Toast.makeText( getContext(), "¡Usuario conectado!", Toast.LENGTH_LONG).show();
 
                         // LOGIN APLICACION
                         SharedPreferencesManager sessionManager = new SharedPreferencesManager( requireContext() );
@@ -117,8 +121,8 @@ public class LoginFragment extends Fragment {
                         Navigation.findNavController( requireView() ).navigate( R.id.calendarHorizontalFragment );
 
                     } else {
-                        Toast.makeText( getContext() , "Incorrect Credentials! Try again!", Toast.LENGTH_LONG).show();
-                        Log.d("Incorrect Credentials!", "Retorno de API : " + s );
+                        Toast.makeText( getContext() , "¡Credenciales incorrectas! ¡Intentar otra vez!", Toast.LENGTH_LONG).show();
+                        Log.d("¡Credenciales incorrectas!", "Retorno API : " + s );
                     }
 
                 }
@@ -129,7 +133,8 @@ public class LoginFragment extends Fragment {
 
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
-                Toast.makeText( getContext(), t.getMessage(), Toast.LENGTH_LONG).show();
+                Toast.makeText( getContext(), "Fallo conexión API", Toast.LENGTH_LONG).show();
+               // Toast.makeText( getContext(), t.getMessage(), Toast.LENGTH_LONG).show();
             }
         });
 

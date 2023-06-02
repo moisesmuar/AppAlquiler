@@ -20,25 +20,22 @@ public class Alquiler implements Serializable {
     private Inmueble inmueble;
     @SerializedName("cliente")
     private Cliente cliente;
+    @SerializedName("portal")
+    private Portal portal;
+    @SerializedName("empresa")
+    private Empresa empresa;
 
-    public Alquiler( /*int dias, double precioDia,*/ String fhinicio, String fhfin, Inmueble inmueble, Cliente cliente) {
+    public Alquiler( /*int dias, double precioDia,*/ String fhinicio, String fhfin,
+                                                     Inmueble inmueble, Cliente cliente,
+                                                     Portal portal, Empresa empresa) {
        /* this.dias = dias;
         this.precioDia = precioDia;*/
         this.fhinicio = fhinicio;
         this.fhfin = fhfin;
         this.inmueble = inmueble;
         this.cliente = cliente;
-    }
-
-    @Override
-    public String toString() {
-        return "Alquiler{" +
-                "idAlquiler=" + idAlquiler +
-                ", fhinicio='" + fhinicio + '\'' +
-                ", fhfin='" + fhfin + '\'' +
-                ", inmueble=" + inmueble +
-                ", cliente=" + cliente +
-                '}';
+        this.portal = portal;
+        this.empresa = empresa;
     }
 
     public int getIdAlquiler() {
@@ -48,23 +45,7 @@ public class Alquiler implements Serializable {
     public void setIdAlquiler(int idAlquiler) {
         this.idAlquiler = idAlquiler;
     }
-/*
-    public int getDias() {
-        return dias;
-    }
 
-    public void setDias(int dias) {
-        this.dias = dias;
-    }
-
-    public double getPrecioDia() {
-        return precioDia;
-    }
-
-    public void setPrecioDia(double precioDia) {
-        this.precioDia = precioDia;
-    }
-*/
     public String getFhinicio() {
         return fhinicio;
     }
@@ -95,5 +76,21 @@ public class Alquiler implements Serializable {
 
     public void setCliente(Cliente cliente) {
         this.cliente = cliente;
+    }
+
+    public Portal getPortal() {
+        return portal;
+    }
+
+    public void setPortal(Portal portal) {
+        this.portal = portal;
+    }
+
+    public Empresa getEmpresa() {
+        return empresa;
+    }
+
+    public void setEmpresa(Empresa empresa) {
+        this.empresa = empresa;
     }
 }

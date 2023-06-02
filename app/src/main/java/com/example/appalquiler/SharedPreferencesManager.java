@@ -3,11 +3,17 @@ package com.example.appalquiler;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import androidx.appcompat.app.AppCompatDelegate;
+
 public class SharedPreferencesManager {
 
     private final String SP_NAMA = "spName";
     private final String SP_EMAIL = "spEmail";
     private final String SP_ISLOGIN = "spIsLogin";
+    private final String SP_THEME = "spTheme";
+    private static final String KEY_THEME = "theme";
+
+
     private SharedPreferences sharedPreference;
     private SharedPreferences.Editor spEditor;
 
@@ -15,37 +21,40 @@ public class SharedPreferencesManager {
         sharedPreference = context.getSharedPreferences("LoggedIn", Context.MODE_PRIVATE);
         spEditor = sharedPreference.edit();
     }
-
     public void saveSpString(String spKey, String value) {
         spEditor.putString(spKey, value);
         spEditor.apply();
     }
-
     public void saveSpInt(String spKey, int value) {
         spEditor.putInt(spKey, value);
         spEditor.apply();
     }
-
     public void saveSpEmail(String spKey, String value) {
         spEditor.putString(spKey, value);
         spEditor.apply();
     }
-
     public void saveSpBoolean(String spKey, boolean value) {
         spEditor.putBoolean(spKey, value);
         spEditor.apply();
     }
-
     public String getName() {
         return sharedPreference.getString(SP_NAMA, "");
     }
-
     public String getEmail() {
         return sharedPreference.getString(SP_EMAIL, "");
     }
 
     public Boolean isLogin() {
         return sharedPreference.getBoolean(SP_ISLOGIN, false);
+    }
+
+    public void saveTheme(int themeMode) {
+        spEditor.putInt(KEY_THEME, themeMode);
+        spEditor.apply();
+    }
+
+    public int getSavedTheme() {
+        return sharedPreference.getInt(KEY_THEME, AppCompatDelegate.MODE_NIGHT_UNSPECIFIED);
     }
 
     public String getString(String key) {

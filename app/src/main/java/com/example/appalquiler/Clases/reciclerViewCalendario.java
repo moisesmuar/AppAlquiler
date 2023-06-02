@@ -19,6 +19,7 @@ import com.example.appalquiler.API.RetrofitClient;
 import com.example.appalquiler.APIInterfaces.APIServiceAlquiler;
 import com.example.appalquiler.Miscelanea.CalendarHorizontalAdapter;
 import com.example.appalquiler.R;
+import com.google.android.material.button.MaterialButton;
 
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
@@ -49,6 +50,8 @@ public class reciclerViewCalendario {
     private ArrayList<Date> dates = new ArrayList<>(); // ej [2023-04-01, 2023-04-02, 2023-04-03, ...] mes leido
 
     private TextView tvNombreInmueble;
+    private MaterialButton materialButton;
+
     private Inmueble inmueble;
     private List<Alquiler> alquilerList;
 
@@ -57,7 +60,6 @@ public class reciclerViewCalendario {
     private Context context;
 
     public reciclerViewCalendario( @NonNull Inmueble inmueble,
-
                                    LinearLayout linearParaAnadirRecicler,
                                    Context context
                                    ) {
@@ -69,9 +71,7 @@ public class reciclerViewCalendario {
         // Maximo mes que muestra calendario
         lastDayInCalendar.add(Calendar.MONTH, 12);
 
-
         // Consultas por mes y año
-
         obtenerAlquileresMesDelInmueble( );  // Peticion
     }
     /**
@@ -84,7 +84,7 @@ public class reciclerViewCalendario {
         cal.add( Calendar.MONTH, -1 );
         if ( cal.equals(currentDate) ){
             linearParaAnadirRecicler.removeView( recyclerView );  // borrado de anterior creado
-            linearParaAnadirRecicler.removeView( tvNombreInmueble );
+            linearParaAnadirRecicler.removeView( materialButton );
 
             obtenerAlquileresMesDelInmueble( );
 
@@ -94,7 +94,7 @@ public class reciclerViewCalendario {
         }
         else{
             linearParaAnadirRecicler.removeView( recyclerView );  // borrado de anterior creado
-            linearParaAnadirRecicler.removeView( tvNombreInmueble );
+            linearParaAnadirRecicler.removeView( materialButton );
 
             obtenerAlquileresMesDelInmueble( );
 
@@ -111,24 +111,22 @@ public class reciclerViewCalendario {
         cal.add( Calendar.MONTH, 1 );
 
         linearParaAnadirRecicler.removeView( recyclerView );  // borrado de anterior creado
-        linearParaAnadirRecicler.removeView( tvNombreInmueble );
+        linearParaAnadirRecicler.removeView( materialButton );
 
         obtenerAlquileresMesDelInmueble( );
 
-       // montarCalendario();
+        // montarCalendario();
         // setUpCalendar( cal );
     }
 
     private void montarCalendario( ) {
-
         LinearSnapHelper snapHelper = new LinearSnapHelper();
 
         recyclerView = new RecyclerView( context );
         snapHelper.attachToRecyclerView( recyclerView );
 
-        tvNombreInmueble = new TextView( context ); // Crear textView dinámicamente
+        /*tvNombreInmueble = new TextView( context ); // Crear textView dinámicamente
         tvNombreInmueble.setText( inmueble.getNombre() );
-
         tvNombreInmueble.setOnClickListener(new View.OnClickListener() {  // Ir a CalendarDetalle
             @Override
             public void onClick(View view) {
@@ -138,18 +136,55 @@ public class reciclerViewCalendario {
                 // Navigation.findNavController(view).navigate(R.id.action_calendarHorizontalFragment_to_calendarDetalleFagment,bundle);
             }
         });
+        */
 
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(  // Crear parámetros de diseño
                 LinearLayout.LayoutParams.WRAP_CONTENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT
         );
         params.setMargins(30, 40, 0, 20);
-        tvNombreInmueble.setLayoutParams(params);
+
+        materialButton = new MaterialButton(context);
+        materialButton.setLayoutParams(params);
+
+        // Crear el botón MaterialButton
+        //MaterialButton materialButton = new MaterialButton( context );
+        //materialButton.setStyle(context, com.google.android.material.R.style.Widget_Material3_Search_Toolbar_Button_Navigation);
+
+        // Crear el OutlinedButton
+        //MaterialButton outlinedButton = new MaterialButton(context, null, R.attr.outlinedButtonStyle);
+        //outlinedButton.setText("Texto del botón");
+
+       // Configurar el estilo y otras propiedades
+       // outlinedButton.setStrokeColorResource(R.color.outline_button_stroke_color);
+        //outlinedButton.setStrokeWidth(getResources().getDimensionPixelSize(R.dimen.outline_button_stroke_width));
+
+        materialButton.setText( inmueble.getNombre() );
+
+
+        // materialButton.setOutlinedButtonStyle(context.getResources().getIdentifier("Widget.MaterialComponents.Button.OutlinedButton", "style", context.getPackageName()));
+       // materialButton.setStyle(context, R.style.Widget_MaterialComponents_Button_OutlinedButton);
+
+
+        // Agregar el evento OnClickListener al botón
+        materialButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // Crear el Bundle con los datos a pasar al fragmento de destino
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("inmueble", (Serializable) inmueble);
+
+                // Navegar al fragmento de destino
+                Navigation.findNavController(view).navigate(R.id.calendarDetalleFagment, bundle);
+            }
+        });
 
         recyclerView.setId( View.generateViewId() ); // Asignar un ID único al RecyclerView
 
         // Agregar tv y rv al LinearLayout
-        linearParaAnadirRecicler.addView( tvNombreInmueble );
+
+                // linearParaAnadirRecicler.addView( tvNombreInmueble );
+        linearParaAnadirRecicler.addView( materialButton );
         linearParaAnadirRecicler.addView( recyclerView );
 
         // ¿necesito añadirlo lo hago, esta por hacer?

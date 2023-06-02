@@ -78,11 +78,11 @@ public class RegistroFragment extends Fragment {
         String password = etPassword.getText().toString().trim();
 
         if (userName.isEmpty()) {
-            etUsername.setError("Username is required");
+            etUsername.setError("Usuario requerido");
             etUsername.requestFocus();
             return;
         } else if (password.isEmpty()) {
-            etPassword.setError("Password is required");
+            etPassword.setError("Contraseña requerida");
             etPassword.requestFocus();
             return;
         }
@@ -104,10 +104,10 @@ public class RegistroFragment extends Fragment {
                         e.printStackTrace();
                     }
                     if ( s.equals("SUCCESS") ) {
-                        Toast.makeText( getContext(), "Successfully registered. Please login", Toast.LENGTH_LONG).show();
+                        Toast.makeText( getContext(), "Registrado exitosamente. Por favor Iniciar sesión", Toast.LENGTH_LONG).show();
                         Navigation.findNavController( requireView() ).navigate( R.id.loginFragment );
                     } else {
-                        Toast.makeText( getContext(), "User already exists!", Toast.LENGTH_LONG).show();
+                        Toast.makeText( getContext(), "El usuario ya existe!", Toast.LENGTH_LONG).show();
                     }
                 }
                 else {    // Manejar el caso de respuesta nula o no exitosa
@@ -117,7 +117,8 @@ public class RegistroFragment extends Fragment {
 
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
-                Toast.makeText( getContext(), t.getMessage(), Toast.LENGTH_LONG).show();
+                Toast.makeText( getContext(), "Fallo conexión API", Toast.LENGTH_LONG).show();
+               // Toast.makeText( getContext(), t.getMessage(), Toast.LENGTH_LONG).show();
             }
         });
 

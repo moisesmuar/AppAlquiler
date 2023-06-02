@@ -15,6 +15,7 @@ import android.widget.Toast;
 
 import com.example.appalquiler.API.RetrofitClient;
 import com.example.appalquiler.APIInterfaces.APIServiceAlquiler;
+import com.example.appalquiler.Clases.Empresa;
 import com.example.appalquiler.Clases.Inmueble;
 import com.example.appalquiler.APIInterfaces.APIServiceInmueble;
 import com.example.appalquiler.R;
@@ -87,24 +88,54 @@ public class InmueblesFormFragment extends Fragment {
                             Integer.parseInt( binding.editTextNumPersonas.getText().toString() ),
                             Integer.parseInt( binding.editTextNumHabitaciones.getText().toString() ),
                             Integer.parseInt( binding.editTextNumBanos.getText().toString() ),
-                            Integer.parseInt( binding.editTextNumAseos.getText().toString() )
+                            Integer.parseInt( binding.editTextNumAseos.getText().toString() ),
+                            new Empresa(1, "Empresa TIPO")
                     );
                     editar( inmueble.getIdInmueble() , inmModificado );
 
                     Navigation.findNavController(view).navigate( R.id.inmueblesFragment );
                 }
                 else{  // Crear NUEVO
-                    String nombre = binding.editTextNombre.getText().toString();
+                   /* String nombre = binding.editTextNombre.getText().toString();
                     String calle = binding.editTextCalle.getText().toString();
                     String ciudad = binding.editTextCiudad.getText().toString();
                     Integer numPersonas =  Integer.parseInt( binding.editTextNumPersonas.getText().toString() );
                     Integer numHabitaciones =  Integer.parseInt( binding.editTextNumHabitaciones.getText().toString() );
                     Integer numBanos =  Integer.parseInt( binding.editTextNumBanos.getText().toString() );
-                    Integer numAseos =  Integer.parseInt( binding.editTextNumAseos.getText().toString() );
-                    Inmueble nuevoInmueble = new Inmueble( nombre, calle, ciudad, numPersonas, numHabitaciones, numBanos, numAseos );
-                    guardar( nuevoInmueble );
+                    Integer numAseos =  Integer.parseInt( binding.editTextNumAseos.getText().toString() );*/
 
-                    Navigation.findNavController(view).navigate( R.id.inmueblesFragment );
+
+                    String nombre = binding.editTextNombre.getText().toString();
+                    String calle = binding.editTextCalle.getText().toString();
+                    String ciudad = binding.editTextCiudad.getText().toString();
+                    Integer numPersonas, numHabitaciones, numBanos, numAseos;
+
+                    if (nombre.isEmpty() || calle.isEmpty() || ciudad.isEmpty()) {
+                        // Mostrar mensaje de llenar todos los campos
+                        Toast.makeText( getContext(), "Por favor, llene todos los campos.", Toast.LENGTH_LONG).show();
+
+                       // System.out.println("Por favor, llene todos los campos.");
+                    } else {
+                        try {
+                            numPersonas = Integer.parseInt(binding.editTextNumPersonas.getText().toString());
+                            numHabitaciones = Integer.parseInt(binding.editTextNumHabitaciones.getText().toString());
+                            numBanos = Integer.parseInt(binding.editTextNumBanos.getText().toString());
+                            numAseos = Integer.parseInt(binding.editTextNumAseos.getText().toString());
+
+                            Inmueble nuevoInmueble = new Inmueble(
+                                    nombre, calle, ciudad, numPersonas,
+                                    numHabitaciones, numBanos, numAseos,
+                                    new Empresa(1, "Empresa TIPO") );
+                            guardar( nuevoInmueble );
+                            Navigation.findNavController(view).navigate( R.id.inmueblesFragment );
+
+                        } catch (NumberFormatException e) {
+                            // Al menos uno de los campos numéricos no contiene un valor válido
+                            Toast.makeText( getContext(), "Ingrese valores numéricos válidos para los campos numéricos.", Toast.LENGTH_LONG).show();
+
+                        }
+                    }
+
                 }
 
             }
@@ -136,11 +167,13 @@ public class InmueblesFormFragment extends Fragment {
                 if ( response.isSuccessful() ) {
                     Toast.makeText(getContext(), "¡Guardado!", Toast.LENGTH_LONG).show();
                     limpiarCamposFragment();
+                    Log.e("onResponse", " Registro Guardado ");
+
                 }
             }
             @Override
             public void onFailure(Call<Inmueble> call, Throwable t) {
-                Log.e("Error con Log.e", "¡¡onFailure Error al Guardar", t);
+                Log.e("onFailure", " Error al Guardar ", t);
             }
         });
     }

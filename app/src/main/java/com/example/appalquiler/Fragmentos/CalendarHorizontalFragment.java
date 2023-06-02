@@ -2,6 +2,7 @@ package com.example.appalquiler.Fragmentos;
 
 import static java.security.AccessController.getContext;
 
+import android.content.Context;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -17,6 +18,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -74,6 +76,10 @@ public class CalendarHorizontalFragment extends Fragment {
                              Bundle savedInstanceState) {
         binding = FragmentCalendarHorizontalBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
+
+        // Ocultar el teclado virtual
+        InputMethodManager imm = (InputMethodManager) requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
 
         linearParaAnadirRecicler = binding.idLinearCalenHorizont;
 

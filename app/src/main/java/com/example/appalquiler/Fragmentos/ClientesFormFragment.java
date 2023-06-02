@@ -17,6 +17,7 @@ import com.example.appalquiler.API.RetrofitClient;
 import com.example.appalquiler.APIInterfaces.APIServiceAlquiler;
 import com.example.appalquiler.Clases.Cliente;
 import com.example.appalquiler.APIInterfaces.APIServiceCliente;
+import com.example.appalquiler.Clases.Empresa;
 import com.example.appalquiler.R;
 import com.example.appalquiler.SharedPreferencesManager;
 import com.example.appalquiler.databinding.FragmentClientesFormBinding;
@@ -86,7 +87,8 @@ public class ClientesFormFragment extends Fragment {
                         binding.editTextCalle.getText().toString(),
                         binding.editTextCiudad.getText().toString(),
                         binding.editTextPais.getText().toString(),
-                        binding.editTextCP.getText().toString()
+                        binding.editTextCP.getText().toString(),
+                            new Empresa(1, "Empresa TIPO")
                     );
                     editar( cliente.getIdCliente() , cliModificado );
 
@@ -100,7 +102,9 @@ public class ClientesFormFragment extends Fragment {
                     String ciudad = binding.editTextCiudad.getText().toString();
                     String pais = binding.editTextPais.getText().toString();
                     String cp = binding.editTextCP.getText().toString();
-                    Cliente nuevoCliente = new Cliente( nombre, telefono, email, calle, ciudad, pais, cp );
+
+                    Cliente nuevoCliente = new Cliente( nombre, telefono, email,
+                            calle, ciudad, pais, cp, new Empresa(1, "Empresa TIPO"));
                     guardar( nuevoCliente );
 
                     Navigation.findNavController(view).navigate( R.id.clientesFragment );
@@ -142,11 +146,13 @@ public class ClientesFormFragment extends Fragment {
                 if ( response.isSuccessful() ) {
                     Toast.makeText(getContext(), "¡Guardado!", Toast.LENGTH_LONG).show();
                     limpiarCamposFragment();
+                    Log.e("onResponse", " Registro Guardado ");
+
                 }
             }
             @Override
             public void onFailure(Call<Cliente> call, Throwable t) {
-                Log.e("Error con Log.e", "¡¡onFailure Error al Guardar", t);
+                Log.e("onFailure", " Error al Guardar ", t);
             }
         });
     }

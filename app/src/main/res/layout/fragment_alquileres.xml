@@ -4,6 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="?android:attr/colorBackground"
+    app:navGraph="@navigation/mobile_navigation"
     tools:context=".Fragmentos.AlquileresFragment">
 
     <androidx.recyclerview.widget.RecyclerView

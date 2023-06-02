@@ -1,37 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Fragmentos.AlquileresFormFragment">
+    android:background="?android:attr/colorBackground"
+
+    tools:context=".Fragmentos.AlquileresFormFragment"
+     >
 
     <TextView
-        android:id="@+id/tvTitulo"
+        android:id="@+id/tvTituloAlq"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
         android:text="Alquiler"
         android:textAlignment="center"
-        android:textColor="@color/black"
+        android:textColor="?attr/colorOnSurface"
         android:textSize="25sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-
     <EditText
         android:id="@+id/editTextFhInicio"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
         android:layout_marginTop="50dp"
+        android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
         android:hint="Fecha de inicio"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvTitulo" />
+        app:layout_constraintTop_toBottomOf="@+id/tvTituloAlq" />
 
     <EditText
         android:id="@+id/editTextFhFin"
@@ -55,7 +58,6 @@
         android:inputType="number"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editTextFhFin" />
-
 
     <EditText
         android:id="@+id/editTextPrecioDia"
@@ -88,7 +90,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editTextNombreInmueble" />
 
-
     <LinearLayout
         android:id="@+id/lyBotones"
         android:layout_width="match_parent"
@@ -96,22 +97,28 @@
         android:layout_marginTop="16dp"
         android:gravity="center"
         android:orientation="horizontal"
+        android:paddingBottom="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/editTextNombreCliente">
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent">
 
         <Button
+            style="@style/Widget.Material3.Button.TonalButton"
             android:id="@+id/btnGuardar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Guardar" />
+            android:text="Guardar"
+            android:textSize="16sp" />
 
         <Button
+            style="@style/Widget.Material3.Button.TonalButton"
             android:id="@+id/btnEliminar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:text="Eliminar" />
+            android:layout_marginStart="20dp"
+            android:text="Eliminar"
+            android:textSize="16sp" />
 
     </LinearLayout>
 
@@ -134,6 +141,5 @@
         android:src="@drawable/find_in_page_black_24dp"
         app:layout_constraintStart_toEndOf="@+id/editTextNombreCliente"
         app:layout_constraintTop_toBottomOf="@+id/ibtn_inmuebleAlquilerBuscar" />
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

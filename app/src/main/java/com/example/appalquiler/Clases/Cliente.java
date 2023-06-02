@@ -22,8 +22,13 @@ public class Cliente implements Serializable  {
     private String pais;
     @SerializedName("cp")
     private String cp;
+    @SerializedName("empresa")
+    private Empresa empresa;
 
-    public Cliente( String nombre, String telefono, String email, String calle, String ciudad, String pais, String cp) {
+    public Cliente( String nombre, String telefono,
+                    String email, String calle,
+                    String ciudad, String pais,
+                    String cp, Empresa empresa) {
         this.nombre = nombre;
         this.telefono = telefono;
         this.email = email;
@@ -31,6 +36,7 @@ public class Cliente implements Serializable  {
         this.ciudad = ciudad;
         this.pais = pais;
         this.cp = cp;
+        this.empresa = empresa;
     }
 
     public int getIdCliente() {
@@ -95,5 +101,13 @@ public class Cliente implements Serializable  {
 
     public void setCp(String cp) {
         this.cp = cp;
+    }
+
+    public Empresa getEmpresa() {
+        return empresa;
+    }
+
+    public void setEmpresa(Empresa empresa) {
+        this.empresa = empresa;
     }
 }

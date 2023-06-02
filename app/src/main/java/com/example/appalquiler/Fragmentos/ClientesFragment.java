@@ -27,6 +27,7 @@ import com.google.gson.GsonBuilder;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -58,6 +59,10 @@ public class ClientesFragment extends Fragment {
         if ( !sessionManager.isLogin() ) { // Usuario logeado? no. redirigir a fragmento login
             Navigation.findNavController(view).navigate( R.id.loginFragment );
         }
+
+        // genero token
+        String token = UUID.randomUUID().toString();
+        Log.d("    token    ", token );
 
         return view;
     }

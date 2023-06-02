@@ -26,11 +26,15 @@ import com.example.appalquiler.R;
 import com.example.appalquiler.SharedPreferencesManager;
 import com.example.appalquiler.databinding.FragmentCalendarDetalleBinding;
 
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.YearMonth;
+import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -60,6 +64,7 @@ public class CalendarDetalleFragment extends Fragment implements CalendarAdapter
         binding = FragmentCalendarDetalleBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
 
+        // mostrar barra de navegación botón de retroceso en barra de acción de la actividad actual
         ((AppCompatActivity) requireActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         SharedPreferencesManager sessionManager = new SharedPreferencesManager( requireContext() );
@@ -161,7 +166,12 @@ public class CalendarDetalleFragment extends Fragment implements CalendarAdapter
      * @return String
      */
     private String mesyAnoDelaFecha(LocalDate date) {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMMM yyyy");
+        /*// pasar LocalDate a Date
+        Date fecha = Date.from(date.atStartOfDay(ZoneId.systemDefault()).toInstant());
+        SimpleDateFormat formatter = new SimpleDateFormat("MMMM yyyy", new Locale("es", "ES"));
+        return formatter.format(fecha);*/
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMMM yyyy", new Locale("es", "ES"));
         return date.format( formatter );
     }
 

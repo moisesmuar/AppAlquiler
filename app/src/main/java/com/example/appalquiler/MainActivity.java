@@ -5,6 +5,7 @@ import android.view.Menu;
 
 import com.google.android.material.navigation.NavigationView;
 
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -34,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });*/
+        
         DrawerLayout drawer = binding.drawerLayout;
         NavigationView navigationView = binding.navView;
         // Passing each menu ID as a set of Ids because each
@@ -51,6 +53,18 @@ public class MainActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
+
+
+        // Obtener el tema guardado o utilizar el valor predeterminado
+        SharedPreferencesManager sharedPreferencesManager = new SharedPreferencesManager(getApplicationContext());
+        int savedTheme = sharedPreferencesManager.getSavedTheme();
+        if (savedTheme == AppCompatDelegate.MODE_NIGHT_UNSPECIFIED) {
+            savedTheme = AppCompatDelegate.MODE_NIGHT_NO; // Valor predeterminado si no hay tema guardado
+        }
+
+        // Establecer el tema guardado o el valor predeterminado
+        AppCompatDelegate.setDefaultNightMode( savedTheme );
+
     }
 
     @Override

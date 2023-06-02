@@ -1,13 +1,16 @@
 package com.example.appalquiler.Miscelanea;
 
 import android.content.Context;
+import android.content.res.ColorStateList;
 import android.graphics.Color;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
+import androidx.core.view.ViewCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.appalquiler.Clases.Alquiler;
@@ -88,9 +91,17 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarViewHolder>
                     int idAlquiler = alquiler.getIdAlquiler();
                     holder.itemView.setTag( idAlquiler );
 
+
+                    // Cuando defino color sin tema
                     holder.itemView.setBackgroundColor(
-                            ContextCompat.getColor(context, R.color.color_dia_alquilado)
+                            ContextCompat.getColor(context, R.color.md_theme_light_errorContainer)
                     );
+
+//                    TypedValue typedValue = new TypedValue();
+//                    context.getTheme().resolveAttribute(com.google.android.material.R.attr.colorTertiary, typedValue, true);
+//                    int colorTertiary = typedValue.data;
+//                    holder.itemView.setBackgroundColor( colorTertiary );
+
                 }
             }
         }

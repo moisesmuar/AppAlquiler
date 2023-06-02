@@ -3,6 +3,7 @@ package com.example.appalquiler.Miscelanea;
 import android.content.Context;
 import android.graphics.Color;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -83,17 +84,21 @@ public class CalendarHorizontalAdapter extends RecyclerView.Adapter<CalendarHori
     }
 
 
-    private void makeItemDisabled(CalendarHorizontalViewHolder holder) {
-        holder.txtDay.setTextColor(ContextCompat.getColor( context, R.color.themeColor2) );
-        holder.txtDayInWeek.setTextColor(ContextCompat.getColor( context, R.color.themeColor2 ));
-        holder.linearLayout.setBackgroundColor(Color.WHITE);
+    private void makeItemDisabled(CalendarHorizontalViewHolder holder) {  // gris desactivado
+        holder.txtDay.setTextColor( Color.GRAY );
+        holder.txtDayInWeek.setTextColor( Color.GRAY );
+        holder.linearLayout.setBackgroundColor( Color.WHITE );
         holder.linearLayout.setEnabled(false);
     }
 
-    private void makeItemSelected(CalendarHorizontalViewHolder holder) {
+    private void makeItemSelected(CalendarHorizontalViewHolder holder) {   // dia selecionado
+        TypedValue typedValue = new TypedValue();
+        context.getTheme().resolveAttribute(com.google.android.material.R.attr.colorPrimary, typedValue, true);
+        int colorPrimary = typedValue.data;
+
         holder.txtDay.setTextColor(Color.parseColor("#FFFFFF"));
         holder.txtDayInWeek.setTextColor(Color.parseColor("#FFFFFF"));
-        holder.linearLayout.setBackgroundColor(ContextCompat.getColor( context, R.color.themeColor1) );
+        holder.linearLayout.setBackgroundColor( colorPrimary );
         holder.linearLayout.setEnabled(false);
     }
 
@@ -125,9 +130,16 @@ public class CalendarHorizontalAdapter extends RecyclerView.Adapter<CalendarHori
             Log.v("Exception", ex.getLocalizedMessage());
         }
 
+        // Establecer celda color blanco, sin tema
         holder.itemView.setBackgroundColor(
-                ContextCompat.getColor(context, R.color.white)
+                ContextCompat.getColor(context, R.color.md_theme_light_onError )
         );
+
+        /*TypedValue typedValue = new TypedValue();
+        context.getTheme().resolveAttribute( com.google.android.material.R.attr.colorSurface, typedValue, true );
+        int colorSurface = typedValue.data;
+        holder.itemView.setBackgroundColor( colorSurface );*/
+
         holder.txtDay.setText( String.valueOf( displayDay ) );
 
         /**
@@ -164,8 +176,13 @@ public class CalendarHorizontalAdapter extends RecyclerView.Adapter<CalendarHori
                     Log.d("  Alquilado ", "Coloresar Azul Dia: "+ displayDay );
 
                     holder.itemView.setBackgroundColor(
-                            ContextCompat.getColor(context, R.color.color_dia_alquilado)
+                            ContextCompat.getColor(context, R.color.md_theme_light_errorContainer)
                     );
+
+                    /*TypedValue typedV = new TypedValue();
+                    context.getTheme().resolveAttribute(com.google.android.material.R.attr.colorTertiary, typedV, true);
+                    int colorTertiary = typedV.data;
+                    holder.itemView.setBackgroundColor( colorTertiary );*/
                 }
             }
         }

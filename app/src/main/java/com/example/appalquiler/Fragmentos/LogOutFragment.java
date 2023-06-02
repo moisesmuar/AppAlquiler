@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
@@ -27,21 +29,26 @@ public class LogOutFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        //return inflater.inflate(R.layout.fragment_log_out, container, false);
-
         binding = FragmentLogOutBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 /*
         // Llamar al método clearSession() para cerrar la sesión ->logout
         SharedPreferencesManager sessionManager = new SharedPreferencesManager(requireContext());
         sessionManager.clearSession();
-
-        // Navegarfragmento de inicio de sesión
-        Navigation.findNavController(requireView()).navigate( R.id.loginFragment );
 */
         return root;
     }
 
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
 
+        SharedPreferencesManager sessionManager = new SharedPreferencesManager(requireContext());
+        sessionManager.saveSpBoolean("spIsLogin", false);
+
+        System.exit(0);
+
+        // Navigation.findNavController(requireView()).navigate(R.id.loginFragment);
+
+    }
 }
