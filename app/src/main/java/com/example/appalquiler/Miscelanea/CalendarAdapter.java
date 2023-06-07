@@ -73,12 +73,15 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarViewHolder>
             int diaHolderActual = Integer.parseInt( dia );
 
             for( Alquiler alquiler : this.alquileresList ) {  // alquileres de mes actual y año actual
-                LocalDate  fhhoraInicio = LocalDate.parse( alquiler.getFhinicio() );
-                int diaEntrada = fhhoraInicio.getDayOfMonth();
+                LocalDate fechaInicio = LocalDate.parse(alquiler.getFhinicio());
+
+                int diaEntrada = fechaInicio.getDayOfMonth();
                 //int mesEntrada = fhhoraInicio.getMonthValue();
                 //int anoEntrada = fhhoraInicio.getYear();
-                LocalDate fhhorafin = LocalDate.parse( alquiler.getFhfin() );
-                int diaSalida = fhhorafin.getDayOfMonth();
+
+                LocalDate fechaFin = LocalDate.parse(alquiler.getFhfin());
+
+                int diaSalida = fechaFin.getDayOfMonth();
                 //int mesSalida = fhhorafin.getMonthValue();
                 //int anoSalida = fhhorafin.getYear();
                 /* if( diaHolderActual >= diaEntrada && diaHolderActual <= diaSalida &&

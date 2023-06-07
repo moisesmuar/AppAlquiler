@@ -36,7 +36,7 @@ public class AlquilerAdapter extends RecyclerView.Adapter<AlquilerAdapterViewHol
 
     @Override
     public void onBindViewHolder( AlquilerAdapterViewHolder holder, int position ) {
-        // pase Json from AccessControlProfileId  the Code City
+
         Alquiler itemAlquiler = alquileres.get( position );  // objeto Alquiler
         holder.render( itemAlquiler );
 
@@ -44,10 +44,7 @@ public class AlquilerAdapter extends RecyclerView.Adapter<AlquilerAdapterViewHol
             @Override
             public void onClick(View v) {
                 Bundle bundle = new Bundle();
-                // bundle.putInt("id_alquiler", itemAlquiler.getIdAlquiler() );
-                bundle.putSerializable("alquiler" , (Serializable) itemAlquiler );
-                // bundle.putSerializable("inmueble" , (Serializable) itemAlquiler.getInmueble() );
-                // bundle.putSerializable("cliente" , (Serializable) itemAlquiler.getCliente() );
+                bundle.putSerializable("alquilerEdicion" , (Serializable) itemAlquiler );
 
                 Navigation.findNavController(v).navigate( R.id.alquileresFormFragment, bundle );
             }

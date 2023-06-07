@@ -183,9 +183,18 @@ public class CalendarDetalleFragment extends Fragment implements CalendarAdapter
         }*/
 
         if ( alquiler != null ) {
-            String message = "Entrada: " + LocalDate.parse(alquiler.getFhinicio()).getDayOfMonth()
-                    + " Salida: " + LocalDate.parse(alquiler.getFhfin()).getDayOfMonth() + "\n"
+
+            LocalDate fechaInicio = LocalDate.parse(alquiler.getFhinicio());
+            LocalDate fechaFin = LocalDate.parse(alquiler.getFhfin());
+
+            String message = "Entrada: " + fechaInicio.getDayOfMonth()
+                    + " Salida: " + fechaFin.getDayOfMonth() + "\n"
                     + "Cliente: " + alquiler.getCliente().getNombre();
+
+          /*  String message = "Entrada: " + alquiler.getFhinicio().getDayOfMonth()
+                    + " Salida: " + alquiler.getFhfin().getDayOfMonth() + "\n"
+                    + "Cliente: " + alquiler.getCliente().getNombre();*/
+
             Toast.makeText( getContext(), message, Toast.LENGTH_LONG).show();
         }
 
@@ -209,13 +218,9 @@ public class CalendarDetalleFragment extends Fragment implements CalendarAdapter
 
                     for ( Alquiler alquiler : alquileresList ) {
                         int idAlquiler = alquiler.getIdAlquiler();
-                        // int dias = alquiler.getDias();
-                        // double precioDia = alquiler.getPrecioDia();
-                        String fhinicio = alquiler.getFhinicio();
-                        String fhfin = alquiler.getFhfin();
 
-                        System.out.println("Fecha inicio: " + fhinicio);
-                        System.out.println("Fecha fin: " + fhfin);
+                        System.out.println("Fecha inicio: " + alquiler.getFhinicio());
+                        System.out.println("Fecha fin: " + alquiler.getFhfin());
                         Log.d("RESPONSE", "Código: " + response.code() + " Respuesta: " + alquiler.toString() );
 
                     }

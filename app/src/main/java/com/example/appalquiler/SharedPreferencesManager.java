@@ -5,6 +5,9 @@ import android.content.SharedPreferences;
 
 import androidx.appcompat.app.AppCompatDelegate;
 
+import com.example.appalquiler.Clases.Usuario;
+import com.google.gson.Gson;
+
 public class SharedPreferencesManager {
 
     private final String SP_NAMA = "spName";
@@ -12,7 +15,7 @@ public class SharedPreferencesManager {
     private final String SP_ISLOGIN = "spIsLogin";
     private final String SP_THEME = "spTheme";
     private static final String KEY_THEME = "theme";
-
+    private static final String KEY_USER = "spUser";
 
     private SharedPreferences sharedPreference;
     private SharedPreferences.Editor spEditor;
@@ -70,4 +73,24 @@ public class SharedPreferencesManager {
         spEditor.apply();
     }
 
+    /**
+     * guardar usuario
+     */
+    public void saveSpUser(String spKey, Usuario usuario) {
+        Gson gson = new Gson();
+        String userJson = gson.toJson(usuario);
+        spEditor.putString( spKey, userJson );
+        spEditor.apply();
+    }
+    /**
+     * retorno del usuario
+     */
+    public Usuario getSpUser() {
+        String userJson = sharedPreference.getString(KEY_USER, null);
+        if (userJson != null) {
+            Gson gson = new Gson();
+            return gson.fromJson(userJson, Usuario.class);
+        }
+        return null;
+    }
 }

@@ -3,19 +3,21 @@ package com.example.appalquiler.Clases;
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
+import java.sql.Timestamp;
+import java.time.LocalDate;
+import java.util.Date;
 
 public class Alquiler implements Serializable {
 
     @SerializedName("idAlquiler")
     private int idAlquiler;
-    /*@SerializedName("dias")
-    private int dias;
-    @SerializedName("precioDia")
-    private double precioDia;*/
+
     @SerializedName("fhinicio")
     private String fhinicio;
+
     @SerializedName("fhfin")
-    private String fhfin;
+    private String   fhfin;
+
     @SerializedName("inmueble")
     private Inmueble inmueble;
     @SerializedName("cliente")
@@ -25,11 +27,12 @@ public class Alquiler implements Serializable {
     @SerializedName("empresa")
     private Empresa empresa;
 
-    public Alquiler( /*int dias, double precioDia,*/ String fhinicio, String fhfin,
-                                                     Inmueble inmueble, Cliente cliente,
-                                                     Portal portal, Empresa empresa) {
-       /* this.dias = dias;
-        this.precioDia = precioDia;*/
+    public Alquiler(){}
+
+    public Alquiler( String fhinicio, String fhfin,
+                     Inmueble inmueble, Cliente cliente,
+                     Portal portal, Empresa empresa) {
+
         this.fhinicio = fhinicio;
         this.fhfin = fhfin;
         this.inmueble = inmueble;

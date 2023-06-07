@@ -20,6 +20,7 @@ import android.widget.Toast;
 import com.example.appalquiler.API.RetrofitClient;
 import com.example.appalquiler.APIInterfaces.APIServiceInmueble;
 import com.example.appalquiler.APIInterfaces.APIServiceUsuario;
+import com.example.appalquiler.Clases.LoginResponse;
 import com.example.appalquiler.Clases.Usuario;
 import com.example.appalquiler.R;
 import com.example.appalquiler.SharedPreferencesManager;
@@ -98,41 +99,43 @@ public class LoginFragment extends Fragment {
         RetrofitClient retrofitClient = RetrofitClient.getInstance();
         APIServiceUsuario apiService = retrofitClient.getRetrofit().create( APIServiceUsuario.class );
 
-        Call<ResponseBody> call = apiService.checkUser( new Usuario(userName, password) );
-        call.enqueue( new Callback<ResponseBody>() {
+        Call<LoginResponse> call = apiService.checkUser( new Usuario(userName, password) );
+        call.enqueue( new Callback<LoginResponse>() {
             @Override
-            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+            public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
 
                 if ( response.isSuccessful() && response.body() != null ) {
 
-                    String s = "";
-                    try {
-                        s = response.body().string();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                    Log.d("String response.body", "Retorno de API : " + s );
-                    if ( s.equals(userName) ) {
-                        Toast.makeText( getContext(), "¡Usuario conectado!", Toast.LENGTH_LONG).show();
+                    LoginResponse loginResponse = response.body();
+                    if (loginResponse != null && loginResponse.getUser() != null) {
 
-                        // LOGIN APLICACION
-                        SharedPreferencesManager sessionManager = new SharedPreferencesManager( requireContext() );
+                        // Inicio de sesión exitoso
+                        Usuario user = loginResponse.getUser();
+                        Toast.makeText(getContext(), "¡Usuario conectado!", Toast.LENGTH_LONG).show();
+
+                        Log.d("LOGIN", "usuario : " + user.toString() );
+
+                        // Realiza las operaciones necesarias con el usuario y la empresa asociada
+
+                        // Login + Guardar usuario en SharedPreferences
+                        SharedPreferencesManager sessionManager = new SharedPreferencesManager(requireContext());
                         sessionManager.saveSpBoolean("spIsLogin", true);
-                        Navigation.findNavController( requireView() ).navigate( R.id.calendarHorizontalFragment );
+                        sessionManager.saveSpUser("spUser", user);
 
-                    } else {
-                        Toast.makeText( getContext() , "¡Credenciales incorrectas! ¡Intentar otra vez!", Toast.LENGTH_LONG).show();
-                        Log.d("¡Credenciales incorrectas!", "Retorno API : " + s );
+                        // Navegar a la siguiente pantalla
+                        Navigation.findNavController(requireView()).navigate(R.id.calendarHorizontalFragment);
+                    }else {
+                        // Credenciales inválidas
+                        Toast.makeText(getContext(), "¡Credenciales incorrectas! ¡Intentar otra vez!", Toast.LENGTH_LONG).show();
                     }
-
-                }
-                else {    // Manejar el caso de respuesta nula o no exitosa
-                    Log.d("ERROR", "Código: " + response.code() + "respuesta nula o no exitosa LoginFragment - Mensaje: " + response.message());
+                } else {
+                    Log.d(" Error", "Código: " + response.code() + " - Mensaje: " + response.message());
+                    Toast.makeText(getContext(), "Error credenciales.", Toast.LENGTH_LONG).show();
                 }
             }
 
             @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
+            public void onFailure(Call<LoginResponse> call, Throwable t) {
                 Toast.makeText( getContext(), "Fallo conexión API", Toast.LENGTH_LONG).show();
                // Toast.makeText( getContext(), t.getMessage(), Toast.LENGTH_LONG).show();
             }

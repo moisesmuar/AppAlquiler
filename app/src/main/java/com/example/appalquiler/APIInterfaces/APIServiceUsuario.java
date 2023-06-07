@@ -1,5 +1,6 @@
 package com.example.appalquiler.APIInterfaces;
 
+import com.example.appalquiler.Clases.LoginResponse;
 import com.example.appalquiler.Clases.Usuario;
 
 import okhttp3.ResponseBody;
@@ -15,7 +16,7 @@ public interface APIServiceUsuario {
     );
 
     @POST("users/login")
-    Call<ResponseBody> checkUser (
+    Call<LoginResponse> checkUser (
             @Body Usuario user
     );
 

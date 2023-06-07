@@ -27,7 +27,11 @@ public class MainActivity extends AppCompatActivity {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        setSupportActionBar(binding.appBarMain.toolbar);
+        setSupportActionBar( binding.appBarMain.toolbar );
+
+        // Desactivar titulos en toolbar
+        // getSupportActionBar().setDisplayShowTitleEnabled(false);
+
         /*binding.appBarMain.fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -44,6 +48,7 @@ public class MainActivity extends AppCompatActivity {
                 R.id.inmueblesFragment,
                 R.id.alquileresFragment,
                 R.id.clientesFragment,
+                R.id.portalesFragment,
                 R.id.calendarHorizontalFragment,
                 R.id.logOutFragment,
                 R.id.configuracionFragment
@@ -54,7 +59,6 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
 
-
         // Obtener el tema guardado o utilizar el valor predeterminado
         SharedPreferencesManager sharedPreferencesManager = new SharedPreferencesManager(getApplicationContext());
         int savedTheme = sharedPreferencesManager.getSavedTheme();
@@ -64,13 +68,12 @@ public class MainActivity extends AppCompatActivity {
 
         // Establecer el tema guardado o el valor predeterminado
         AppCompatDelegate.setDefaultNightMode( savedTheme );
-
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main, menu);
+        // No inflo el menu de opciones
+        // getMenuInflater().inflate( R.menu.main, menu );
         return true;
     }
 
@@ -80,4 +83,5 @@ public class MainActivity extends AppCompatActivity {
         return NavigationUI.navigateUp(navController, mAppBarConfiguration)
                 || super.onSupportNavigateUp();
     }
+
 }

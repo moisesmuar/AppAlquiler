@@ -25,6 +25,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+
+
     <EditText
         android:id="@+id/editTextFhInicio"
         android:layout_width="match_parent"
@@ -33,6 +35,10 @@
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
         android:hint="Fecha de inicio"
+        android:inputType="date"
+        android:focusable="false"
+        android:clickable="true"
+        android:maxLines="1"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvTituloAlq" />
 
@@ -44,31 +50,13 @@
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
         android:hint="Fecha de fin"
+        android:inputType="date"
+        android:focusable="false"
+        android:clickable="true"
+        android:maxLines="1"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editTextFhInicio" />
 
-    <EditText
-        android:id="@+id/editTextDias"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
-        android:hint="Días"
-        android:inputType="number"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextFhFin" />
-
-    <EditText
-        android:id="@+id/editTextPrecioDia"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:hint="Precio por Día"
-        android:inputType="numberDecimal"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextDias" />
 
     <EditText
         android:id="@+id/editTextNombreInmueble"
@@ -76,9 +64,19 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
-        android:hint="Nombre Inmueble"
+        android:hint="Inmueble"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextPrecioDia" />
+        app:layout_constraintTop_toBottomOf="@+id/editTextFhFin" />
+
+    <ImageButton
+        android:id="@+id/ibtn_inmuebleAlquilerBuscar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="18dp"
+        android:src="@drawable/find_in_page_black_24dp"
+        app:layout_constraintStart_toEndOf="@+id/editTextNombreInmueble"
+        app:layout_constraintTop_toBottomOf="@+id/editTextFhFin" />
 
     <EditText
         android:id="@+id/editTextNombreCliente"
@@ -86,9 +84,39 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
-        android:hint="Nombre Cliente"
+        android:hint="Cliente"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editTextNombreInmueble" />
+
+    <ImageButton
+        android:id="@+id/ibtn_clienteAlquilerBuscar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="16dp"
+        android:src="@drawable/find_in_page_black_24dp"
+        app:layout_constraintStart_toEndOf="@+id/editTextNombreCliente"
+        app:layout_constraintTop_toBottomOf="@+id/ibtn_inmuebleAlquilerBuscar" />
+
+    <EditText
+        android:id="@+id/editTextNombrePortal"
+        android:layout_width="310dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="12dp"
+        android:hint="Portal"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTextNombreCliente" />
+
+    <ImageButton
+        android:id="@+id/ibtn_portalBuscar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="16dp"
+        android:src="@drawable/find_in_page_black_24dp"
+        app:layout_constraintStart_toEndOf="@+id/editTextNombrePortal"
+        app:layout_constraintTop_toBottomOf="@+id/ibtn_clienteAlquilerBuscar" />
 
     <LinearLayout
         android:id="@+id/lyBotones"
@@ -122,24 +150,7 @@
 
     </LinearLayout>
 
-    <ImageButton
-        android:id="@+id/ibtn_inmuebleAlquilerBuscar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="18dp"
-        android:src="@drawable/find_in_page_black_24dp"
-        app:layout_constraintStart_toEndOf="@+id/editTextNombreInmueble"
-        app:layout_constraintTop_toBottomOf="@+id/editTextPrecioDia" />
 
-    <ImageButton
-        android:id="@+id/ibtn_clienteAlquilerBuscar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="19dp"
-        android:layout_marginTop="16dp"
-        android:src="@drawable/find_in_page_black_24dp"
-        app:layout_constraintStart_toEndOf="@+id/editTextNombreCliente"
-        app:layout_constraintTop_toBottomOf="@+id/ibtn_inmuebleAlquilerBuscar" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

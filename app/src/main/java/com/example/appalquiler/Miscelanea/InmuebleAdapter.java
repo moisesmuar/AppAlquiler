@@ -20,12 +20,12 @@ import java.util.List;
 public class InmuebleAdapter extends RecyclerView.Adapter<InmuebleAdapterViewHolder> {
 
     private List<Inmueble> inmuebles;
-    private boolean modoSeleccionActivado;
+    private int modoSeleccion;
     private Alquiler alquilerEdicion;
 
-    public InmuebleAdapter(  List<Inmueble> itemList, boolean modoSeleccionActivado, Alquiler alquiler ) {
+    public InmuebleAdapter(  List<Inmueble> itemList, int modoSeleccion, Alquiler alquiler ) {
         this.inmuebles = itemList;
-        this.modoSeleccionActivado = modoSeleccionActivado;
+        this.modoSeleccion = modoSeleccion;
         this.alquilerEdicion = alquiler;
     }
 
@@ -41,22 +41,40 @@ public class InmuebleAdapter extends RecyclerView.Adapter<InmuebleAdapterViewHol
     public void onBindViewHolder(@NonNull InmuebleAdapterViewHolder holder, int position) {
         Inmueble itemInmueble = inmuebles.get( position );
         holder.render( itemInmueble );
-
-        Log.d("ViewHolder", "modoSeleccionActivado: " + modoSeleccionActivado );
+        Log.d("onBindViewHolder", "modoSeleccion: " + modoSeleccion );
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Bundle bundle = new Bundle();
 
-                if( modoSeleccionActivado ){  //
+               /* if( modoSeleccionActivado ){  //
                     alquilerEdicion.setInmueble( itemInmueble );  // EDITAR Alquiler NEW Inmueble
-                    bundle.putSerializable("alquiler" , (Serializable) alquilerEdicion );
+                    bundle.putSerializable("alquilerNuevo" , (Serializable) alquilerEdicion );
                     Navigation.findNavController(v).navigate( R.id.alquileresFormFragment, bundle );
                 }
                 else{
                     bundle.putSerializable("inmueble" , (Serializable) itemInmueble );
                     Navigation.findNavController(v).navigate( R.id.inmueblesFormFragment, bundle );
+                }
+*/
+                switch (modoSeleccion) {
+                    case 0:   // Editar Inmueble
+                        bundle.putSerializable("inmueble" , (Serializable) itemInmueble );
+                        Navigation.findNavController(v).navigate( R.id.inmueblesFormFragment, bundle );
+                        break;
+                    case 1:  // accion creaccion - key alquilerNuevo
+                        alquilerEdicion.setInmueble( itemInmueble );  // Establecer Inmueble de Alquiler
+                        bundle.putSerializable("alquilerNuevo" , (Serializable) alquilerEdicion );
+                        Navigation.findNavController(v).navigate( R.id.alquileresFormFragment, bundle );
+                        break;
+                    case 2:  // acción edición - key alquilerEdicion
+                        alquilerEdicion.setInmueble( itemInmueble );  // EDITAR Inmueble del Alquiler
+                        bundle.putSerializable("alquilerEdicion" , (Serializable) alquilerEdicion );
+                        Navigation.findNavController(v).navigate( R.id.alquileresFormFragment, bundle );
+                        break;
+                    default:
+                        break;
                 }
             }
         });

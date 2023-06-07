@@ -91,30 +91,19 @@ public class InmueblesFormFragment extends Fragment {
                             Integer.parseInt( binding.editTextNumAseos.getText().toString() ),
                             new Empresa(1, "Empresa TIPO")
                     );
-                    editar( inmueble.getIdInmueble() , inmModificado );
 
+                    editar( inmueble.getIdInmueble() , inmModificado );
                     Navigation.findNavController(view).navigate( R.id.inmueblesFragment );
                 }
                 else{  // Crear NUEVO
-                   /* String nombre = binding.editTextNombre.getText().toString();
-                    String calle = binding.editTextCalle.getText().toString();
-                    String ciudad = binding.editTextCiudad.getText().toString();
-                    Integer numPersonas =  Integer.parseInt( binding.editTextNumPersonas.getText().toString() );
-                    Integer numHabitaciones =  Integer.parseInt( binding.editTextNumHabitaciones.getText().toString() );
-                    Integer numBanos =  Integer.parseInt( binding.editTextNumBanos.getText().toString() );
-                    Integer numAseos =  Integer.parseInt( binding.editTextNumAseos.getText().toString() );*/
-
 
                     String nombre = binding.editTextNombre.getText().toString();
                     String calle = binding.editTextCalle.getText().toString();
                     String ciudad = binding.editTextCiudad.getText().toString();
                     Integer numPersonas, numHabitaciones, numBanos, numAseos;
 
-                    if (nombre.isEmpty() || calle.isEmpty() || ciudad.isEmpty()) {
-                        // Mostrar mensaje de llenar todos los campos
+                    if ( nombre.isEmpty() || calle.isEmpty() || ciudad.isEmpty() ) {
                         Toast.makeText( getContext(), "Por favor, llene todos los campos.", Toast.LENGTH_LONG).show();
-
-                       // System.out.println("Por favor, llene todos los campos.");
                     } else {
                         try {
                             numPersonas = Integer.parseInt(binding.editTextNumPersonas.getText().toString());
@@ -126,6 +115,7 @@ public class InmueblesFormFragment extends Fragment {
                                     nombre, calle, ciudad, numPersonas,
                                     numHabitaciones, numBanos, numAseos,
                                     new Empresa(1, "Empresa TIPO") );
+
                             guardar( nuevoInmueble );
                             Navigation.findNavController(view).navigate( R.id.inmueblesFragment );
 
@@ -167,8 +157,8 @@ public class InmueblesFormFragment extends Fragment {
                 if ( response.isSuccessful() ) {
                     Toast.makeText(getContext(), "¡Guardado!", Toast.LENGTH_LONG).show();
                     limpiarCamposFragment();
-                    Log.e("onResponse", " Registro Guardado ");
 
+                    Log.e("onResponse", " Registro Guardado ");
                 }
             }
             @Override
@@ -189,11 +179,13 @@ public class InmueblesFormFragment extends Fragment {
                 if ( response.isSuccessful() ) {
                     Toast.makeText(getContext(), "¡Editado!", Toast.LENGTH_LONG).show();
                     limpiarCamposFragment();
+
+                    Log.e("onResponse", " Registro Editado ");
                 }
             }
             @Override
             public void onFailure(Call<Inmueble> call, Throwable t) {
-                Log.e("Error con Log.e", "¡¡onFailure Error Editar", t);
+                Log.e("onFailure", "Error Editar", t);
             }
         });
     }
@@ -213,7 +205,7 @@ public class InmueblesFormFragment extends Fragment {
             }
             @Override
             public void onFailure(Call<Void> call, Throwable t) {
-                Log.e("Error con Log.e", "¡¡onFailure Error Eliminar", t);
+                Log.e("onFailure", "Error Eliminar", t);
             }
         });
     }

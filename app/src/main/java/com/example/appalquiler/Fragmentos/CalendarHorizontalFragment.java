@@ -7,6 +7,8 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -28,6 +30,7 @@ import com.example.appalquiler.APIInterfaces.APIServiceAlquiler;
 import com.example.appalquiler.APIInterfaces.APIServiceInmueble;
 import com.example.appalquiler.Clases.Alquiler;
 import com.example.appalquiler.Clases.Inmueble;
+import com.example.appalquiler.Clases.Usuario;
 import com.example.appalquiler.Clases.reciclerViewCalendario;
 import com.example.appalquiler.Miscelanea.CalendarAdapter;
 import com.example.appalquiler.Miscelanea.CalendarHorizontalAdapter;
@@ -67,6 +70,8 @@ public class CalendarHorizontalFragment extends Fragment {
     private List<Inmueble> listaInmuebles = new ArrayList<>(); // lista inmuebles API
     Map<String, List<Alquiler>> alquileresDeInmueblesMap = new HashMap<>();  // almacenar listado alquiler cada inmueble
 
+    SharedPreferencesManager sessionManager;
+
     public CalendarHorizontalFragment() {
         // Required empty public constructor
     }
@@ -77,6 +82,16 @@ public class CalendarHorizontalFragment extends Fragment {
         binding = FragmentCalendarHorizontalBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
 
+
+        sessionManager= new SharedPreferencesManager( requireContext() );
+        if ( !sessionManager.isLogin() ) { // Usuario logeado? no. redirigir a fragmento login
+            Navigation.findNavController(view).navigate( R.id.loginFragment );
+        }
+
+  /*      Toolbar toolbar = view.findViewById(R.id.toolbar);
+        ((AppCompatActivity) requireActivity()).setSupportActionBar(toolbar);
+        ((AppCompatActivity) requireActivity()).getSupportActionBar().setDisplayShowTitleEnabled(false);
+*/
         // Ocultar el teclado virtual
         InputMethodManager imm = (InputMethodManager) requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
@@ -124,6 +139,10 @@ public class CalendarHorizontalFragment extends Fragment {
             @Override
             public void onResponse(Call<List<Inmueble>> call, Response<List<Inmueble>> response) {
                 if ( response.isSuccessful() && response.body() != null ) {
+
+                    /*Usuario user = sessionManager.getSpUser();
+                    Log.d("USER SP", "Nombre usuario: " + user.getUserName() + ", Contraseña: " + user.getPassword() );
+                    Log.d("USER SP", "Nombre empresa: " + user.getEmpresa().getNombre() );*/
 
                     List<Inmueble> listaRespuesta = response.body();;
 

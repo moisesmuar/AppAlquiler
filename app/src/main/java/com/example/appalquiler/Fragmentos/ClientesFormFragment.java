@@ -147,12 +147,13 @@ public class ClientesFormFragment extends Fragment {
                     Toast.makeText(getContext(), "¡Guardado!", Toast.LENGTH_LONG).show();
                     limpiarCamposFragment();
                     Log.e("onResponse", " Registro Guardado ");
-
+                }else {
+                    Log.e("onResponse", "Error en la respuesta: " + response.message());
                 }
             }
             @Override
             public void onFailure(Call<Cliente> call, Throwable t) {
-                Log.e("onFailure", " Error al Guardar ", t);
+                Log.e("onFailure", "Error en la petición: " + t.getMessage());
             }
         });
     }

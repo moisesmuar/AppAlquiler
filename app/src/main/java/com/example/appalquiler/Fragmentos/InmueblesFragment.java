@@ -39,9 +39,9 @@ public class InmueblesFragment extends Fragment {
     private FragmentInmueblesBinding binding;
     private InmuebleAdapter inmuebleAdapter;
     private List<Inmueble> listaInmuebles = new ArrayList<>();
-
-    private boolean modoSeleccionActivado = false;
     private Alquiler alquilerEdicion;
+
+    private int modoSeleccion = 0;
 
     public InmueblesFragment() {
         // Required empty public constructor
@@ -78,16 +78,28 @@ public class InmueblesFragment extends Fragment {
     }
 
     private void initRecyclerView() {
-
+        // Modo selección
+        // 0 default listado
+        // 1 selecionar obj Inmueble - accion creacción de un Alquiler
+        // 2 seleccionar obj Inmueble - acción edición de un Alquiler
         Bundle bundle = getArguments();
-        if ( bundle != null && bundle.containsKey("modoSeleccionActivado") ) {  // key "seleccionCliente" no es nula
-            this.modoSeleccionActivado = bundle.getBoolean("modoSeleccionActivado");
-            this.alquilerEdicion = (Alquiler) bundle.getSerializable("alquiler");
-            Log.d("InmueblesFragment", "modoSeleccionActivado: " + modoSeleccionActivado );
+        if ( bundle != null && bundle.containsKey("modoSeleccion") ) {
+            this.modoSeleccion = bundle.getInt("modoSeleccion");
+            switch (modoSeleccion) {
+                case 1:     // Creacción
+                    this.alquilerEdicion = (Alquiler) bundle.getSerializable("alquilerNuevo");
+                    break;
+                case 2:     // Edición
+                    this.alquilerEdicion = (Alquiler) bundle.getSerializable("alquilerEdicion");
+                    break;
+                default:
+                    break;
+            }
         }
+        Log.d("InmueblesFragment", "modoSeleccion: " + modoSeleccion );
 
         binding.rvInmuebles.setLayoutManager( new LinearLayoutManager( getContext() ) );
-        inmuebleAdapter = new InmuebleAdapter( listaInmuebles, modoSeleccionActivado, alquilerEdicion );
+        inmuebleAdapter = new InmuebleAdapter( listaInmuebles, modoSeleccion, alquilerEdicion );
         binding.rvInmuebles.setAdapter( inmuebleAdapter );
     }
 

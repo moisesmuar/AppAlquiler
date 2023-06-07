@@ -157,10 +157,11 @@ public class CalendarHorizontalAdapter extends RecyclerView.Adapter<CalendarHori
                 //Log.d("RECORRO alquileresList en onBindViewHolder del calendario", "....: " );
                 //Log.d("ALQUILERRRR: ", "obj: " + alquiler.toString() );
 
-                LocalDate fhhoraInicio = LocalDate.parse( alquiler.getFhinicio() );
-                int diaEntrada = fhhoraInicio.getDayOfMonth();
-                LocalDate fhhorafin = LocalDate.parse( alquiler.getFhfin() );
-                int diaSalida = fhhorafin.getDayOfMonth();
+                LocalDate fechaInicio = LocalDate.parse(alquiler.getFhinicio());
+                LocalDate fechaFin = LocalDate.parse(alquiler.getFhfin());
+
+                int diaEntrada = fechaInicio.getDayOfMonth();
+                int diaSalida = fechaFin.getDayOfMonth();
 
                 if( displayDay >= diaEntrada && displayDay <= diaSalida ){
                     Log.d("   DiaHolderActual", String.valueOf(displayDay) +

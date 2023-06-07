@@ -25,6 +25,7 @@ import com.example.appalquiler.SharedPreferencesManager;
 import com.example.appalquiler.databinding.FragmentClientesBinding;
 import com.google.gson.GsonBuilder;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -41,9 +42,10 @@ public class ClientesFragment extends Fragment {
     private FragmentClientesBinding binding;
     private ClienteAdapter clienteAdapter;
     private List<Cliente> listaClientes = new ArrayList<>();
-
-    private boolean modoSeleccionActivado = false;
     private Alquiler alquilerEdicion;
+
+    private int modoSeleccion = 0;  // 0 para listar Clientes
+
 
     public ClientesFragment() {
         // Required empty public constructor
@@ -59,10 +61,6 @@ public class ClientesFragment extends Fragment {
         if ( !sessionManager.isLogin() ) { // Usuario logeado? no. redirigir a fragmento login
             Navigation.findNavController(view).navigate( R.id.loginFragment );
         }
-
-        // genero token
-        String token = UUID.randomUUID().toString();
-        Log.d("    token    ", token );
 
         return view;
     }
@@ -84,17 +82,24 @@ public class ClientesFragment extends Fragment {
     }
 
     private void initRecyclerView() {
-
         Bundle bundle = getArguments();
-        if ( bundle != null && bundle.containsKey("modoSeleccionActivado") ) {  // key "seleccionCliente" no es nula
-            this.modoSeleccionActivado = bundle.getBoolean("modoSeleccionActivado");
-            this.alquilerEdicion = (Alquiler) bundle.getSerializable("alquiler");
-            Log.d("ClientesFragment", "modoSeleccionActivado: " + modoSeleccionActivado );
+        if ( bundle != null && bundle.containsKey("modoSeleccion") ) {
+            this.modoSeleccion = bundle.getInt("modoSeleccion");
+            switch (modoSeleccion) {
+                case 1:     // Creacción
+                    this.alquilerEdicion = (Alquiler) bundle.getSerializable("alquilerNuevo");
+                    break;
+                case 2:     // Edición
+                    this.alquilerEdicion = (Alquiler) bundle.getSerializable("alquilerEdicion");
+                    break;
+                default:
+                    break;
+            }
         }
+        Log.d("ClientesFragment", "modoSeleccion: " + modoSeleccion );
 
         binding.rvClientes.setLayoutManager( new LinearLayoutManager( getContext() ) );
-        clienteAdapter = new ClienteAdapter( listaClientes , modoSeleccionActivado, alquilerEdicion );
-        //clienteAdapter = new ClienteAdapter( listaClientes );
+        clienteAdapter = new ClienteAdapter( listaClientes , modoSeleccion, alquilerEdicion );
         binding.rvClientes.setAdapter( clienteAdapter );
     }
 

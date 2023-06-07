@@ -5,25 +5,31 @@
 
     <group android:checkableBehavior="single">
 
-        <item android:title="Pricipal">
+        <item android:title="Principal">
+
             <menu>
-            <item
-                android:id="@+id/calendarHorizontalFragment"
-                android:icon="@drawable/calendar_today_black_24dp"
-                android:title="Calendario Horizontal" />
-            <item
-                android:id="@+id/alquileresFragment"
-                android:icon="@drawable/list_alt_black_24dp"
-                android:title="Alquileres" />
-            <item
-                android:id="@+id/inmueblesFragment"
-                android:icon="@drawable/home_black_24dp"
-                android:title="Inmuebles" />
-            <item
-                android:id="@+id/clientesFragment"
-                android:icon="@drawable/contacts_black_24dp"
-                android:title="Clientes" />
+                <item
+                    android:id="@+id/calendarHorizontalFragment"
+                    android:icon="@drawable/calendar_today_black_24dp"
+                    android:title="Calendarios" />
+                <item
+                    android:id="@+id/alquileresFragment"
+                    android:icon="@drawable/list_alt_black_24dp"
+                    android:title="Alquileres" />
+                <item
+                    android:id="@+id/inmueblesFragment"
+                    android:icon="@drawable/home_black_24dp"
+                    android:title="Inmuebles" />
+                <item
+                    android:id="@+id/clientesFragment"
+                    android:icon="@drawable/contacts_black_24dp"
+                    android:title="Clientes" />
+                <item
+                    android:id="@+id/portalesFragment"
+                    android:icon="@drawable/web_black_24dp"
+                    android:title="Portales" />
             </menu>
+
         </item>
 
         <item android:title="Otros">

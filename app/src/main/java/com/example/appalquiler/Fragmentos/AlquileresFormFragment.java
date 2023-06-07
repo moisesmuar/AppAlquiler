@@ -1,5 +1,6 @@
 package com.example.appalquiler.Fragmentos;
 
+import android.app.DatePickerDialog;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -7,30 +8,36 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.appalquiler.API.RetrofitClient;
 import com.example.appalquiler.Clases.Alquiler;
 import com.example.appalquiler.APIInterfaces.APIServiceAlquiler;
-import com.example.appalquiler.Clases.Empresa;
-import com.example.appalquiler.Clases.Portal;
+import com.example.appalquiler.Clases.Usuario;
+import com.example.appalquiler.Dialog.DatePickerFragment;
 import com.example.appalquiler.R;
 import com.example.appalquiler.SharedPreferencesManager;
 import com.example.appalquiler.databinding.FragmentAlquileresFormBinding;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import java.io.Serializable;
-import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.util.Date;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 
 public class AlquileresFormFragment extends Fragment {
@@ -38,6 +45,11 @@ public class AlquileresFormFragment extends Fragment {
     private FragmentAlquileresFormBinding binding;
 
     private Alquiler alquiler;
+    SharedPreferencesManager sessionManager;
+    Bundle bundle;
+    private int modoSeleccion;
+    private final SimpleDateFormat sdf_bd = new SimpleDateFormat("yyyy-MM-dd");
+    private final SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 
     public AlquileresFormFragment() {
         // Required empty public constructor
@@ -51,11 +63,10 @@ public class AlquileresFormFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
         binding = FragmentAlquileresFormBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
 
-        SharedPreferencesManager sessionManager = new SharedPreferencesManager( requireContext() );
+        sessionManager = new SharedPreferencesManager( requireContext() );
         if ( !sessionManager.isLogin() ) { // Usuario logeado? no. redirigir a fragmento login
             Navigation.findNavController(view).navigate( R.id.loginFragment );
         }
@@ -67,63 +78,135 @@ public class AlquileresFormFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        Bundle bundle = getArguments();  // Obtener bundle de argumentos del fragment
+        bundle = getArguments();
 
-        if( bundle != null ) {   // Para saber si es edición o creacción.
+        // Edición
+        // key : "alquilerEdicion" proviene de click sobre tarjeta Alquiler
+        // o sobre la sucesion de fragments en una "accion" de edición
+        if( bundle.getSerializable("alquilerEdicion") != null ) {
 
-            // RECOGER OBJ Alquiler de (AlquileresFragment) listado o de listad despues de Editarlo
-            this.alquiler = (Alquiler) bundle.getSerializable("alquiler");
+            this.alquiler = (Alquiler) bundle.getSerializable("alquilerEdicion");
+            modoSeleccion = 2;
 
-            //binding.editTextDias.setText( String.valueOf( alquiler.getDias() )  );
-            //binding.editTextPrecioDia.setText( String.valueOf( alquiler.getPrecioDia() ) );
             binding.editTextFhInicio.setText( alquiler.getFhinicio() );
-            binding.editTextFhFin.setText( alquiler.getFhfin() );
+            binding.editTextFhFin.setText(  alquiler.getFhfin() );
             binding.editTextNombreInmueble.setText( alquiler.getInmueble().getNombre() );
             binding.editTextNombreCliente.setText( alquiler.getCliente().getNombre() );
+            binding.editTextNombrePortal.setText( alquiler.getPortal().getNombre() );
 
-            // APIobtenerAlquiler( alquiler.getIdAlquiler() );
             binding.btnGuardar.setText("Modificar");
             binding.btnEliminar.setText("Eliminar");
         }
-        else {
+
+        // Creacción
+        // key : "alquilerNuevo" proviene de click sobre btMasAlquileres
+        // o sobre la sucesion de fragments en una "accion" de crear nuevo objeto Alquiler
+        if( bundle.getSerializable("alquilerNuevo") != null ) {
+
+            this.alquiler = (Alquiler) bundle.getSerializable("alquilerNuevo");
+            modoSeleccion = 1;
+
+            if( null !=  alquiler.getFhinicio() ){
+                binding.editTextFhInicio.setText( alquiler.getFhinicio() );
+            }
+            if( null !=  alquiler.getFhfin() ){
+                binding.editTextFhFin.setText(  alquiler.getFhfin() );
+            }
+            if( null !=  alquiler.getInmueble() ){
+                binding.editTextNombreInmueble.setText( alquiler.getInmueble().getNombre() );
+            }
+            if( null !=  alquiler.getCliente() ){
+                binding.editTextNombreCliente.setText( alquiler.getCliente().getNombre() );
+            }
+            if( null !=  alquiler.getPortal() ){
+                binding.editTextNombrePortal.setText( alquiler.getPortal().getNombre() );
+            }
+
             binding.btnGuardar.setText("Añadir");
             binding.btnEliminar.setText("Cancelar");
         }
 
-        // GET INMUEBLES y CLIENTES
         binding.btnGuardar.setOnClickListener(new View.OnClickListener() {
-
             @Override
             public void onClick( View view ) {
+                Usuario user = sessionManager.getSpUser();
 
-                if( binding.btnGuardar.getText().equals("Modificar") ){
-                    DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy"); // ???
-                    Alquiler alquilerMod = new Alquiler(
-                        binding.editTextFhInicio.getText().toString(),
-                        binding.editTextFhFin.getText().toString(),
-                        alquiler.getInmueble(),
-                        alquiler.getCliente(),
-                        new Portal(1, "Booking", "#003B95"),
-                        new Empresa(1, "Empresa TIPO")
-                    );
-                    editar( alquiler.getIdAlquiler() , alquilerMod );
+                if (alquiler != null   // Validar datos
+                        && alquiler.getFhinicio() != null
+                        && alquiler.getFhfin() != null
+                        && alquiler.getInmueble() != null
+                        && alquiler.getCliente() != null
+                        && alquiler.getPortal() != null
+                        && user != null
+                        && user.getEmpresa() != null) {
 
-                    Navigation.findNavController(view).navigate( R.id.alquileresFragment );
+                    if( binding.btnGuardar.getText().equals("Modificar") ){
+
+                        Alquiler alquilerMod = new Alquiler(
+                            alquiler.getFhinicio(),
+                            alquiler.getFhfin(),
+                            alquiler.getInmueble(),
+                            alquiler.getCliente(),
+                            alquiler.getPortal(),
+                            user.getEmpresa()
+                        );
+                        editar( alquiler.getIdAlquiler() , alquilerMod );
+                        Navigation.findNavController(view).navigate( R.id.alquileresFragment );
+
+                    } else{   //  Nuevo Alquiler
+
+                            /*// Pasar los datos fechas al formato guardado en la bd
+                            Date fechaInicioDate;
+                            Date fechaFinDate;
+                            try {
+                                fechaInicioDate = sdf.parse( alquiler.getFhinicio() );   // dar formato Date dd/MM/yyyy"
+                                fechaFinDate = sdf.parse( alquiler.getFhfin() );
+                            } catch (ParseException e) {
+                                e.printStackTrace();
+                                return;
+                            }
+                            String formattedFechaInicio = sdf_bd.format(fechaInicioDate); // dar formato "yyyy-MM-dd"
+                            String formattedFechaFin = sdf_bd.format(fechaFinDate);*/
+
+                            Alquiler alquilerNuevo = new Alquiler(
+                                    alquiler.getFhinicio(),
+                                    alquiler.getFhfin(),
+                                    alquiler.getInmueble(),
+                                    alquiler.getCliente(),
+                                    alquiler.getPortal(),
+                                    user.getEmpresa()
+                            );
+
+                            // ver json para envio
+                            Gson gson = new GsonBuilder().create();
+                            String json = gson.toJson(alquilerNuevo);
+                            System.out.println(json);
+
+                         /*   Log.d("alquilerNuevo", "fhini: " + alquilerNuevo.getFhinicio() );
+                            Class<?> tipoDato = alquilerNuevo.getFhinicio().getClass();
+                            String nombreTipoDato = tipoDato.getSimpleName();
+                            Log.d("alquilerNuevo", "tipo dato: " + nombreTipoDato );
+
+                            Log.d("alquilerNuevo", "fhfin: " + alquilerNuevo.getFhfin() );
+
+                            Log.d("alquilerNuevo", "getCliente: " + alquilerNuevo.getCliente().getNombre() );
+                            Log.d("alquilerNuevo", "getCliente empresa nombre: " + alquilerNuevo.getCliente().getEmpresa().getNombre() );
+
+                            Log.d("alquilerNuevo", "getInmueble: " + alquilerNuevo.getInmueble().getNombre() );
+                            Log.d("alquilerNuevo", "getInmueble empresa nombre: " + alquilerNuevo.getInmueble().getEmpresa().getNombre() );
+
+                            Log.d("alquilerNuevo", "getEmpresa: " + alquilerNuevo.getEmpresa().getNombre() );
+                            Log.d("alquilerNuevo", "getPortal: " + alquilerNuevo.getPortal().getNombre() );*/
+
+                            guardar( alquilerNuevo );
+                            Navigation.findNavController(view).navigate( R.id.alquileresFragment );
+                    }
+
+                } else {
+                    // Al menos uno de los valores es nulo
+                    Toast.makeText(getContext(), "¡Rellena todos los campos!", Toast.LENGTH_LONG).show();
                 }
-                else{    // Crear NUEVO
-                    DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");  // ???
-                    Alquiler alquilerNuevo = new Alquiler(
-                        binding.editTextFhInicio.getText().toString(),
-                        binding.editTextFhFin.getText().toString(),
-                        alquiler.getInmueble(),
-                        alquiler.getCliente(),
-                        new Portal(1, "Booking", "#003B95"),
-                        new Empresa(1, "Empresa TIPO")
-                    );
-                    guardar( alquilerNuevo );
 
-                    Navigation.findNavController(view).navigate( R.id.alquileresFragment );
-                }
             }
         });
 
@@ -141,28 +224,123 @@ public class AlquileresFormFragment extends Fragment {
             }
         });
 
-        // IR A LISTADO PARA SELECCION DE CLIENTE y editarlo en obj alquiler
-        binding.ibtnClienteAlquilerBuscar.setOnClickListener(new View.OnClickListener() {
+
+        // EditText Clicables, aparece DatePickerDialog
+        binding.editTextFhInicio.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Bundle bundle = new Bundle();
-                bundle.putBoolean("modoSeleccionActivado", true );
-                bundle.putSerializable("alquiler" , (Serializable) alquiler );
-                Navigation.findNavController(v).navigate( R.id.clientesFragment, bundle );
+                showDatePickerDialog(binding.editTextFhInicio);
+            }
+        });
+        binding.editTextFhFin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showDatePickerDialog(binding.editTextFhFin);
             }
         });
 
-        // IR A LISTADO PARA SELECCION DE INMUEBLE y editarlo en obj alquiler
+
+        // Guardar en objeto Alquiler la fecha que DatePickerDialog, escribe en EditText
+        binding.editTextFhInicio.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                alquiler.setFhinicio( s.toString() );
+            }
+            @Override
+            public void afterTextChanged(Editable s) {
+            }
+        });
+        binding.editTextFhFin.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                alquiler.setFhfin( s.toString() );
+            }
+            @Override
+            public void afterTextChanged(Editable s) {
+            }
+        });
+
+        // Ir a listado para selección de INMUEBLE o CLIENTE o PORTAL   accion crear || accion editar
         binding.ibtnInmuebleAlquilerBuscar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Bundle bundle = new Bundle();
-                bundle.putBoolean("modoSeleccionActivado", true );
-                bundle.putSerializable("alquiler" , (Serializable) alquiler );
+                Bundle bundle =  EstablecerBundleKeys_SegunAccion();
                 Navigation.findNavController(v).navigate( R.id.inmueblesFragment, bundle );
             }
         });
+        binding.ibtnClienteAlquilerBuscar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Bundle bundle =  EstablecerBundleKeys_SegunAccion();
+                Navigation.findNavController(v).navigate( R.id.clientesFragment, bundle );
+            }
+        });
+        binding.ibtnPortalBuscar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Bundle bundle =  EstablecerBundleKeys_SegunAccion();
+                Navigation.findNavController(v).navigate( R.id.portalesFragment, bundle );
+            }
+        });
 
+    }
+
+    /**
+     * Configura un Bundle, para usarlo en el flujo de las acciones que defino.
+     * editar un objeto Alquiler y crear nuevo Alquiler
+     */
+    private Bundle EstablecerBundleKeys_SegunAccion(){
+        Bundle bundle = new Bundle();
+        if( modoSeleccion == 2 ){
+            // Entrada clic tarjeta alquiler
+            // Si lo es por la edición de uno existente.
+            bundle.putInt("modoSeleccion", 2 );
+            bundle.putSerializable("alquilerEdicion" , (Serializable) alquiler );
+        }
+        if( modoSeleccion == 1 ){
+            // Entrada a este fragment por boton +
+            // Si es un recorrido de fragment: inmuebles, clientes, portales..por un alquiler nuevo
+            bundle.putInt("modoSeleccion", 1 );
+            bundle.putSerializable("alquilerNuevo" , (Serializable) alquiler );
+        }
+        return bundle;
+    }
+
+    /**
+     *  Reestablecer instancia de Alquiler usado en una edición o creacción
+     *  borra keys y su contenido.
+     */
+    private void vaciarAlquilerYkey() {
+        alquiler = new Alquiler();
+        if ( bundle.containsKey("alquilerNuevo" )) {
+            bundle.remove("alquilerNuevo");
+        }
+        if ( bundle.containsKey("alquilerEdicion" )) {
+            bundle.remove("alquilerEdicion");
+        }
+    }
+
+    private void showDatePickerDialog(final EditText editText) {
+        DatePickerFragment newFragment = DatePickerFragment.newInstance(new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker datePicker, int year, int month, int day) {
+                // final String selectedDate = twoDigits(day) + "/" + twoDigits(month+1) + "/" + year;
+                final String selectedDate = year +"-"+ dosDigitos(month+1) +"-"+ dosDigitos(day);
+
+                editText.setText( selectedDate );   // String ejemplo 08/06/2023
+            }
+        });
+
+        newFragment.show(getActivity().getSupportFragmentManager(), "datePicker");
+    }
+    private String dosDigitos(int n) {
+        return (n<=9) ? ("0"+n) : String.valueOf(n);
     }
 
     public void guardar( Alquiler alquiler ) {
@@ -176,11 +354,16 @@ public class AlquileresFormFragment extends Fragment {
                 if ( response.isSuccessful() ) {
                     Toast.makeText(getContext(), "¡Guardado!", Toast.LENGTH_LONG).show();
                     limpiarCamposFragment();
+                    vaciarAlquilerYkey();
+
+                    Log.d("onResponse", "Respuesta exitosa: ");
+                }else {
+                    Log.e("onResponse", "Error en la respuesta: " + response.message());
                 }
             }
             @Override
             public void onFailure(Call<Alquiler> call, Throwable t) {
-                Log.e("Error con Log.e", "¡¡onFailure Error al Guardar", t);
+                Log.e("onFailure", "Error en la petición: " + t.getMessage());
             }
         });
     }
@@ -196,6 +379,12 @@ public class AlquileresFormFragment extends Fragment {
                 if ( response.isSuccessful() ) {
                     Toast.makeText(getContext(), "¡Editado!", Toast.LENGTH_LONG).show();
                     limpiarCamposFragment();
+                    vaciarAlquilerYkey();
+
+                    Log.d("onResponse", "Respuesta exitosa: " );
+                }
+                else {
+                    Log.e("onResponse", "Error en la respuesta: " + response.message());
                 }
             }
             @Override
@@ -216,6 +405,10 @@ public class AlquileresFormFragment extends Fragment {
                 if ( response.isSuccessful() ) {
                     Toast.makeText(getContext(), "¡Eliminado!", Toast.LENGTH_LONG).show();
                     limpiarCamposFragment();
+
+                    Log.d("onResponse", "Respuesta exitosa: ");
+                }else {
+                    Log.e("onResponse", "Error en la respuesta: " + response.message());
                 }
             }
             @Override
@@ -226,45 +419,12 @@ public class AlquileresFormFragment extends Fragment {
     }
 
     public void limpiarCamposFragment( ) {
-        binding.editTextDias.setText("");
-        binding.editTextPrecioDia.setText("");
         binding.editTextFhInicio.setText("");
         binding.editTextFhFin.setText("");
         binding.editTextNombreInmueble.setText("");
         binding.editTextNombreCliente.setText("");
+        binding.editTextNombrePortal.setText("");
     }
 
-    public void APIobtenerAlquiler( Integer idAlquiler ) {
-        RetrofitClient retrofitClient = RetrofitClient.getInstance();
-        APIServiceAlquiler apiService = retrofitClient.getRetrofit().create( APIServiceAlquiler.class );
-
-        Call<Alquiler> apiCall = apiService.getAlquiler( idAlquiler );
-        apiCall.enqueue( new Callback<Alquiler>() {      // LAMADA ASINC call.enqueue
-            @Override
-            public void onResponse(Call<Alquiler> call, Response<Alquiler> response) {
-                if ( response.isSuccessful() && response.body() != null ) {
-
-                    Alquiler a = response.body();
-
-                    // binding.editTextDias.setText( String.valueOf( a.getDias() )  );
-                    // binding.editTextPrecioDia.setText( String.valueOf( a.getPrecioDia() ) );
-                    binding.editTextFhInicio.setText( a.getFhinicio() );
-                    binding.editTextFhFin.setText( a.getFhfin() );
-
-                    binding.editTextNombreInmueble.setText( a.getInmueble().getNombre() );
-                    binding.editTextNombreCliente.setText( a.getCliente().getNombre() );
-
-                    Log.d("RESPONSE", "Código: " + response.code() + " Respuesta: " + a.toString() );
-
-                } else {
-                    Log.d("ERROR", "Código: " + response.code() + " Mensaje: " + response.message());
-                }
-            }
-            @Override
-            public void onFailure(Call<Alquiler> call, Throwable t) {
-                Log.e("Error con Log.e", "¡¡onFailure Error al obtener alquiler", t);
-            }
-        });
-    }
 
 }

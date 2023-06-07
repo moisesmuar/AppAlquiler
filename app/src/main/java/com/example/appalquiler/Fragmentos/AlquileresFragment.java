@@ -22,8 +22,10 @@ import com.example.appalquiler.Miscelanea.AlquilerAdapter;
 import com.example.appalquiler.R;
 import com.example.appalquiler.SharedPreferencesManager;
 import com.example.appalquiler.databinding.FragmentAlquileresBinding;
+import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,6 +38,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class AlquileresFragment extends Fragment {
 
     private FragmentAlquileresBinding binding;
+    SharedPreferencesManager sessionManager;
     private AlquilerAdapter alquilerAdapter;
     private List<Alquiler> listaAlquileres = new ArrayList<>();
 
@@ -49,8 +52,8 @@ public class AlquileresFragment extends Fragment {
         binding = FragmentAlquileresBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
 
-        SharedPreferencesManager sessionManager = new SharedPreferencesManager( requireContext() );
-        if ( !sessionManager.isLogin() ) { // Usuario logeado? no. redirigir a fragmento login
+        sessionManager = new SharedPreferencesManager( requireContext() );
+        if ( !sessionManager.isLogin() ) {
             Navigation.findNavController(view).navigate( R.id.loginFragment );
         }
 
@@ -63,12 +66,15 @@ public class AlquileresFragment extends Fragment {
 
         initRecyclerView();
         obtenerAlquileres();
+
         binding.btMasAlquileres.setOnClickListener( new View.OnClickListener() {  // IR A FORM Alquileres
             @Override
             public void onClick(View view) {
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("alquilerNuevo" , (Serializable) new Alquiler() );
 
                 NavController navController = Navigation.findNavController( view );
-                navController.navigate( R.id.alquileresFormFragment );
+                navController.navigate( R.id.alquileresFormFragment, bundle  );
 
             }
         });
@@ -90,13 +96,21 @@ public class AlquileresFragment extends Fragment {
         apiCall.enqueue( new Callback<List<Alquiler>>() {      // LAMADA ASINC call.enqueue
             @Override
             public void onResponse(Call<List<Alquiler>> call, Response<List<Alquiler>> response) {
+
+                // Convertir la lista de Alquiler a JSON
+                Gson gson = new Gson();
+                String jsonResponse = gson.toJson( response.body() );
+
+                // Imprimir el JSON de respuesta en la consola
+                Log.d("Respuesta JSON Listado alquileres", jsonResponse);
+
                 if ( response.isSuccessful() && response.body() != null ) {
 
                     List<Alquiler> listaRespuesta = response.body();
-                    Log.d("RESPONSE", "Código: " + response.code() + " Respuesta: " + listaRespuesta.toString());
+                    /*Log.d("RESPONSE", "Código: " + response.code() + " Respuesta: " + listaRespuesta.toString());
                     for (Alquiler alquiler : listaRespuesta) {
                         Log.d("RESPONSE", alquiler.toString());
-                    }
+                    }*/
                     listaAlquileres.clear();
                     listaAlquileres.addAll( listaRespuesta );
                     alquilerAdapter.notifyDataSetChanged();

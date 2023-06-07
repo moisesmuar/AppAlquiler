@@ -24,146 +24,142 @@
             app:layout_constraintTop_toTopOf="parent"
             card_view:layout_constraintHorizontal_bias="0.0">
 
-            <TextView
-                android:id="@+id/textView8"
+            <ImageView
+                android:id="@+id/ivFhIni"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                card_view:layout_constraintStart_toStartOf="parent"
+                card_view:layout_constraintTop_toTopOf="parent"
+                card_view:srcCompat="@drawable/login_black_24dp" />
+
+           <!-- <TextView
+                android:id="@+id/textView8"
+                android:layout_width="wrap_content"
+                android:layout_height="24dp"
                 android:layout_marginTop="2dp"
                 android:text="Entrada: "
                 card_view:layout_constraintStart_toStartOf="parent"
-                card_view:layout_constraintTop_toTopOf="parent" />
+                card_view:layout_constraintTop_toTopOf="parent" />-->
+
 
             <TextView
                 android:id="@+id/tvFhInicio"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="2dp"
-                android:text="fhInicio..."
+                android:layout_height="24dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="4dp"
+                android:text="fh Entrada..."
                 app:layout_constraintTop_toTopOf="parent"
-                card_view:layout_constraintStart_toEndOf="@+id/textView8" />
+                card_view:layout_constraintStart_toEndOf="@+id/ivFhIni" />
 
-            <TextView
+            <!-- <TextView
                 android:id="@+id/tvfhc"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
+                android:layout_height="24dp"
+                android:layout_marginTop="4dp"
                 android:text="Salida:"
                 card_view:layout_constraintStart_toStartOf="parent"
-                card_view:layout_constraintTop_toBottomOf="@+id/textView8" />
+                card_view:layout_constraintTop_toBottomOf="@+id/ivFhIni" />-->
 
+            <ImageView
+                android:id="@+id/ivFhFin"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+
+                android:layout_marginTop="4dp"
+                android:layout_marginEnd="128dp"
+                card_view:layout_constraintEnd_toEndOf="parent"
+                card_view:layout_constraintTop_toTopOf="parent"
+                card_view:srcCompat="@drawable/logout_black_24dp" />
 
             <TextView
                 android:id="@+id/tvFhFin"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="36dp"
-                android:layout_marginTop="5dp"
-                android:text="fhFin..."
-                card_view:layout_constraintStart_toEndOf="@+id/tvfhc"
-                card_view:layout_constraintTop_toBottomOf="@+id/tvFhInicio" />
+                android:layout_height="24dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginStart="10dp"
+                android:text="fh Salida"
+                card_view:layout_constraintStart_toEndOf="@+id/ivFhFin"
+                card_view:layout_constraintTop_toTopOf="parent" />
 
-            <TextView
+            <ImageView
+                android:id="@+id/ivInmueble"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                card_view:srcCompat="@drawable/home_black_24dp"
+                card_view:layout_constraintStart_toStartOf="parent"
+                card_view:layout_constraintTop_toBottomOf="@+id/ivFhIni"/>
+
+          <!--  <TextView
                 android:id="@+id/textView9"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:text="Inmueble: "
                 card_view:layout_constraintStart_toStartOf="parent"
-                card_view:layout_constraintTop_toBottomOf="@+id/tvfhc" />
+                card_view:layout_constraintTop_toBottomOf="@+id/tvfhc" />-->
+
+            <!--    <TextView
+                android:id="@+id/tvnombrec"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="52dp"
+                android:layout_marginTop="5dp"
+                android:text="Nombre:"
+                card_view:layout_constraintStart_toStartOf="parent"
+                card_view:layout_constraintTop_toBottomOf="@+id/ivInmueble" />-->
 
             <TextView
                 android:id="@+id/tvnombreInmueble"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="12dp"
-                android:layout_marginTop="5dp"
-                android:text="nombre"
-                card_view:layout_constraintStart_toEndOf="@+id/textView9"
-                card_view:layout_constraintTop_toBottomOf="@+id/tvFhFin" />
+                android:layout_height="24dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="4dp"
+                android:text="nombre Inmueble"
+                card_view:layout_constraintStart_toEndOf="@+id/ivInmueble"
+                card_view:layout_constraintTop_toBottomOf="@+id/tvFhInicio" />
 
-            <TextView
-                android:id="@+id/tvnombrec"
+            <ImageView
+                android:id="@+id/ivCliente"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:text="Nombre:"
+                android:layout_marginTop="4dp"
                 card_view:layout_constraintStart_toStartOf="parent"
-                card_view:layout_constraintTop_toBottomOf="@+id/textView9" />
+                card_view:layout_constraintTop_toBottomOf="@+id/ivInmueble"
+                card_view:srcCompat="@drawable/person_black_24dp" />
 
             <TextView
                 android:id="@+id/tvnombreCliente"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="24dp"
-                android:layout_marginTop="5dp"
-                android:text="nombre"
-                card_view:layout_constraintStart_toEndOf="@+id/tvnombrec"
+                android:layout_height="24dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="4dp"
+                android:text="nombre Cliente"
+                card_view:layout_constraintStart_toEndOf="@+id/ivCliente"
                 card_view:layout_constraintTop_toBottomOf="@+id/tvnombreInmueble" />
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/idConstrDosAlq"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/idConstrUnoAlq"
-            >
-
-
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/idConstrTresAlq"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/idConstrDosAlq"
-            >
-
-            <TextView
-                android:id="@+id/textView10"
+            <ImageView
+                android:id="@+id/ivPortal"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:text="Dias: "
-                card_view:layout_constraintStart_toStartOf="parent"
-                card_view:layout_constraintTop_toTopOf="parent" />
+                android:layout_marginTop="4dp"
+                android:layout_marginEnd="128dp"
+                card_view:layout_constraintEnd_toEndOf="parent"
+                card_view:layout_constraintTop_toBottomOf="@+id/ivFhFin"
+                card_view:srcCompat="@drawable/web_black_24dp" />
 
             <TextView
-                android:id="@+id/tvDias"
+                android:id="@+id/tvNombrePortal"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="44dp"
-                android:layout_marginTop="5dp"
-                android:text="dias"
-                app:layout_constraintTop_toTopOf="parent"
-                card_view:layout_constraintStart_toEndOf="@+id/textView10" />
-
-            <TextView
-                android:id="@+id/tvPr"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:layout_marginEnd="132dp"
-                android:text="Precio dia:"
-                app:layout_constraintTop_toTopOf="parent"
-                card_view:layout_constraintEnd_toEndOf="parent" />
-
-            <TextView
-                android:id="@+id/tvPrecioDia"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="24dp"
                 android:layout_marginStart="10dp"
-                android:layout_marginTop="5dp"
-                android:text="precioDia"
-                card_view:layout_constraintStart_toEndOf="@+id/tvPr"
-                card_view:layout_constraintTop_toTopOf="parent" />
-
+                android:layout_marginTop="4dp"
+                android:text="nombre Portal"
+                card_view:layout_constraintStart_toEndOf="@+id/ivPortal"
+                card_view:layout_constraintTop_toBottomOf="@+id/tvFhFin" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

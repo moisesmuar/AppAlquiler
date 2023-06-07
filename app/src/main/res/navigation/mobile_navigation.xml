@@ -8,62 +8,67 @@
     <fragment
         android:id="@+id/calendarDetalleFagment"
         android:name="com.example.appalquiler.Fragmentos.CalendarDetalleFragment"
-        android:label="fragment_calendar_detalle"
+        android:label="Calendario"
         tools:layout="@layout/fragment_calendar_detalle" />
     <fragment
         android:id="@+id/alquileresFragment"
         android:name="com.example.appalquiler.Fragmentos.AlquileresFragment"
-        android:label="fragment_alquileres"
+        android:label="Alquileres"
         tools:layout="@layout/fragment_alquileres" />
     <fragment
         android:id="@+id/clientesFragment"
         android:name="com.example.appalquiler.Fragmentos.ClientesFragment"
-        android:label="fragment_clientes"
+        android:label="Clientes"
         tools:layout="@layout/fragment_clientes" />
     <fragment
         android:id="@+id/inmueblesFragment"
         android:name="com.example.appalquiler.Fragmentos.InmueblesFragment"
-        android:label="fragment_inmuebles"
+        android:label="Inmuebles"
         tools:layout="@layout/fragment_inmuebles" />
     <fragment
         android:id="@+id/alquileresFormFragment"
         android:name="com.example.appalquiler.Fragmentos.AlquileresFormFragment"
-        android:label="fragment_alquileres_form"
+        android:label="Formulario Alquiler"
         tools:layout="@layout/fragment_alquileres_form" />
     <fragment
         android:id="@+id/clientesFormFragment"
         android:name="com.example.appalquiler.Fragmentos.ClientesFormFragment"
-        android:label="fragment_clientes_form"
+        android:label="Formulario Cliente"
         tools:layout="@layout/fragment_clientes_form" />
     <fragment
         android:id="@+id/inmueblesFormFragment"
         android:name="com.example.appalquiler.Fragmentos.InmueblesFormFragment"
-        android:label="fragment_inmuebles_form"
+        android:label="Formulario Inmueble"
         tools:layout="@layout/fragment_inmuebles_form" />
     <fragment
         android:id="@+id/loginFragment"
         android:name="com.example.appalquiler.Fragmentos.LoginFragment"
-        android:label="LoginFragment"
+        android:label="Login"
         tools:layout="@layout/fragment_login" />
     <fragment
         android:id="@+id/registroFragment"
         android:name="com.example.appalquiler.Fragmentos.RegistroFragment"
-        android:label="RegistroFragment"
+        android:label="Registro"
         tools:layout="@layout/fragment_registro" />
     <fragment
         android:id="@+id/calendarHorizontalFragment"
         android:name="com.example.appalquiler.Fragmentos.CalendarHorizontalFragment"
-        android:label="CalendarHorizontalFragment"
+        android:label="Calendarios"
         tools:layout="@layout/fragment_calendar_horizontal"/>
     <fragment
         android:id="@+id/logOutFragment"
         android:name="com.example.appalquiler.Fragmentos.LogOutFragment"
-        android:label="fragment_log_out"
+        android:label="Logout"
         tools:layout="@layout/fragment_log_out" />
     <fragment
         android:id="@+id/configuracionFragment"
         android:name="com.example.appalquiler.Fragmentos.ConfiguracionFragment"
-        android:label="fragment_configuracion"
+        android:label="Configuración"
         tools:layout="@layout/fragment_configuracion" />
+    <fragment
+        android:id="@+id/portalesFragment"
+        android:name="com.example.appalquiler.Fragmentos.PortalesFragment"
+        android:label="Portales"
+        tools:layout="@layout/fragment_portales" />
 
 </navigation>
