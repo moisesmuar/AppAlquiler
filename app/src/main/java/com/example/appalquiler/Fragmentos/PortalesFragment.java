@@ -77,6 +77,7 @@ public class PortalesFragment extends Fragment {
         searchView = view.findViewById(R.id.idSearchViewPortales);
         searchView.clearFocus();
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            private String previousQuery = "";
             @Override
             public boolean onQueryTextSubmit(String query) {
                 return false;
@@ -84,7 +85,12 @@ public class PortalesFragment extends Fragment {
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                filtrarLista( newText );
+                if ( newText.equals(previousQuery) ) {
+                    // El texto de búsqueda no ha cambiado, no ejecutar la lógica búsqueda
+                    return false;
+                }
+                filtrarLista(newText);
+                previousQuery = newText;
                 return false;
             }
         });

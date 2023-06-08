@@ -22,6 +22,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -59,7 +60,9 @@ public class CalendarHorizontalFragment extends Fragment {
     private FragmentCalendarHorizontalBinding binding;
 
     private List<reciclerViewCalendario> listaRvCalendarios = new ArrayList<>();
+
     private LinearLayout linearParaAnadirRecicler;
+    // private ScrollView scrollViewContainer;
 
     private Calendar calReferenciaMes = Calendar.getInstance(new Locale("es", "ES"));  // fecha actual
     private SimpleDateFormat sdf = new SimpleDateFormat("MMMM yyyy", new Locale("es", "ES"));
@@ -84,19 +87,18 @@ public class CalendarHorizontalFragment extends Fragment {
 
 
         sessionManager= new SharedPreferencesManager( requireContext() );
-        if ( !sessionManager.isLogin() ) { // Usuario logeado? no. redirigir a fragmento login
+        if ( !sessionManager.isLogin() ) {
             Navigation.findNavController(view).navigate( R.id.loginFragment );
         }
 
-  /*      Toolbar toolbar = view.findViewById(R.id.toolbar);
-        ((AppCompatActivity) requireActivity()).setSupportActionBar(toolbar);
-        ((AppCompatActivity) requireActivity()).getSupportActionBar().setDisplayShowTitleEnabled(false);
-*/
         // Ocultar el teclado virtual
         InputMethodManager imm = (InputMethodManager) requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
 
-        linearParaAnadirRecicler = binding.idLinearCalenHorizont;
+
+        // scrollViewContainer = binding.idScrollViewContaniner
+        // linearParaAnadirRecicler = binding.idLinearCalenHorizont;
+        linearParaAnadirRecicler = binding.idLinearScrolling;
 
         obtenerInmuebles();
 
