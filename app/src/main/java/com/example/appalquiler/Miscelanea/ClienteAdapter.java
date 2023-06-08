@@ -31,6 +31,11 @@ public class ClienteAdapter extends RecyclerView.Adapter<ClienteAdapterViewHolde
         this.alquilerEdicion = alquiler;
     }
 
+    public void setFilteredList(List<Cliente> listaFiltrada){
+        this.clientes = listaFiltrada;
+        notifyDataSetChanged();
+    }
+
     @NonNull
     @Override
     public ClienteAdapterViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {

@@ -1,5 +1,6 @@
 package com.example.appalquiler.Fragmentos;
 
+import android.content.ClipData;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -13,6 +14,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.SearchView;
 import android.widget.Toast;
 
 import com.example.appalquiler.API.RetrofitClient;
@@ -43,9 +45,9 @@ public class ClientesFragment extends Fragment {
     private ClienteAdapter clienteAdapter;
     private List<Cliente> listaClientes = new ArrayList<>();
     private Alquiler alquilerEdicion;
+    private SearchView searchView;
 
-    private int modoSeleccion = 0;  // 0 para listar Clientes
-
+    private int modoSeleccion = 0;  // 0 listar Clientes
 
     public ClientesFragment() {
         // Required empty public constructor
@@ -71,6 +73,22 @@ public class ClientesFragment extends Fragment {
 
         initRecyclerView();
         obtenerClientes();
+
+        searchView = view.findViewById(R.id.idSearchViewClientes);
+        searchView.clearFocus();
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                filtrarLista( newText );
+                return false;
+            }
+        });
+
         binding.btMasClientes.setOnClickListener(new View.OnClickListener() {  // IR A FORM CLIENTES
             @Override
             public void onClick(View view) {
@@ -78,7 +96,25 @@ public class ClientesFragment extends Fragment {
                 navController.navigate( R.id.clientesFormFragment );
             }
         });
+    }
 
+    /**
+     * Filtro por nombre  Cliente
+     * @param texto
+     */
+    private void filtrarLista( String texto ) {
+        List<Cliente> listFiltrada = new ArrayList<>();
+        for( Cliente obj : listaClientes ){
+            if( obj.getNombre().toLowerCase().contains( texto.toLowerCase() )){
+                listFiltrada.add( obj );
+            }
+        }
+
+        if( listFiltrada.isEmpty() ){
+            Toast.makeText( getContext() , "No existen registros con ese Nombre", Toast.LENGTH_SHORT ).show();
+        }else{
+            clienteAdapter.setFilteredList( listFiltrada );
+        }
     }
 
     private void initRecyclerView() {

@@ -8,18 +8,18 @@
         android:startColor="#4DB6AC"
         android:type="linear" />-->
 
-   <!-- <gradient
-        android:angle="135"
-        android:startColor="#2B5AAB"
-        android:centerColor="#3E82F7"
-        android:endColor="#7DA3E3"
-        android:type="linear" />-->
-
     <gradient
+        android:angle="135"
+        android:startColor="?attr/colorPrimaryInverse"
+        android:centerColor="@color/seed"
+        android:endColor="?attr/colorPrimary"
+        android:type="linear" />
+
+   <!-- <gradient
         android:angle="135"
         android:startColor="#7DA3E3"
         android:centerColor="#3E82F7"
         android:endColor="#2B5AAB"
-        android:type="linear" />
+        android:type="linear" />-->
 
 </shape>

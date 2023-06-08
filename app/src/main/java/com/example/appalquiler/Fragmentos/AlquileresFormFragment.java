@@ -43,7 +43,6 @@ import retrofit2.Response;
 public class AlquileresFormFragment extends Fragment {
 
     private FragmentAlquileresFormBinding binding;
-
     private Alquiler alquiler;
     SharedPreferencesManager sessionManager;
     Bundle bundle;

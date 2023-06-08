@@ -36,7 +36,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class RegistroFragment extends Fragment {
 
     private FragmentRegistroBinding binding;
-    private EditText etUsername, etPassword;
+    private EditText etUsername, etPassword, etNifEmpresa;
 
     public RegistroFragment() {
         // Required empty public constructor
@@ -57,6 +57,7 @@ public class RegistroFragment extends Fragment {
 
         etUsername = binding.etRUserName;
         etPassword = binding.etRPassword;
+        etNifEmpresa = binding.etRnif;
 
         binding.btnRegister.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -76,21 +77,26 @@ public class RegistroFragment extends Fragment {
     private void registerUser() {
         String userName = etUsername.getText().toString().trim();
         String password = etPassword.getText().toString().trim();
+        String nif = etNifEmpresa.getText().toString().trim();
 
-        if (userName.isEmpty()) {
+        if ( userName.isEmpty() ) {
             etUsername.setError("Usuario requerido");
             etUsername.requestFocus();
             return;
-        } else if (password.isEmpty()) {
+        } else if ( password.isEmpty() ) {
             etPassword.setError("Contraseña requerida");
             etPassword.requestFocus();
+            return;
+        }else if ( nif.isEmpty() ) {
+            etNifEmpresa.setError("Empresa requerida");
+            etNifEmpresa.requestFocus();
             return;
         }
 
         RetrofitClient retrofitClient = RetrofitClient.getInstance();
         APIServiceUsuario apiService = retrofitClient.getRetrofit().create( APIServiceUsuario.class );
 
-        Call<ResponseBody> call = apiService.createUser( new Usuario(userName, password));
+        Call<ResponseBody> call = apiService.createUser( new Usuario( userName, password, nif ));
         call.enqueue( new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
@@ -104,21 +110,23 @@ public class RegistroFragment extends Fragment {
                         e.printStackTrace();
                     }
                     if ( s.equals("SUCCESS") ) {
-                        Toast.makeText( getContext(), "Registrado exitosamente. Por favor Iniciar sesión", Toast.LENGTH_LONG).show();
+                        Toast.makeText( getContext(), "Registrado exitosamente./n Por favor Iniciar sesión", Toast.LENGTH_LONG).show();
                         Navigation.findNavController( requireView() ).navigate( R.id.loginFragment );
-                    } else {
-                        Toast.makeText( getContext(), "El usuario ya existe!", Toast.LENGTH_LONG).show();
+                    } else if( s.equals("USER_ALREADY_EXISTS") ){
+                        Toast.makeText( getContext(), "Usuario ya existe!", Toast.LENGTH_LONG).show();
+                    } else if( s.equals("UNAUTHORIZED_COMPANY") ){
+                        Toast.makeText( getContext(), "Empresa no autorizada!", Toast.LENGTH_LONG).show();
                     }
+
                 }
                 else {    // Manejar el caso de respuesta nula o no exitosa
-                    Log.d("ERROR", "Código: " + response.code() + "respuesta nula o no exitosa RegistroFragment- Mensaje: " + response.message());
+                    Log.d("onResponse", "Código: " + response.code() + "Error respuesta nula o no exitosa RegistroFragment- Mensaje: " + response.message());
                 }
             }
 
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
                 Toast.makeText( getContext(), "Fallo conexión API", Toast.LENGTH_LONG).show();
-               // Toast.makeText( getContext(), t.getMessage(), Toast.LENGTH_LONG).show();
             }
         });
 

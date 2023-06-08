@@ -13,11 +13,13 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.SearchView;
 import android.widget.Toast;
 
 import com.example.appalquiler.API.RetrofitClient;
 import com.example.appalquiler.Clases.Alquiler;
 import com.example.appalquiler.APIInterfaces.APIServiceAlquiler;
+import com.example.appalquiler.Clases.Cliente;
 import com.example.appalquiler.Miscelanea.AlquilerAdapter;
 import com.example.appalquiler.R;
 import com.example.appalquiler.SharedPreferencesManager;
@@ -41,6 +43,7 @@ public class AlquileresFragment extends Fragment {
     SharedPreferencesManager sessionManager;
     private AlquilerAdapter alquilerAdapter;
     private List<Alquiler> listaAlquileres = new ArrayList<>();
+    private SearchView searchView;
 
     public AlquileresFragment() {
         // Required empty public constructor
@@ -67,6 +70,21 @@ public class AlquileresFragment extends Fragment {
         initRecyclerView();
         obtenerAlquileres();
 
+        searchView = view.findViewById(R.id.idSearchViewAlquileres);
+        searchView.clearFocus();
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                filtrarLista( newText );
+                return false;
+            }
+        });
+
         binding.btMasAlquileres.setOnClickListener( new View.OnClickListener() {  // IR A FORM Alquileres
             @Override
             public void onClick(View view) {
@@ -78,6 +96,31 @@ public class AlquileresFragment extends Fragment {
 
             }
         });
+    }
+
+    /**
+     * Filtro por nombre Portal
+     * @param texto
+     */
+    private void filtrarLista( String texto ) {
+        List<Alquiler> listFiltrada = new ArrayList<>();
+        for( Alquiler obj : listaAlquileres ){
+            /*if( obj.getCliente().getNombre().toLowerCase().contains( texto.toLowerCase() )){
+                listFiltrada.add( obj );
+            }
+            if( obj.getInmueble().getNombre().toLowerCase().contains( texto.toLowerCase() )){
+                listFiltrada.add( obj );
+            }*/
+            if( obj.getPortal().getNombre().toLowerCase().contains( texto.toLowerCase() )){
+                listFiltrada.add( obj );
+            }
+        }
+
+        if( listFiltrada.isEmpty() ){
+            Toast.makeText( getContext() , "No hay registros con ese Nombre Portal", Toast.LENGTH_SHORT ).show();
+        }else{
+            alquilerAdapter.setFilteredList( listFiltrada );
+        }
     }
 
     private void initRecyclerView() {

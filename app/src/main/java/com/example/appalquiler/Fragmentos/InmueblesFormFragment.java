@@ -18,6 +18,7 @@ import com.example.appalquiler.APIInterfaces.APIServiceAlquiler;
 import com.example.appalquiler.Clases.Empresa;
 import com.example.appalquiler.Clases.Inmueble;
 import com.example.appalquiler.APIInterfaces.APIServiceInmueble;
+import com.example.appalquiler.Clases.Usuario;
 import com.example.appalquiler.R;
 import com.example.appalquiler.SharedPreferencesManager;
 import com.example.appalquiler.databinding.FragmentInmueblesFormBinding;
@@ -33,6 +34,8 @@ public class InmueblesFormFragment extends Fragment {
 
     private FragmentInmueblesFormBinding binding;
     private Inmueble inmueble;
+    SharedPreferencesManager sessionManager;
+
 
     public InmueblesFormFragment() {
         // Required empty public constructor
@@ -50,7 +53,7 @@ public class InmueblesFormFragment extends Fragment {
         binding = FragmentInmueblesFormBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
 
-        SharedPreferencesManager sessionManager = new SharedPreferencesManager( requireContext() );
+        sessionManager = new SharedPreferencesManager( requireContext() );
         if ( !sessionManager.isLogin() ) { // Usuario logeado? no. redirigir a fragmento login
             Navigation.findNavController(view).navigate( R.id.loginFragment );
         }
@@ -79,6 +82,7 @@ public class InmueblesFormFragment extends Fragment {
         binding.btnGuardar.setOnClickListener(new View.OnClickListener() {  // POST Inmueble API
             @Override
             public void onClick(View view) {
+                Usuario user = sessionManager.getSpUser();
 
                 if( binding.btnGuardar.getText().equals("Modificar") ){
                     Inmueble inmModificado = new Inmueble(
@@ -89,7 +93,7 @@ public class InmueblesFormFragment extends Fragment {
                             Integer.parseInt( binding.editTextNumHabitaciones.getText().toString() ),
                             Integer.parseInt( binding.editTextNumBanos.getText().toString() ),
                             Integer.parseInt( binding.editTextNumAseos.getText().toString() ),
-                            new Empresa(1, "Empresa TIPO")
+                            user.getEmpresa()
                     );
 
                     editar( inmueble.getIdInmueble() , inmModificado );
@@ -114,7 +118,7 @@ public class InmueblesFormFragment extends Fragment {
                             Inmueble nuevoInmueble = new Inmueble(
                                     nombre, calle, ciudad, numPersonas,
                                     numHabitaciones, numBanos, numAseos,
-                                    new Empresa(1, "Empresa TIPO") );
+                                    user.getEmpresa() );
 
                             guardar( nuevoInmueble );
                             Navigation.findNavController(view).navigate( R.id.inmueblesFragment );

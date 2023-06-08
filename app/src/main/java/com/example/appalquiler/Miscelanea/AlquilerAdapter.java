@@ -13,6 +13,7 @@ import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.appalquiler.Clases.Alquiler;
+import com.example.appalquiler.Clases.Cliente;
 import com.example.appalquiler.R;
 
 import java.io.Serializable;
@@ -24,6 +25,11 @@ public class AlquilerAdapter extends RecyclerView.Adapter<AlquilerAdapterViewHol
 
     public AlquilerAdapter(  List<Alquiler> itemList ) {
         this.alquileres = itemList;
+    }
+
+    public void setFilteredList(List<Alquiler> listaFiltrada){
+        this.alquileres = listaFiltrada;
+        notifyDataSetChanged();
     }
 
     @NonNull

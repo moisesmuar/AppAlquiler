@@ -11,6 +11,7 @@ import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.appalquiler.Clases.Alquiler;
+import com.example.appalquiler.Clases.Cliente;
 import com.example.appalquiler.Clases.Inmueble;
 import com.example.appalquiler.R;
 
@@ -27,6 +28,11 @@ public class InmuebleAdapter extends RecyclerView.Adapter<InmuebleAdapterViewHol
         this.inmuebles = itemList;
         this.modoSeleccion = modoSeleccion;
         this.alquilerEdicion = alquiler;
+    }
+
+    public void setFilteredList(List<Inmueble> listaFiltrada){
+        this.inmuebles = listaFiltrada;
+        notifyDataSetChanged();
     }
 
     @NonNull

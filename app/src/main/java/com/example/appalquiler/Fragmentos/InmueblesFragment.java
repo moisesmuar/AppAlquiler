@@ -13,10 +13,12 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.SearchView;
 import android.widget.Toast;
 
 import com.example.appalquiler.API.RetrofitClient;
 import com.example.appalquiler.Clases.Alquiler;
+import com.example.appalquiler.Clases.Cliente;
 import com.example.appalquiler.Clases.Inmueble;
 import com.example.appalquiler.APIInterfaces.APIServiceInmueble;
 import com.example.appalquiler.Miscelanea.InmuebleAdapter;
@@ -40,8 +42,9 @@ public class InmueblesFragment extends Fragment {
     private InmuebleAdapter inmuebleAdapter;
     private List<Inmueble> listaInmuebles = new ArrayList<>();
     private Alquiler alquilerEdicion;
+    private SearchView searchView;
 
-    private int modoSeleccion = 0;
+    private int modoSeleccion = 0; // 0 listar Inmuebles
 
     public InmueblesFragment() {
         // Required empty public constructor
@@ -67,6 +70,22 @@ public class InmueblesFragment extends Fragment {
 
         initRecyclerView();
         obtenerInmuebles();
+
+        searchView = view.findViewById(R.id.idSearchViewInmuebles);
+        searchView.clearFocus();
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                filtrarLista( newText );
+                return false;
+            }
+        });
+
         binding.btMasInmuebles.setOnClickListener(new View.OnClickListener() {  // IR A FORM Inmueble
             @Override
             public void onClick(View view) {
@@ -75,6 +94,25 @@ public class InmueblesFragment extends Fragment {
             }
         });
 
+    }
+
+    /**
+     * Filtro por nombre Inmueble
+     * @param texto
+     */
+    private void filtrarLista( String texto ) {
+        List<Inmueble> listFiltrada = new ArrayList<>();
+        for( Inmueble obj : listaInmuebles ){
+            if( obj.getNombre().toLowerCase().contains( texto.toLowerCase() )){
+                listFiltrada.add( obj );
+            }
+        }
+
+        if( listFiltrada.isEmpty() ){
+            Toast.makeText( getContext() , "No existen registros con ese Nombre", Toast.LENGTH_SHORT ).show();
+        }else{
+            inmuebleAdapter.setFilteredList( listFiltrada );
+        }
     }
 
     private void initRecyclerView() {

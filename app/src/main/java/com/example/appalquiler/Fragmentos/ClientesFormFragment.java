@@ -18,6 +18,7 @@ import com.example.appalquiler.APIInterfaces.APIServiceAlquiler;
 import com.example.appalquiler.Clases.Cliente;
 import com.example.appalquiler.APIInterfaces.APIServiceCliente;
 import com.example.appalquiler.Clases.Empresa;
+import com.example.appalquiler.Clases.Usuario;
 import com.example.appalquiler.R;
 import com.example.appalquiler.SharedPreferencesManager;
 import com.example.appalquiler.databinding.FragmentClientesFormBinding;
@@ -33,6 +34,7 @@ public class ClientesFormFragment extends Fragment {
 
     private FragmentClientesFormBinding binding;
     private Cliente cliente;
+    SharedPreferencesManager sessionManager;
 
     public ClientesFormFragment() {
         // Required empty public constructor
@@ -50,7 +52,7 @@ public class ClientesFormFragment extends Fragment {
         binding = FragmentClientesFormBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
 
-        SharedPreferencesManager sessionManager = new SharedPreferencesManager( requireContext() );
+        sessionManager = new SharedPreferencesManager( requireContext() );
         if ( !sessionManager.isLogin() ) { // Usuario logeado? no. redirigir a fragmento login
             Navigation.findNavController(view).navigate( R.id.loginFragment );
         }
@@ -79,6 +81,8 @@ public class ClientesFormFragment extends Fragment {
         binding.btnGuardar.setOnClickListener(new View.OnClickListener() {  // POST CLIENTE API
             @Override
             public void onClick(View view) {
+                Usuario user = sessionManager.getSpUser();
+
                 if( binding.btnGuardar.getText().equals("Modificar") ){
                     Cliente cliModificado = new Cliente(
                         binding.editTextNombre.getText().toString(),
@@ -88,7 +92,7 @@ public class ClientesFormFragment extends Fragment {
                         binding.editTextCiudad.getText().toString(),
                         binding.editTextPais.getText().toString(),
                         binding.editTextCP.getText().toString(),
-                            new Empresa(1, "Empresa TIPO")
+                        user.getEmpresa()
                     );
                     editar( cliente.getIdCliente() , cliModificado );
 
@@ -103,8 +107,11 @@ public class ClientesFormFragment extends Fragment {
                     String pais = binding.editTextPais.getText().toString();
                     String cp = binding.editTextCP.getText().toString();
 
-                    Cliente nuevoCliente = new Cliente( nombre, telefono, email,
-                            calle, ciudad, pais, cp, new Empresa(1, "Empresa TIPO"));
+                    Cliente nuevoCliente = new Cliente(
+                            nombre, telefono,
+                            email, calle,
+                            ciudad, pais,
+                            cp,  user.getEmpresa() );
                     guardar( nuevoCliente );
 
                     Navigation.findNavController(view).navigate( R.id.clientesFragment );
@@ -127,13 +134,7 @@ public class ClientesFormFragment extends Fragment {
         });
 
     }
-    /*
-    public Retrofit  getRetrofit()  {
-        return new Retrofit.Builder()
-                .baseUrl("http://10.0.2.2:8082/calendario/")
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-    }*/
+
     public void guardar( Cliente cli ) {
         RetrofitClient retrofitClient = RetrofitClient.getInstance();
         APIServiceCliente apiService = retrofitClient.getRetrofit().create( APIServiceCliente.class );

@@ -11,6 +11,7 @@ import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.appalquiler.Clases.Alquiler;
+import com.example.appalquiler.Clases.Cliente;
 import com.example.appalquiler.Clases.Portal;
 import com.example.appalquiler.R;
 
@@ -29,6 +30,11 @@ public class PortalesAdapter extends RecyclerView.Adapter<PortalAdapterViewHolde
         this.portales = portales;
         this.modoSeleccion = modoSeleccion;
         this.alquilerEdicion = alquiler;
+    }
+
+    public void setFilteredList(List<Portal> listaFiltrada){
+        this.portales = listaFiltrada;
+        notifyDataSetChanged();
     }
 
     @NonNull
