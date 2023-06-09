@@ -73,19 +73,13 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarViewHolder>
             int diaHolderActual = Integer.parseInt( dia );
 
             for( Alquiler alquiler : this.alquileresList ) {  // alquileres de mes actual y año actual
+
                 LocalDate fechaInicio = LocalDate.parse(alquiler.getFhinicio());
-
                 int diaEntrada = fechaInicio.getDayOfMonth();
-                //int mesEntrada = fhhoraInicio.getMonthValue();
-                //int anoEntrada = fhhoraInicio.getYear();
-
                 LocalDate fechaFin = LocalDate.parse(alquiler.getFhfin());
-
                 int diaSalida = fechaFin.getDayOfMonth();
-                //int mesSalida = fhhorafin.getMonthValue();
-                //int anoSalida = fhhorafin.getYear();
-                /* if( diaHolderActual >= diaEntrada && diaHolderActual <= diaSalida &&
-                        monthvisionado == mesEntrada && yearvisionado == anoEntrada ){ */
+
+                // Dia alquilado
                 if( diaHolderActual >= diaEntrada && diaHolderActual <= diaSalida ){
                     // establecer alquiler que pertenece al holder
                     holder.setAlquiler( alquiler );
@@ -94,17 +88,15 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarViewHolder>
                     int idAlquiler = alquiler.getIdAlquiler();
                     holder.itemView.setTag( idAlquiler );
 
-
                     // Cuando defino color sin tema
                     holder.itemView.setBackgroundColor(
                             ContextCompat.getColor(context, R.color.md_theme_light_errorContainer)
                     );
 
-//                    TypedValue typedValue = new TypedValue();
-//                    context.getTheme().resolveAttribute(com.google.android.material.R.attr.colorTertiary, typedValue, true);
-//                    int colorTertiary = typedValue.data;
-//                    holder.itemView.setBackgroundColor( colorTertiary );
-
+                    // Establecer color
+                    String colorHex  = alquiler.getPortal().getColorHex();
+                    int color = Color.parseColor(colorHex);
+                    holder.itemView.setBackgroundColor( color );
                 }
             }
         }

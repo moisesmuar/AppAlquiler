@@ -135,11 +135,6 @@ public class CalendarHorizontalAdapter extends RecyclerView.Adapter<CalendarHori
                 ContextCompat.getColor(context, R.color.md_theme_light_onError )
         );
 
-        /*TypedValue typedValue = new TypedValue();
-        context.getTheme().resolveAttribute( com.google.android.material.R.attr.colorSurface, typedValue, true );
-        int colorSurface = typedValue.data;
-        holder.itemView.setBackgroundColor( colorSurface );*/
-
         holder.txtDay.setText( String.valueOf( displayDay ) );
 
         /**
@@ -163,6 +158,7 @@ public class CalendarHorizontalAdapter extends RecyclerView.Adapter<CalendarHori
                 int diaEntrada = fechaInicio.getDayOfMonth();
                 int diaSalida = fechaFin.getDayOfMonth();
 
+                // Dia alquilado
                 if( displayDay >= diaEntrada && displayDay <= diaSalida ){
                     Log.d("   DiaHolderActual", String.valueOf(displayDay) +
                             " Entrada "+String.valueOf(diaEntrada)+
@@ -174,16 +170,12 @@ public class CalendarHorizontalAdapter extends RecyclerView.Adapter<CalendarHori
                     // tagearlo con idAlquiler
                     int idAlquiler = alquiler.getIdAlquiler();
                     holder.itemView.setTag( idAlquiler );
-                    Log.d("  Alquilado ", "Coloresar Azul Dia: "+ displayDay );
 
-                    holder.itemView.setBackgroundColor(
-                            ContextCompat.getColor(context, R.color.md_theme_light_errorContainer)
-                    );
+                    // Establecer color
+                    String colorHex  = alquiler.getPortal().getColorHex();  // ejemplo #003B95
+                    int color = Color.parseColor(colorHex);
+                    holder.itemView.setBackgroundColor( color );
 
-                    /*TypedValue typedV = new TypedValue();
-                    context.getTheme().resolveAttribute(com.google.android.material.R.attr.colorTertiary, typedV, true);
-                    int colorTertiary = typedV.data;
-                    holder.itemView.setBackgroundColor( colorTertiary );*/
                 }
             }
         }

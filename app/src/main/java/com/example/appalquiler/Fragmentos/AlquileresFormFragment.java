@@ -154,19 +154,6 @@ public class AlquileresFormFragment extends Fragment {
 
                     } else{   //  Nuevo Alquiler
 
-                            /*// Pasar los datos fechas al formato guardado en la bd
-                            Date fechaInicioDate;
-                            Date fechaFinDate;
-                            try {
-                                fechaInicioDate = sdf.parse( alquiler.getFhinicio() );   // dar formato Date dd/MM/yyyy"
-                                fechaFinDate = sdf.parse( alquiler.getFhfin() );
-                            } catch (ParseException e) {
-                                e.printStackTrace();
-                                return;
-                            }
-                            String formattedFechaInicio = sdf_bd.format(fechaInicioDate); // dar formato "yyyy-MM-dd"
-                            String formattedFechaFin = sdf_bd.format(fechaFinDate);*/
-
                             Alquiler alquilerNuevo = new Alquiler(
                                     alquiler.getFhinicio(),
                                     alquiler.getFhfin(),
@@ -180,22 +167,6 @@ public class AlquileresFormFragment extends Fragment {
                             Gson gson = new GsonBuilder().create();
                             String json = gson.toJson(alquilerNuevo);
                             System.out.println(json);
-
-                         /*   Log.d("alquilerNuevo", "fhini: " + alquilerNuevo.getFhinicio() );
-                            Class<?> tipoDato = alquilerNuevo.getFhinicio().getClass();
-                            String nombreTipoDato = tipoDato.getSimpleName();
-                            Log.d("alquilerNuevo", "tipo dato: " + nombreTipoDato );
-
-                            Log.d("alquilerNuevo", "fhfin: " + alquilerNuevo.getFhfin() );
-
-                            Log.d("alquilerNuevo", "getCliente: " + alquilerNuevo.getCliente().getNombre() );
-                            Log.d("alquilerNuevo", "getCliente empresa nombre: " + alquilerNuevo.getCliente().getEmpresa().getNombre() );
-
-                            Log.d("alquilerNuevo", "getInmueble: " + alquilerNuevo.getInmueble().getNombre() );
-                            Log.d("alquilerNuevo", "getInmueble empresa nombre: " + alquilerNuevo.getInmueble().getEmpresa().getNombre() );
-
-                            Log.d("alquilerNuevo", "getEmpresa: " + alquilerNuevo.getEmpresa().getNombre() );
-                            Log.d("alquilerNuevo", "getPortal: " + alquilerNuevo.getPortal().getNombre() );*/
 
                             guardar( alquilerNuevo );
                             Navigation.findNavController(view).navigate( R.id.alquileresFragment );
@@ -224,19 +195,7 @@ public class AlquileresFormFragment extends Fragment {
         });
 
 
-        // EditText Clicables, aparece DatePickerDialog
-        binding.editTextFhInicio.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showDatePickerDialog(binding.editTextFhInicio);
-            }
-        });
-        binding.editTextFhFin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showDatePickerDialog(binding.editTextFhFin);
-            }
-        });
+
 
 
         // Guardar en objeto Alquiler la fecha que DatePickerDialog, escribe en EditText
@@ -262,6 +221,34 @@ public class AlquileresFormFragment extends Fragment {
             }
             @Override
             public void afterTextChanged(Editable s) {
+            }
+        });
+
+        // EditText Clicables, aparece DatePickerDialog
+        binding.editTextFhInicio.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showDatePickerDialog(binding.editTextFhInicio);
+            }
+        });
+        binding.editTextFhFin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showDatePickerDialog(binding.editTextFhFin);
+            }
+        });
+
+        // Botones para lanzar DatePickerDialog
+        binding.ibtnFhini.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showDatePickerDialog(binding.editTextFhInicio);
+            }
+        });
+        binding.ibtnFhfin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showDatePickerDialog(binding.editTextFhFin);
             }
         });
 

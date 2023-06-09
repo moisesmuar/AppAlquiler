@@ -5,16 +5,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="?android:attr/colorBackground"
-
-    tools:context=".Fragmentos.AlquileresFormFragment"
-     >
+    tools:context=".Fragmentos.AlquileresFormFragment"   >
 
     <TextView
         android:id="@+id/tvTituloAlq"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
         android:layout_marginStart="16dp"
+        android:layout_marginTop="20dp"
         android:layout_marginEnd="16dp"
         android:text="Alquiler"
         android:textAlignment="center"
@@ -26,97 +24,125 @@
         app:layout_constraintTop_toTopOf="parent" />
 
 
-
     <EditText
         android:id="@+id/editTextFhInicio"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
+        android:layout_width="250dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="64dp"
+        android:clickable="true"
+        android:focusable="false"
         android:hint="Fecha de inicio"
         android:inputType="date"
-        android:focusable="false"
-        android:clickable="true"
         android:maxLines="1"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/imageView10"
         app:layout_constraintTop_toBottomOf="@+id/tvTituloAlq" />
 
     <EditText
         android:id="@+id/editTextFhFin"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
+        android:layout_width="250dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="12dp"
         android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
+        android:clickable="true"
+        android:focusable="false"
         android:hint="Fecha de fin"
         android:inputType="date"
-        android:focusable="false"
-        android:clickable="true"
         android:maxLines="1"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/imageView16"
         app:layout_constraintTop_toBottomOf="@+id/editTextFhInicio" />
 
-
-    <EditText
-        android:id="@+id/editTextNombreInmueble"
-        android:layout_width="310dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:hint="Inmueble"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextFhFin" />
-
     <ImageButton
-        android:id="@+id/ibtn_inmuebleAlquilerBuscar"
+        android:id="@+id/ibtn_fhini"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="18dp"
-        android:src="@drawable/find_in_page_black_24dp"
-        app:layout_constraintStart_toEndOf="@+id/editTextNombreInmueble"
-        app:layout_constraintTop_toBottomOf="@+id/editTextFhFin" />
-
-    <EditText
-        android:id="@+id/editTextNombreCliente"
-        android:layout_width="310dp"
-        android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:hint="Cliente"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextNombreInmueble" />
+        android:layout_marginTop="64dp"
+        android:src="@drawable/date_range_black_24dp"
+        app:layout_constraintStart_toEndOf="@+id/editTextFhInicio"
+        app:layout_constraintTop_toBottomOf="@+id/tvTituloAlq" />
 
     <ImageButton
-        android:id="@+id/ibtn_clienteAlquilerBuscar"
+        android:id="@+id/ibtn_fhfin"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="16dp"
-        android:src="@drawable/find_in_page_black_24dp"
-        app:layout_constraintStart_toEndOf="@+id/editTextNombreCliente"
-        app:layout_constraintTop_toBottomOf="@+id/ibtn_inmuebleAlquilerBuscar" />
-
-    <EditText
-        android:id="@+id/editTextNombrePortal"
-        android:layout_width="310dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="12dp"
+        android:src="@drawable/date_range_black_24dp"
+        app:layout_constraintStart_toEndOf="@+id/editTextFhFin"
+        app:layout_constraintTop_toBottomOf="@+id/ibtn_fhini" />
+
+
+    <EditText
+        android:id="@+id/editTextNombrePortal"
+        android:layout_width="250dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="16dp"
         android:hint="Portal"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/imageView20"
         app:layout_constraintTop_toBottomOf="@+id/editTextNombreCliente" />
+
+    <ImageView
+        android:id="@+id/imageView20"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="28dp"
+        android:src="@drawable/web_black_24dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView19" />
+
+    <EditText
+        android:id="@+id/editTextNombreInmueble"
+        android:layout_width="250dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="16dp"
+        android:hint="Inmueble"
+        app:layout_constraintStart_toEndOf="@+id/imageView18"
+        app:layout_constraintTop_toBottomOf="@+id/editTextFhFin" />
+
+
+    <EditText
+        android:id="@+id/editTextNombreCliente"
+        android:layout_width="250dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="16dp"
+        android:hint="Cliente"
+        app:layout_constraintStart_toEndOf="@+id/imageView19"
+        app:layout_constraintTop_toBottomOf="@+id/editTextNombreInmueble" />
 
     <ImageButton
         android:id="@+id/ibtn_portalBuscar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="12dp"
         android:src="@drawable/find_in_page_black_24dp"
         app:layout_constraintStart_toEndOf="@+id/editTextNombrePortal"
         app:layout_constraintTop_toBottomOf="@+id/ibtn_clienteAlquilerBuscar" />
+
+    <ImageButton
+        android:id="@+id/ibtn_clienteAlquilerBuscar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="12dp"
+        android:src="@drawable/find_in_page_black_24dp"
+        app:layout_constraintStart_toEndOf="@+id/editTextNombreCliente"
+        app:layout_constraintTop_toBottomOf="@+id/ibtn_inmuebleAlquilerBuscar" />
+
+    <ImageButton
+        android:id="@+id/ibtn_inmuebleAlquilerBuscar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="12dp"
+        android:src="@drawable/find_in_page_black_24dp"
+        app:layout_constraintStart_toEndOf="@+id/editTextNombreInmueble"
+        app:layout_constraintTop_toBottomOf="@+id/ibtn_fhfin" />
 
     <LinearLayout
         android:id="@+id/lyBotones"
@@ -149,6 +175,47 @@
             android:textSize="16sp" />
 
     </LinearLayout>
+
+    <ImageView
+        android:id="@+id/imageView10"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="64dp"
+        android:src="@drawable/login_black_24dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvTituloAlq" />
+
+    <ImageView
+        android:id="@+id/imageView16"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="24dp"
+        android:src="@drawable/logout_black_24dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView10" />
+
+    <ImageView
+        android:id="@+id/imageView18"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="28dp"
+        android:src="@drawable/home_black_24dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView16" />
+
+    <ImageView
+        android:id="@+id/imageView19"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="24dp"
+        android:src="@drawable/person_black_24dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView18" />
+
 
 
 

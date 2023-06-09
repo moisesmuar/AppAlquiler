@@ -1,25 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-<!--    <color name="purple_200">#FFBB86FC</color>-->
-<!--    <color name="purple_500">#FF6200EE</color>-->
-<!--    <color name="purple_700">#FF3700B3</color>-->
-<!--    <color name="teal_200">#FF03DAC5</color>-->
-<!--    <color name="teal_700">#FF018786</color>-->
+ <!-- colores reservas los recojo bd-->
 
-<!--    <color name="gray">#888</color>-->
-<!--    <color name="blue">#0000FF</color>-->
-<!--    <color name="black">#FF000000</color>-->
-<!--    <color name="white">#FFFFFFFF</color>-->
+ <color name="reserva_airbnb">#FF385C</color>
+ <color name="reserva_booking">#003B95</color>
+ <color name="reserva_externa">#6AD397</color>
 
-<!--    <color name="colorPrimary">#884A6F</color>-->
-<!--    <color name="colorPrimaryDark">#462B45</color>-->
-<!--    <color name="colorAccent">#F5EAEF</color>-->
+ <color name="reserva_airbnb_claro">#ff9aac</color>
+ <color name="reserva_booking_claro">#a9cbff</color>
+ <color name="reserva_externa_claro">#b6e9cc</color>
+ <color name="reserva_externa_narclaro">#ffd496</color>
 
-<!--    <color name="themeColor1">#946c82</color>-->
-<!--    <color name="themeColor2">#758b8b</color>-->
-
-<!--    <color name="color_dia_alquilado">#2997FF</color>-->
+ <!-- tema de color -->
 
  <color name="seed">#1877f2</color>
  <color name="md_theme_light_primary">#005BC0</color>
@@ -82,6 +75,5 @@
  <color name="md_theme_dark_surfaceTint">#ADC6FF</color>
  <color name="md_theme_dark_outlineVariant">#44474F</color>
  <color name="md_theme_dark_scrim">#000000</color>
-
 
 </resources>

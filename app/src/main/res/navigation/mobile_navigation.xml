@@ -28,17 +28,17 @@
     <fragment
         android:id="@+id/alquileresFormFragment"
         android:name="com.example.appalquiler.Fragmentos.AlquileresFormFragment"
-        android:label="Formulario Alquiler"
+        android:label="Formulario"
         tools:layout="@layout/fragment_alquileres_form" />
     <fragment
         android:id="@+id/clientesFormFragment"
         android:name="com.example.appalquiler.Fragmentos.ClientesFormFragment"
-        android:label="Formulario Cliente"
+        android:label="Formulario"
         tools:layout="@layout/fragment_clientes_form" />
     <fragment
         android:id="@+id/inmueblesFormFragment"
         android:name="com.example.appalquiler.Fragmentos.InmueblesFormFragment"
-        android:label="Formulario Inmueble"
+        android:label="Formulario"
         tools:layout="@layout/fragment_inmuebles_form" />
     <fragment
         android:id="@+id/loginFragment"
