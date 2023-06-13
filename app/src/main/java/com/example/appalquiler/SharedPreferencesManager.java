@@ -65,16 +65,7 @@ public class SharedPreferencesManager {
     }
 
     /**
-     * eliminará todos los datos guardados en las preferencias compartidas,
-     * Cierra la sesión. estado ini sesion = false
-     */
-    public void clearSession() {
-        spEditor.clear();
-        spEditor.apply();
-    }
-
-    /**
-     * guardar usuario
+     * Guardar el Usuario
      */
     public void saveSpUser(String spKey, Usuario usuario) {
         Gson gson = new Gson();
@@ -82,8 +73,9 @@ public class SharedPreferencesManager {
         spEditor.putString( spKey, userJson );
         spEditor.apply();
     }
+
     /**
-     * retorno del usuario
+     * Retorno datos del Usuario logeado
      */
     public Usuario getSpUser() {
         String userJson = sharedPreference.getString(KEY_USER, null);

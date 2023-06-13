@@ -65,7 +65,6 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarViewHolder>
         String dia = daysOfMonth.get( position ); // Obtener el día correspondiente a esta posición en la lista
         holder.dayOfMonth.setText( dia );
 
-
         if ( alquileresList != null  &&  dia != null  &&  !dia.isEmpty() ) {
 
             int monthvisionado = selectedDate.getMonthValue(); // mes actual entero (1-12)

@@ -31,11 +31,7 @@ public class LogOutFragment extends Fragment {
                              Bundle savedInstanceState) {
         binding = FragmentLogOutBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
-/*
-        // Llamar al método clearSession() para cerrar la sesión ->logout
-        SharedPreferencesManager sessionManager = new SharedPreferencesManager(requireContext());
-        sessionManager.clearSession();
-*/
+
         return root;
     }
 
@@ -46,9 +42,9 @@ public class LogOutFragment extends Fragment {
         SharedPreferencesManager sessionManager = new SharedPreferencesManager(requireContext());
         sessionManager.saveSpBoolean("spIsLogin", false);
 
-        System.exit(0);
+        // Cerrar la aplicación
+        // System.exit(0);
 
-        // Navigation.findNavController(requireView()).navigate(R.id.loginFragment);
-
+        Navigation.findNavController(requireView()).navigate(R.id.loginFragment);
     }
 }

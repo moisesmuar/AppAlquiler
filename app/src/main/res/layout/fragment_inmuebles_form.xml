@@ -27,8 +27,8 @@
     <EditText
         android:id="@+id/editTextNombre"
         android:layout_width="250dp"
-        android:layout_height="40dp"
-        android:layout_marginStart="24dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
         android:layout_marginTop="50dp"
         android:hint="Nombre"
         app:layout_constraintStart_toEndOf="@+id/imageView11"
@@ -37,8 +37,8 @@
     <EditText
         android:id="@+id/editTextNumBanos"
         android:layout_width="250dp"
-        android:layout_height="40dp"
-        android:layout_marginStart="24dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
         android:layout_marginTop="16dp"
         android:hint="Número de baños"
         android:inputType="number"
@@ -48,8 +48,8 @@
     <EditText
         android:id="@+id/editTextCalle"
         android:layout_width="250dp"
-        android:layout_height="40dp"
-        android:layout_marginStart="24dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
         android:layout_marginTop="16dp"
         android:hint="Calle"
         app:layout_constraintStart_toEndOf="@+id/imageView12"
@@ -58,8 +58,8 @@
     <EditText
         android:id="@+id/editTextNumAseos"
         android:layout_width="250dp"
-        android:layout_height="40dp"
-        android:layout_marginStart="24dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
         android:layout_marginTop="16dp"
         android:hint="Número de aseos"
         android:inputType="number"
@@ -71,7 +71,7 @@
         android:layout_width="30dp"
         android:layout_height="30dp"
         android:layout_marginStart="48dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="32dp"
         android:src="@drawable/streetview_black_24dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView11" />
@@ -79,8 +79,8 @@
     <EditText
         android:id="@+id/editTextNumPersonas"
         android:layout_width="250dp"
-        android:layout_height="40dp"
-        android:layout_marginStart="24dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
         android:layout_marginTop="16dp"
         android:hint="Número de personas"
         android:inputType="number"
@@ -90,8 +90,8 @@
     <EditText
         android:id="@+id/editTextNumHabitaciones"
         android:layout_width="250dp"
-        android:layout_height="40dp"
-        android:layout_marginStart="24dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
         android:layout_marginTop="16dp"
         android:hint="Número de habitaciones"
         android:inputType="number"
@@ -103,7 +103,7 @@
         android:layout_width="30dp"
         android:layout_height="30dp"
         android:layout_marginStart="48dp"
-        android:layout_marginTop="28dp"
+        android:layout_marginTop="32dp"
         android:src="@drawable/bedroom_child_black_24dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView14" />
@@ -123,7 +123,7 @@
         android:layout_width="30dp"
         android:layout_height="30dp"
         android:layout_marginStart="48dp"
-        android:layout_marginTop="28dp"
+        android:layout_marginTop="30dp"
         android:src="@drawable/person_black_24dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView13" />
@@ -131,8 +131,8 @@
     <EditText
         android:id="@+id/editTextCiudad"
         android:layout_width="250dp"
-        android:layout_height="40dp"
-        android:layout_marginStart="24dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
         android:layout_marginTop="16dp"
         android:hint="Ciudad"
         app:layout_constraintStart_toEndOf="@+id/imageView13"
@@ -143,7 +143,7 @@
         android:layout_width="30dp"
         android:layout_height="30dp"
         android:layout_marginStart="48dp"
-        android:layout_marginTop="28dp"
+        android:layout_marginTop="31dp"
         android:src="@drawable/clean_hands_black_24dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView17" />
@@ -153,21 +153,21 @@
         android:layout_width="30dp"
         android:layout_height="30dp"
         android:layout_marginStart="48dp"
-        android:layout_marginTop="28dp"
+        android:layout_marginTop="32dp"
         android:src="@drawable/location_city_black_24dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView12" />
+
 
     <ImageView
         android:id="@+id/imageView17"
         android:layout_width="30dp"
         android:layout_height="30dp"
         android:layout_marginStart="48dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="31dp"
         android:src="@drawable/bathtub_black_24dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView15" />
-
 
     <LinearLayout
         android:id="@+id/lyBotones"

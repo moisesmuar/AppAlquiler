@@ -27,7 +27,7 @@
     <EditText
         android:id="@+id/editTextFhInicio"
         android:layout_width="250dp"
-        android:layout_height="40dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="12dp"
         android:layout_marginTop="64dp"
         android:clickable="true"
@@ -41,9 +41,9 @@
     <EditText
         android:id="@+id/editTextFhFin"
         android:layout_width="250dp"
-        android:layout_height="40dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="12dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="15dp"
         android:clickable="true"
         android:focusable="false"
         android:hint="Fecha de fin"
@@ -62,23 +62,23 @@
         app:layout_constraintStart_toEndOf="@+id/editTextFhInicio"
         app:layout_constraintTop_toBottomOf="@+id/tvTituloAlq" />
 
+
     <ImageButton
         android:id="@+id/ibtn_fhfin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="16dp"
         android:src="@drawable/date_range_black_24dp"
         app:layout_constraintStart_toEndOf="@+id/editTextFhFin"
         app:layout_constraintTop_toBottomOf="@+id/ibtn_fhini" />
 
-
     <EditText
         android:id="@+id/editTextNombrePortal"
         android:layout_width="250dp"
-        android:layout_height="40dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="12dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="15dp"
         android:hint="Portal"
         app:layout_constraintStart_toEndOf="@+id/imageView20"
         app:layout_constraintTop_toBottomOf="@+id/editTextNombreCliente" />
@@ -88,7 +88,7 @@
         android:layout_width="30dp"
         android:layout_height="30dp"
         android:layout_marginStart="32dp"
-        android:layout_marginTop="28dp"
+        android:layout_marginTop="30dp"
         android:src="@drawable/web_black_24dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView19" />
@@ -96,9 +96,9 @@
     <EditText
         android:id="@+id/editTextNombreInmueble"
         android:layout_width="250dp"
-        android:layout_height="40dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="12dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="15dp"
         android:hint="Inmueble"
         app:layout_constraintStart_toEndOf="@+id/imageView18"
         app:layout_constraintTop_toBottomOf="@+id/editTextFhFin" />
@@ -107,9 +107,9 @@
     <EditText
         android:id="@+id/editTextNombreCliente"
         android:layout_width="250dp"
-        android:layout_height="40dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="12dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="15dp"
         android:hint="Cliente"
         app:layout_constraintStart_toEndOf="@+id/imageView19"
         app:layout_constraintTop_toBottomOf="@+id/editTextNombreInmueble" />
@@ -119,7 +119,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="16dp"
         android:src="@drawable/find_in_page_black_24dp"
         app:layout_constraintStart_toEndOf="@+id/editTextNombrePortal"
         app:layout_constraintTop_toBottomOf="@+id/ibtn_clienteAlquilerBuscar" />
@@ -129,7 +129,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="16dp"
         android:src="@drawable/find_in_page_black_24dp"
         app:layout_constraintStart_toEndOf="@+id/editTextNombreCliente"
         app:layout_constraintTop_toBottomOf="@+id/ibtn_inmuebleAlquilerBuscar" />
@@ -139,7 +139,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="16dp"
         android:src="@drawable/find_in_page_black_24dp"
         app:layout_constraintStart_toEndOf="@+id/editTextNombreInmueble"
         app:layout_constraintTop_toBottomOf="@+id/ibtn_fhfin" />
@@ -191,7 +191,7 @@
         android:layout_width="30dp"
         android:layout_height="30dp"
         android:layout_marginStart="32dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="30dp"
         android:src="@drawable/logout_black_24dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView10" />
@@ -201,7 +201,7 @@
         android:layout_width="30dp"
         android:layout_height="30dp"
         android:layout_marginStart="32dp"
-        android:layout_marginTop="28dp"
+        android:layout_marginTop="30dp"
         android:src="@drawable/home_black_24dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView16" />
@@ -211,7 +211,7 @@
         android:layout_width="30dp"
         android:layout_height="30dp"
         android:layout_marginStart="32dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="30dp"
         android:src="@drawable/person_black_24dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView18" />

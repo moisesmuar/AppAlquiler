@@ -40,6 +40,9 @@ public class CalendarHorizontalAdapter extends RecyclerView.Adapter<CalendarHori
     private int selectedMonth;
     private int selectedYear;
 
+    SimpleDateFormat sdf = new SimpleDateFormat("EEE", new Locale("es", "ES"));
+
+
     private List<Alquiler> alquileresList = null;
 
     public CalendarHorizontalAdapter(Context context, ArrayList<Date> data,
@@ -112,30 +115,26 @@ public class CalendarHorizontalAdapter extends RecyclerView.Adapter<CalendarHori
 
     @Override
     public void onBindViewHolder(@NonNull CalendarHorizontalViewHolder holder, int position) {
-        SimpleDateFormat sdf = new SimpleDateFormat("EEE MMM dd HH:mm:ss", Locale.ENGLISH);
+
         Calendar cal = Calendar.getInstance();
         cal.setTime( data.get(position) );
 
-        // Establezca el año, mes y día que se mostrará
         int displayMonth = cal.get( Calendar.MONTH );
         int displayYear = cal.get( Calendar.YEAR );
-        int displayDay = cal.get( Calendar.DAY_OF_MONTH );
 
-        // Establecer texto en txtDayInWeek y txtDay
-        try {
-            Date dayInWeek = sdf.parse( cal.getTime().toString() );
-            sdf.applyPattern("EEE");
-            holder.txtDayInWeek.setText( sdf.format(dayInWeek).toString() );
-        } catch (ParseException ex) {
-            Log.v("Exception", ex.getLocalizedMessage());
-        }
+        // Establecer el número del día ( 1 2 3 )
+        int displayDay = cal.get( Calendar.DAY_OF_MONTH );
+        holder.txtDay.setText( String.valueOf( displayDay ) );
+
+        // Establecer el día de la semana abreviado (LUN, MAR, etc.)
+        Date dayInWeek = cal.getTime();
+        String dayOfWeekAbbr = sdf.format(dayInWeek);
+        holder.txtDayInWeek.setText(dayOfWeekAbbr);
 
         // Establecer celda color blanco, sin tema
         holder.itemView.setBackgroundColor(
                 ContextCompat.getColor(context, R.color.md_theme_light_onError )
         );
-
-        holder.txtDay.setText( String.valueOf( displayDay ) );
 
         /**
          * Creo que puedes usar "cal.after(currentDate)" y "cal == currentDate",

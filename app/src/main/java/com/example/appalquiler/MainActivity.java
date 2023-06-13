@@ -55,6 +55,7 @@ public class MainActivity extends AppCompatActivity {
         )
                 .setOpenableLayout(drawer)
                 .build();
+
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
@@ -68,6 +69,15 @@ public class MainActivity extends AppCompatActivity {
 
         // Establecer el tema guardado o el valor predeterminado
         AppCompatDelegate.setDefaultNightMode( savedTheme );
+
+        // Verifica si el fragmento actual es el loginFragment desactiva fecha retroceso
+        navController.addOnDestinationChangedListener((controller, destination, arguments) -> {
+            if (destination.getId() == R.id.loginFragment) {
+                getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+            } else {
+                getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            }
+        });
     }
 
     @Override
