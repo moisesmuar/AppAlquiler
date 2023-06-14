@@ -105,6 +105,16 @@ public class AlquileresFragment extends Fragment {
     }
 
     /**
+     * Fragmento listado queda en segundo plano al ir FormFragment
+     * Actualizo datos de lista por si hay un CREATE UPDATE DELETE
+     */
+    @Override
+    public void onResume() {
+        super.onResume();
+        obtenerAlquileres();
+    }
+
+    /**
      * Filtro por nombre Portal
      * @param texto
      */

@@ -103,6 +103,16 @@ public class InmueblesFragment extends Fragment {
     }
 
     /**
+     * Fragmento listado queda en segundo plano al ir FormFragment
+     * Actualizo datos de lista por si hay un CREATE UPDATE DELETE
+     */
+    @Override
+    public void onResume() {
+        super.onResume();
+        obtenerInmuebles();
+    }
+
+    /**
      * Filtro por nombre Inmueble
      * @param texto
      */
