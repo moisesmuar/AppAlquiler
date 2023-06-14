@@ -60,14 +60,14 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
 
-        // Obtener el tema guardado o utilizar el valor predeterminado
+        // Obtener el tema guardado
         SharedPreferencesManager sharedPreferencesManager = new SharedPreferencesManager(getApplicationContext());
         int savedTheme = sharedPreferencesManager.getSavedTheme();
         if (savedTheme == AppCompatDelegate.MODE_NIGHT_UNSPECIFIED) {
             savedTheme = AppCompatDelegate.MODE_NIGHT_NO; // Valor predeterminado si no hay tema guardado
         }
 
-        // Establecer el tema guardado o el valor predeterminado
+        // Establecer el tema guardado
         AppCompatDelegate.setDefaultNightMode( savedTheme );
 
         // Verifica si el fragmento actual es el loginFragment desactiva fecha retroceso

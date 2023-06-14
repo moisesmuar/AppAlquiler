@@ -4,6 +4,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -21,12 +22,15 @@ import com.example.appalquiler.Clases.Alquiler;
 import com.example.appalquiler.Clases.Cliente;
 import com.example.appalquiler.Clases.Inmueble;
 import com.example.appalquiler.APIInterfaces.APIServiceInmueble;
+import com.example.appalquiler.Clases.Usuario;
 import com.example.appalquiler.Miscelanea.InmuebleAdapter;
 import com.example.appalquiler.R;
 import com.example.appalquiler.SharedPreferencesManager;
 import com.example.appalquiler.databinding.FragmentInmueblesBinding;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.gson.GsonBuilder;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,6 +43,9 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class InmueblesFragment extends Fragment {
 
     private FragmentInmueblesBinding binding;
+    SharedPreferencesManager sessionManager;
+    private Usuario user;
+
     private InmuebleAdapter inmuebleAdapter;
     private List<Inmueble> listaInmuebles = new ArrayList<>();
     private Alquiler alquilerEdicion;
@@ -56,10 +63,11 @@ public class InmueblesFragment extends Fragment {
         binding = FragmentInmueblesBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
 
-        SharedPreferencesManager sessionManager = new SharedPreferencesManager( requireContext() );
+        sessionManager = new SharedPreferencesManager( requireContext() );
         if ( !sessionManager.isLogin() ) { // Usuario logeado? no. redirigir a fragmento login
             Navigation.findNavController(view).navigate( R.id.loginFragment );
         }
+        user = sessionManager.getSpUser();
 
         return view;
     }
@@ -92,13 +100,39 @@ public class InmueblesFragment extends Fragment {
             }
         });
 
-        binding.btMasInmuebles.setOnClickListener(new View.OnClickListener() {  // IR A FORM Inmueble
-            @Override
-            public void onClick(View view) {
-                NavController navController = Navigation.findNavController( view );
-                navController.navigate( R.id.inmueblesFormFragment );
-            }
-        });
+        Log.e("INFO USER", "Fragment Inmuebles" + user.toString() +" "+ user.getRol());
+
+        // Si el usuario es admin (rol 0) permitir crear registros boton +
+        if ( user.getRol() == 0 ) {
+
+            ConstraintLayout constraintLayout = view.findViewById(R.id.idLayoutInmuebles);
+
+            FloatingActionButton fab = new FloatingActionButton(getContext());
+            fab.setLayoutParams(new ConstraintLayout.LayoutParams(
+                    ConstraintLayout.LayoutParams.WRAP_CONTENT,
+                    ConstraintLayout.LayoutParams.WRAP_CONTENT
+            ));
+
+            fab.setId(View.generateViewId()); // Genera un ID único para el botón
+            ConstraintLayout.LayoutParams layoutParams = (ConstraintLayout.LayoutParams) fab.getLayoutParams();
+            layoutParams.bottomToBottom = ConstraintLayout.LayoutParams.PARENT_ID; // Alinea borde inferior con borde inferior del ConstraintLayout
+            layoutParams.endToEnd = ConstraintLayout.LayoutParams.PARENT_ID; // Alinea borde derecho con borde derecho del ConstraintLayout
+            layoutParams.setMargins(0, 0, 40, 40); // Establece los márgenes
+            fab.setLayoutParams(layoutParams);
+
+            fab.setContentDescription("Nuevo Inmueble");
+            fab.setImageResource(R.drawable.ic_mas);
+
+            fab.setOnClickListener( new View.OnClickListener() {  // IR A FORM Inmueble
+                @Override
+                public void onClick(View view) {
+                    NavController navController = Navigation.findNavController( view );
+                    navController.navigate( R.id.inmueblesFormFragment );
+                }
+            });
+
+            constraintLayout.addView( fab );
+        }
 
     }
 

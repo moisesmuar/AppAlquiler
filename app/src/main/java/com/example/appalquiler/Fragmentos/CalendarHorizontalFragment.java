@@ -85,7 +85,6 @@ public class CalendarHorizontalFragment extends Fragment {
         binding = FragmentCalendarHorizontalBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
 
-
         sessionManager= new SharedPreferencesManager( requireContext() );
         if ( !sessionManager.isLogin() ) {
             Navigation.findNavController(view).navigate( R.id.loginFragment );
@@ -95,6 +94,14 @@ public class CalendarHorizontalFragment extends Fragment {
         InputMethodManager imm = (InputMethodManager) requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
 
+
+        return view;
+    }
+
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
 
         // scrollViewContainer = binding.idScrollViewContaniner
         // linearParaAnadirRecicler = binding.idLinearCalenHorizont;
@@ -128,8 +135,6 @@ public class CalendarHorizontalFragment extends Fragment {
                 }
             }
         });
-
-        return view;
     }
 
     public void obtenerInmuebles( ) {
