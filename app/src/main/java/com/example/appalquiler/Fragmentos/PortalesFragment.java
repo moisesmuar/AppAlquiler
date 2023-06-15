@@ -4,6 +4,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -23,12 +24,14 @@ import com.example.appalquiler.Clases.Alquiler;
 import com.example.appalquiler.Clases.Cliente;
 import com.example.appalquiler.Clases.Inmueble;
 import com.example.appalquiler.Clases.Portal;
+import com.example.appalquiler.Clases.Usuario;
 import com.example.appalquiler.Clases.reciclerViewCalendario;
 import com.example.appalquiler.Miscelanea.AlquilerAdapter;
 import com.example.appalquiler.Miscelanea.PortalesAdapter;
 import com.example.appalquiler.R;
 import com.example.appalquiler.SharedPreferencesManager;
 import com.example.appalquiler.databinding.FragmentPortalesBinding;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,6 +44,8 @@ public class PortalesFragment extends Fragment {
 
     private FragmentPortalesBinding binding;
     SharedPreferencesManager sessionManager;
+    private Usuario user;
+
     private PortalesAdapter portalAdapter;
     private List<Portal> listaPortales = new ArrayList<>();
     private Alquiler alquilerEdicion;
@@ -63,6 +68,7 @@ public class PortalesFragment extends Fragment {
         if ( !sessionManager.isLogin() ) {
             Navigation.findNavController(view).navigate( R.id.loginFragment );
         }
+        user = sessionManager.getSpUser();
 
         return view;
     }
@@ -95,13 +101,38 @@ public class PortalesFragment extends Fragment {
             }
         });
 
-        binding.btMasPortales.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast.makeText( getContext() , "No se puede registrar un portal.", Toast.LENGTH_SHORT ).show();
+        // Si el usuario es admin (rol 0) permitir crear registros boton +
+        if ( user.getRol() == 0 ) {
 
-            }
-        });
+            ConstraintLayout constraintLayout = view.findViewById(R.id.idLayoutPortales);
+
+            FloatingActionButton fab = new FloatingActionButton(getContext());
+            fab.setLayoutParams(new ConstraintLayout.LayoutParams(
+                    ConstraintLayout.LayoutParams.WRAP_CONTENT,
+                    ConstraintLayout.LayoutParams.WRAP_CONTENT
+            ));
+
+            fab.setId(View.generateViewId()); // Genera un ID único para el botón
+            ConstraintLayout.LayoutParams layoutParams = (ConstraintLayout.LayoutParams) fab.getLayoutParams();
+            layoutParams.bottomToBottom = ConstraintLayout.LayoutParams.PARENT_ID; // Alinea borde inferior con borde inferior del ConstraintLayout
+            layoutParams.endToEnd = ConstraintLayout.LayoutParams.PARENT_ID; // Alinea borde derecho con borde derecho del ConstraintLayout
+            layoutParams.setMargins(0, 0, 40, 40); // Establece los márgenes
+            fab.setLayoutParams(layoutParams);
+
+            fab.setContentDescription("Nuevo Portal");
+            fab.setImageResource(R.drawable.ic_mas);
+
+            fab.setOnClickListener( new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Toast.makeText( getContext() , "No se puede registrar un portal.", Toast.LENGTH_SHORT ).show();
+
+                }
+            });
+
+            constraintLayout.addView( fab );
+        }
+
     }
 
     /**

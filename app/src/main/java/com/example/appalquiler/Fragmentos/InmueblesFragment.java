@@ -195,7 +195,7 @@ public class InmueblesFragment extends Fragment {
         RetrofitClient retrofitClient = RetrofitClient.getInstance();
         APIServiceInmueble apiService = retrofitClient.getRetrofit().create( APIServiceInmueble.class );
 
-        Call<List<Inmueble>> apiCall = apiService.getInmuebles();
+        Call<List<Inmueble>> apiCall = apiService.getInmueblesEmpresa( user.getEmpresa().getNombre() );
         apiCall.enqueue( new Callback<List<Inmueble>>() {
             @Override
             public void onResponse(Call<List<Inmueble>> call, Response<List<Inmueble>> response) {
@@ -203,6 +203,14 @@ public class InmueblesFragment extends Fragment {
 
                     List<Inmueble> listaRespuesta = response.body();;
                     Log.d("RESPONSE", "Código: " + response.code() + " Respuesta: " + listaRespuesta.toString());
+
+                    int cantidadElementos = listaRespuesta.size();
+                    Log.d("CANTIDAD INMUEBLES EMPRESA", " cantidad INMUEBLES: "+ cantidadElementos);
+
+                    // Log.d("RESPONSE", "Código: " + response.code() + " Respuesta: " + listaRespuesta.toString());
+                    for ( Inmueble inmu : listaRespuesta ) {
+                        Log.d("Id empresa listado alquiler ", String.valueOf( inmu.getEmpresa().getIdEmpresa() ) );
+                    }
 
                     listaInmuebles.clear();
                     listaInmuebles.addAll( listaRespuesta );

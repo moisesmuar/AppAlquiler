@@ -39,6 +39,12 @@ public interface APIServiceAlquiler {
     @DELETE("alquileres/{id}")
     Call<Void> deleteAlquiler(@Path("id") int id);
 
+
+
+    // obtener todos los Alquileres de la empresa, para mostrar al user logeado
+    @GET("alquileres/empresa/{nombreEmpresa}")
+    Call<List<Alquiler>> getAlquileresEmpresa(@Path("nombreEmpresa") String nombreEmpresa);
+
     // obtener alquileres por su mes y año
     @GET("alquileres/{mes}/{ano}/{idInmueble}")
     Call<List<Alquiler>> getAlquileresMesAnoInmueble(

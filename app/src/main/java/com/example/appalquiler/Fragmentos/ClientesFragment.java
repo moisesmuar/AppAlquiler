@@ -80,7 +80,7 @@ public class ClientesFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         initRecyclerView();
-        obtenerClientes();
+        obtenerClientesDeEmpresa();
 
         searchView = view.findViewById(R.id.idSearchViewClientes);
         searchView.clearFocus();
@@ -146,7 +146,7 @@ public class ClientesFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        obtenerClientes();
+        obtenerClientesDeEmpresa();
     }
 
     /**
@@ -190,11 +190,11 @@ public class ClientesFragment extends Fragment {
         binding.rvClientes.setAdapter( clienteAdapter );
     }
 
-    public void obtenerClientes( ) {
+    public void obtenerClientesDeEmpresa( ) {
         RetrofitClient retrofitClient = RetrofitClient.getInstance();
         APIServiceCliente apiService = retrofitClient.getRetrofit().create( APIServiceCliente.class );
 
-        Call<List<Cliente>> apiCall = apiService.getClientes();
+        Call<List<Cliente>> apiCall = apiService.getClientesEmpresa( user.getEmpresa().getNombre() );
         apiCall.enqueue( new Callback<List<Cliente>>() {
             @Override
             public void onResponse(Call<List<Cliente>> call, Response<List<Cliente>> response) {
@@ -202,6 +202,16 @@ public class ClientesFragment extends Fragment {
 
                     List<Cliente> listaRespuesta = response.body();;
                     Log.d("RESPONSE", "Código: " + response.code() + " Respuesta: " + listaRespuesta.toString());
+
+
+                    int cantidadElementos = listaRespuesta.size();
+                    Log.d("CANTIDAD CLIENTES EMPRESA", " cantidad CLIENTES: "+ cantidadElementos);
+
+                    //Log.d("RESPONSE", "Código: " + response.code() + " Respuesta: " + listaRespuesta.toString());
+                    for (Cliente cli : listaRespuesta) {
+                        Log.d("Id empresa listado cliente ", String.valueOf( cli.getEmpresa().getIdEmpresa()));
+                    }
+
 
                     listaClientes.clear();
                     listaClientes.addAll( listaRespuesta );

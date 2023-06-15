@@ -58,6 +58,8 @@ import retrofit2.Response;
 public class CalendarHorizontalFragment extends Fragment {
 
     private FragmentCalendarHorizontalBinding binding;
+    SharedPreferencesManager sessionManager;
+    private Usuario user;
 
     private List<reciclerViewCalendario> listaRvCalendarios = new ArrayList<>();
 
@@ -73,8 +75,6 @@ public class CalendarHorizontalFragment extends Fragment {
     private List<Inmueble> listaInmuebles = new ArrayList<>(); // lista inmuebles API
     Map<String, List<Alquiler>> alquileresDeInmueblesMap = new HashMap<>();  // almacenar listado alquiler cada inmueble
 
-    SharedPreferencesManager sessionManager;
-
     public CalendarHorizontalFragment() {
         // Required empty public constructor
     }
@@ -89,6 +89,7 @@ public class CalendarHorizontalFragment extends Fragment {
         if ( !sessionManager.isLogin() ) {
             Navigation.findNavController(view).navigate( R.id.loginFragment );
         }
+        user = sessionManager.getSpUser();
 
         // Ocultar el teclado virtual
         InputMethodManager imm = (InputMethodManager) requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -141,7 +142,7 @@ public class CalendarHorizontalFragment extends Fragment {
         RetrofitClient retrofitClient = RetrofitClient.getInstance();
         APIServiceInmueble apiService = retrofitClient.getRetrofit().create( APIServiceInmueble.class );
 
-        Call<List<Inmueble>> apiCall = apiService.getInmuebles();
+        Call<List<Inmueble>> apiCall = apiService.getInmueblesEmpresa( user.getEmpresa().getNombre()  );
         apiCall.enqueue( new Callback<List<Inmueble>>() {
             @Override
             public void onResponse(Call<List<Inmueble>> call, Response<List<Inmueble>> response) {

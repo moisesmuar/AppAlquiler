@@ -1,5 +1,6 @@
 package com.example.appalquiler.APIInterfaces;
 
+import com.example.appalquiler.Clases.Alquiler;
 import com.example.appalquiler.Clases.Cliente;
 
 import java.util.List;
@@ -36,5 +37,10 @@ public interface APIServiceCliente {
     // eliminar registro
     @DELETE("clientes/{id}")
     Call<Void> deleteCliente(@Path("id") int id);
+
+
+    // obtener todos los Clientes de la empresa, para mostrar al user logeado
+    @GET("clientes/empresa/{nombreEmpresa}")
+    Call<List<Cliente>> getClientesEmpresa(@Path("nombreEmpresa") String nombreEmpresa);
 
 }

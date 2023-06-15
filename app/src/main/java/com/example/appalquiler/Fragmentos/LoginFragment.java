@@ -129,8 +129,8 @@ public class LoginFragment extends Fragment {
                         Toast.makeText(getContext(), "¡Credenciales incorrectas! ¡Intentar otra vez!", Toast.LENGTH_LONG).show();
                     }
                 } else {
-                    Log.d(" Error", "Código: " + response.code() + " - Mensaje: " + response.message());
-                    Toast.makeText(getContext(), "Error credenciales.", Toast.LENGTH_LONG).show();
+                    Log.d("Error", "Código: " + response.code() + " - Mensaje: " + response.message());
+                    Toast.makeText(getContext(), "Error onResponse.", Toast.LENGTH_LONG).show();
                 }
             }
 

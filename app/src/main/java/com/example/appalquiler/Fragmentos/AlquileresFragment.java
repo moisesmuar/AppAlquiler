@@ -75,7 +75,7 @@ public class AlquileresFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         initRecyclerView();
-        obtenerAlquileres();
+        obtenerAlquileresDeEmpresa();
 
         searchView = view.findViewById(R.id.idSearchViewAlquileres);
         searchView.clearFocus();
@@ -145,7 +145,7 @@ public class AlquileresFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        obtenerAlquileres();
+        obtenerAlquileresDeEmpresa();
     }
 
     /**
@@ -180,12 +180,14 @@ public class AlquileresFragment extends Fragment {
         binding.rvAlquileres.setAdapter( alquilerAdapter );
     }
 
-    public void obtenerAlquileres() {
-
+    /**
+     * Obtiene listado de alquileres del la empresa del user logeado
+     */
+    public void obtenerAlquileresDeEmpresa() {
         RetrofitClient retrofitClient = RetrofitClient.getInstance();
         APIServiceAlquiler apiService = retrofitClient.getRetrofit().create( APIServiceAlquiler.class );
 
-        Call<List<Alquiler>> apiCall = apiService.getAlquileres();
+        Call<List<Alquiler>> apiCall = apiService.getAlquileresEmpresa( user.getEmpresa().getNombre() );
         apiCall.enqueue( new Callback<List<Alquiler>>() {      // LAMADA ASINC call.enqueue
             @Override
             public void onResponse(Call<List<Alquiler>> call, Response<List<Alquiler>> response) {
@@ -200,10 +202,15 @@ public class AlquileresFragment extends Fragment {
                 if ( response.isSuccessful() && response.body() != null ) {
 
                     List<Alquiler> listaRespuesta = response.body();
-                    /*Log.d("RESPONSE", "Código: " + response.code() + " Respuesta: " + listaRespuesta.toString());
+
+                    int cantidadElementos = listaRespuesta.size();
+                    Log.d("CANTIDAD ALQUILERES EMPRESA", " cantidad Alquileres: "+ cantidadElementos);
+
+                    //Log.d("RESPONSE", "Código: " + response.code() + " Respuesta: " + listaRespuesta.toString());
                     for (Alquiler alquiler : listaRespuesta) {
-                        Log.d("RESPONSE", alquiler.toString());
-                    }*/
+                        Log.d("Id empresa listado alquiler ", String.valueOf( alquiler.getEmpresa().getIdEmpresa()));
+                    }
+
                     listaAlquileres.clear();
                     listaAlquileres.addAll( listaRespuesta );
                     alquilerAdapter.notifyDataSetChanged();
