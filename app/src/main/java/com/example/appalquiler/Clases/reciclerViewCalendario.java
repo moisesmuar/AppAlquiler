@@ -5,11 +5,14 @@ import static java.security.AccessController.getContext;
 import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.LinearSnapHelper;
@@ -22,6 +25,7 @@ import com.example.appalquiler.R;
 import com.google.android.material.button.MaterialButton;
 
 import java.io.Serializable;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -49,30 +53,34 @@ public class reciclerViewCalendario {
     private int selectedYear = currentYear;
     private ArrayList<Date> dates = new ArrayList<>(); // ej [2023-04-01, 2023-04-02, 2023-04-03, ...] mes leido
 
-    private TextView tvNombreInmueble;
+    private ConstraintLayout constraintLayout_btn_tv;
     private MaterialButton materialButton;
+    private TextView tvPorcentajeOcupacion;
+    LinearLayout linearParaAnadirRecicler;
+    RecyclerView recyclerView;
 
     private Inmueble inmueble;
     private List<Alquiler> alquilerList;
 
-    LinearLayout linearParaAnadirRecicler;
-    RecyclerView recyclerView;
+    private Usuario user;
     private Context context;
+
 
     public reciclerViewCalendario( @NonNull Inmueble inmueble,
                                    LinearLayout linearParaAnadirRecicler,
-                                   Context context
+                                   Usuario user, Context context
                                    ) {
         this.inmueble = inmueble;
         //this.alquilerList = alquilerList;  // lo consigo en peticion aqui dentro
         this.linearParaAnadirRecicler = linearParaAnadirRecicler;
+        this.user = user;
         this.context = context;
 
         // Maximo mes que muestra calendario
         lastDayInCalendar.add(Calendar.MONTH, 12);
 
-        // Consultas por mes y año
-        obtenerAlquileresMesDelInmueble( );  // Peticion
+        // Consultas por mes y año - Peticion
+        obtenerAlquileresMesDelInmueble( );
     }
     /**
      * Ir al mes anterior. Primero, asegúrese de que el mes actual (cal)
@@ -84,22 +92,15 @@ public class reciclerViewCalendario {
         cal.add( Calendar.MONTH, -1 );
         if ( cal.equals(currentDate) ){
             linearParaAnadirRecicler.removeView( recyclerView );  // borrado de anterior creado
-            linearParaAnadirRecicler.removeView( materialButton );
+            linearParaAnadirRecicler.removeView( constraintLayout_btn_tv );
 
             obtenerAlquileresMesDelInmueble( );
-
-            //montarCalendario();
-                        // setUpCalendar( null );
-            //setUpCalendar( cal );
         }
         else{
             linearParaAnadirRecicler.removeView( recyclerView );  // borrado de anterior creado
-            linearParaAnadirRecicler.removeView( materialButton );
+            linearParaAnadirRecicler.removeView( constraintLayout_btn_tv );
 
             obtenerAlquileresMesDelInmueble( );
-
-            //montarCalendario();
-            //setUpCalendar( cal );
         }
     }
     /**
@@ -111,18 +112,16 @@ public class reciclerViewCalendario {
         cal.add( Calendar.MONTH, 1 );
 
         linearParaAnadirRecicler.removeView( recyclerView );  // borrado de anterior creado
-        linearParaAnadirRecicler.removeView( materialButton );
+        linearParaAnadirRecicler.removeView( constraintLayout_btn_tv );
 
         obtenerAlquileresMesDelInmueble( );
-
-        // montarCalendario();
-        // setUpCalendar( cal );
     }
 
     private void montarCalendario( ) {
         LinearSnapHelper snapHelper = new LinearSnapHelper();
 
         recyclerView = new RecyclerView( context );
+        recyclerView.setId( View.generateViewId() ); // Asignar un ID único al RecyclerView
         snapHelper.attachToRecyclerView( recyclerView );
 
         /*tvNombreInmueble = new TextView( context ); // Crear textView dinámicamente
@@ -138,35 +137,15 @@ public class reciclerViewCalendario {
         });
         */
 
+        /*materialButton = new MaterialButton(context);
+
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(  // Crear parámetros de diseño
                 LinearLayout.LayoutParams.WRAP_CONTENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT
         );
         params.setMargins(30, 40, 0, 20);
-
-        materialButton = new MaterialButton(context);
         materialButton.setLayoutParams(params);
-
-        // Crear el botón MaterialButton
-        //MaterialButton materialButton = new MaterialButton( context );
-        //materialButton.setStyle(context, com.google.android.material.R.style.Widget_Material3_Search_Toolbar_Button_Navigation);
-
-        // Crear el OutlinedButton
-        //MaterialButton outlinedButton = new MaterialButton(context, null, R.attr.outlinedButtonStyle);
-        //outlinedButton.setText("Texto del botón");
-
-       // Configurar el estilo y otras propiedades
-       // outlinedButton.setStrokeColorResource(R.color.outline_button_stroke_color);
-        //outlinedButton.setStrokeWidth(getResources().getDimensionPixelSize(R.dimen.outline_button_stroke_width));
-
         materialButton.setText( inmueble.getNombre() );
-
-
-        // materialButton.setOutlinedButtonStyle(context.getResources().getIdentifier("Widget.MaterialComponents.Button.OutlinedButton", "style", context.getPackageName()));
-       // materialButton.setStyle(context, R.style.Widget_MaterialComponents_Button_OutlinedButton);
-
-
-        // Agregar el evento OnClickListener al botón
         materialButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -179,18 +158,69 @@ public class reciclerViewCalendario {
             }
         });
 
-        recyclerView.setId( View.generateViewId() ); // Asignar un ID único al RecyclerView
+        tvPorcentajeOcupacion = new TextView(context);
+        tvPorcentajeOcupacion.setText("0 %");  // Insertaré porcentaje ocupación.
 
-        // Agregar tv y rv al LinearLayout
+        LinearLayout linearHorizontal = new LinearLayout(context);
+        linearHorizontal.setOrientation(LinearLayout.HORIZONTAL);
+        linearHorizontal.setGravity(Gravity.CENTER_VERTICAL);
 
-                // linearParaAnadirRecicler.addView( tvNombreInmueble );
-        linearParaAnadirRecicler.addView( materialButton );
+        linearHorizontal.addView( materialButton );
+        linearHorizontal.addView( tvPorcentajeOcupacion );
+
+        linearParaAnadirRecicler.addView( linearHorizontal );
+        linearParaAnadirRecicler.addView( recyclerView );*/
+
+        constraintLayout_btn_tv = new ConstraintLayout(context);
+        materialButton = new MaterialButton(context);
+        materialButton.setText( inmueble.getNombre() );
+        materialButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // Crear el Bundle con los datos a pasar al fragmento de destino
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("inmueble", (Serializable) inmueble);
+                Navigation.findNavController(view).navigate(R.id.calendarDetalleFagment, bundle);
+            }
+        });
+        tvPorcentajeOcupacion = new TextView(context);
+        tvPorcentajeOcupacion.setText("0 %");  // Insertaré porcentaje ocupación.
+
+        // Asignación Parámetros ConstraintLayout
+        ConstraintLayout.LayoutParams layoutParams = new ConstraintLayout.LayoutParams(
+                ConstraintLayout.LayoutParams.MATCH_PARENT,
+                ConstraintLayout.LayoutParams.WRAP_CONTENT
+        );
+        layoutParams.setMargins(0, 45, 0, 20);
+        constraintLayout_btn_tv.setLayoutParams(layoutParams);
+
+        // Asignación Parámetros materialButton - margen izquierdo para el Button
+        ConstraintLayout.LayoutParams buttonParams = new ConstraintLayout.LayoutParams(
+                ConstraintLayout.LayoutParams.WRAP_CONTENT,
+                ConstraintLayout.LayoutParams.WRAP_CONTENT
+        );
+        buttonParams.startToStart = ConstraintLayout.LayoutParams.PARENT_ID;
+        buttonParams.topToTop = ConstraintLayout.LayoutParams.PARENT_ID;
+        buttonParams.bottomToBottom = ConstraintLayout.LayoutParams.PARENT_ID;
+        buttonParams.setMargins(30, 0, 0, 0);
+        materialButton.setLayoutParams(buttonParams);
+
+        // Asignación Parámetros tvPorcentajeOcupacion -  margen derecho para el TextView
+        ConstraintLayout.LayoutParams tvParams = new ConstraintLayout.LayoutParams(
+                ConstraintLayout.LayoutParams.WRAP_CONTENT,
+                ConstraintLayout.LayoutParams.WRAP_CONTENT
+        );
+        tvParams.endToEnd = ConstraintLayout.LayoutParams.PARENT_ID;
+        tvParams.topToTop = ConstraintLayout.LayoutParams.PARENT_ID;
+        tvParams.bottomToBottom = ConstraintLayout.LayoutParams.PARENT_ID;
+        tvParams.setMargins(0, 0, 40, 0);
+        tvPorcentajeOcupacion.setLayoutParams(tvParams);
+
+        constraintLayout_btn_tv.addView( materialButton );
+        constraintLayout_btn_tv.addView( tvPorcentajeOcupacion );
+
+        linearParaAnadirRecicler.addView( constraintLayout_btn_tv );
         linearParaAnadirRecicler.addView( recyclerView );
-
-        // ¿necesito añadirlo lo hago, esta por hacer?
-        // rvCalendarios.add( recyclerView ); // Agregar referencia del rv a ArrayList
-        // tvInmuebles.add( textView );
-
     }
 
     /**
@@ -198,27 +228,13 @@ public class reciclerViewCalendario {
      * @param changeMonth
      */
     private void setUpCalendar( Calendar changeMonth ) {
-
         // Establecer mes, dia mes año seleccionado
         // binding.txtCurrentMonth.setText( sdf.format( cal.getTime() ) );
-
 
         // Copia del obj calendario
         Calendar monthCalendar = (Calendar) cal.clone();
         // num maximos dias mes actual objeto cal
         int maxDaysInMonth = cal.getActualMaximum( Calendar.DAY_OF_MONTH );
-
-        // Si CambioDeMes no Nulo coger dia,mes,año de él
-        /*
-        if ( changeMonth != null ) {
-            selectedDay = changeMonth.getActualMinimum( Calendar.DAY_OF_MONTH );
-            selectedMonth = changeMonth.get( Calendar.MONTH );
-            selectedYear = changeMonth.get( Calendar.YEAR );
-        } else {
-            selectedDay = currentDay;
-            selectedMonth = currentMonth;
-            selectedYear = currentYear;
-        }*/
 
         // Verificar si cal no está en el currentMonth
         if ( cal.get(Calendar.MONTH) != currentDate.get(Calendar.MONTH) ) {
@@ -236,14 +252,11 @@ public class reciclerViewCalendario {
         selectedMonth = changeMonth.get( Calendar.MONTH );
         selectedYear = changeMonth.get( Calendar.YEAR );
 
-        // borrar ArrayList fechas, monthCalendar primer dia de mes
-        dates.clear();
-        // Establecer en 1 dia mes actual en copiaCalendario
-        monthCalendar.set( Calendar.DAY_OF_MONTH, 1 );
+        dates.clear(); // borrar ArrayList fechas, monthCalendar primer dia de mes
+        monthCalendar.set( Calendar.DAY_OF_MONTH, 1 ); // Establecer en 1 dia mes actual en copiaCalendario
 
         // Agregar al array de fechas -hasta- max dias del mes.
-        // currentPosition posición primer dia seleccionado
-        int currentPosition = 0;
+        int currentPosition = 0;  // posición primer dia seleccionado
         while ( dates.size() < maxDaysInMonth ) {
             if ( monthCalendar.get( Calendar.DAY_OF_MONTH ) == selectedDay ) {
                 currentPosition = dates.size();
@@ -251,6 +264,24 @@ public class reciclerViewCalendario {
             dates.add( monthCalendar.getTime() );  // ej [2023-04-01, 2023-04-02, 2023-04-03, ...] mes leido
             monthCalendar.add( Calendar.DAY_OF_MONTH, 1 );
         }
+
+        // Asignar % ocupacion mensual
+        int totalDiasAlquilado = 0;
+        if ( alquilerList.size() > 0 ) {
+            for (Alquiler alquiler : alquilerList) {
+                totalDiasAlquilado += alquiler.totaldiasAlquiler();
+            }
+            //Log.d("Total días de alquiler", String.valueOf(totalDiasAlquilado));
+        }
+        double porcentaje = 0;
+        if (dates.size() > 0 ) {
+            porcentaje = (totalDiasAlquilado * 100) / dates.size();
+        }
+        DecimalFormat decimalFormat = new DecimalFormat("#");
+        tvPorcentajeOcupacion.setText( decimalFormat.format(porcentaje) + " %" );
+
+        //Log.d("totalDiasAlquilado ", ": " + totalDiasAlquilado);
+        //Log.d("total dates", ": " + dates.size());
 
         // Asignar vista de calendario
         LinearLayoutManager layoutManager = new LinearLayoutManager(
@@ -262,7 +293,7 @@ public class reciclerViewCalendario {
         );
         recyclerView.setAdapter( calendarHorizontalAdapter );
 
-        // Centrar dia actual si no es 3 primeros 1 2 3 o 3 ultimos 29 30 31
+        // Centrar dia actual si no es 3 primeros 1 2 3 o 3 últimos 29 30 31
         if ( currentPosition > 2 ) {
             recyclerView.scrollToPosition( currentPosition - 3 );
         } else if ( maxDaysInMonth - currentPosition < 2 ) {
@@ -271,22 +302,15 @@ public class reciclerViewCalendario {
             recyclerView.scrollToPosition(currentPosition);
         }
 
-        // Editar listener y sobreescribir onItemClick
         calendarHorizontalAdapter.setOnItemClickListener(new CalendarHorizontalAdapter.OnItemClickListener() {
             @Override
             public void onItemClick( int position ) {  // Cuando se hace click en elemento
-                //Calendar clickCalendar = Calendar.getInstance();  // nuevo calendario
-                //clickCalendar.setTime( dates.get(position) );  // establecer fecha, que corresponde
-                //selectedDay = clickCalendar.get( Calendar.DAY_OF_MONTH ); // actualizar variable dia seleccionaddo
+
             }
         });
 
     }
 
-    /**
-     * obtiene List<Alquiler> de 1 Inmueble y lo guarda en
-     * Map<String, List<Alquiler>> alquileresDeInmueblesMap
-     */
     public void obtenerAlquileresMesDelInmueble(  ){
         RetrofitClient retrofitClient = RetrofitClient.getInstance();
         APIServiceAlquiler apiService = retrofitClient.getRetrofit().create( APIServiceAlquiler.class );
@@ -296,11 +320,12 @@ public class reciclerViewCalendario {
         Log.d("calReferenciaMes.get(Calendar.MONTH),", ": " + cal.get(Calendar.MONTH )+ 1 );
         Log.d("calReferenciaMes.get(Calendar.YEAR),", ": " + cal.get(Calendar.YEAR) );
 
-        Call<List<Alquiler>> call = apiService.getAlquileresMesAnoInmueble(
+        Call<List<Alquiler>> call = apiService.getAlquileresMesAnoInmueble_deEmpresa(
                 // convención de indexación de meses en Calendar: enero 0 febrero 1
                 cal.get(Calendar.MONTH )+ 1,  // mes actual
                 cal.get(Calendar.YEAR),
-                inmueble.getIdInmueble()
+                inmueble.getIdInmueble(),
+                user.getEmpresa().getNombre()
         );
         call.enqueue( new Callback<List<Alquiler>>() {
             @Override
@@ -308,7 +333,6 @@ public class reciclerViewCalendario {
                 if ( response.isSuccessful() ) {
 
                     List<Alquiler> list = response.body();
-
                     Log.d("RESPONSE", "Código: " + response.code() + " obtenerAlquileresMesDelInmueble() " );
                     for ( Alquiler alq : list ) {
                         Log.d("Lectura ", " "+ inmueble.getNombre()+ " "+ alq.toString() );
@@ -318,10 +342,6 @@ public class reciclerViewCalendario {
 
                     montarCalendario();
                     setUpCalendar( cal );
-
-                    // Guardar respuesta en Map con clave
-                    // alquileresDeInmueblesMap.put( inmueble.getNombre() , alquileresList );
-
 
                 } else {
                     Log.e("onResponse", "Not succesful");

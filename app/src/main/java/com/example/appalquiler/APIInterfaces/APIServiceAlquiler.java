@@ -45,11 +45,12 @@ public interface APIServiceAlquiler {
     @GET("alquileres/empresa/{nombreEmpresa}")
     Call<List<Alquiler>> getAlquileresEmpresa(@Path("nombreEmpresa") String nombreEmpresa);
 
-    // obtener alquileres por su mes y año
-    @GET("alquileres/{mes}/{ano}/{idInmueble}")
-    Call<List<Alquiler>> getAlquileresMesAnoInmueble(
+    // obtener alquileres por su mes y año de la Empresa
+    @GET("alquileres/{mes}/{ano}/{idInmueble}/{nombreEmpresa}")
+    Call<List<Alquiler>> getAlquileresMesAnoInmueble_deEmpresa(
             @Path("mes") int mes,
             @Path("ano") int ano,
-            @Path("idInmueble") int idInmueble);
+            @Path("idInmueble") int idInmueble,
+            @Path("nombreEmpresa") String nombreEmpresa);
 
 }

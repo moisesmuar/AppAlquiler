@@ -1,9 +1,13 @@
 package com.example.appalquiler.Clases;
 
+import android.util.Log;
+
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.Date;
 
@@ -11,13 +15,10 @@ public class Alquiler implements Serializable {
 
     @SerializedName("idAlquiler")
     private int idAlquiler;
-
     @SerializedName("fhinicio")
     private String fhinicio;
-
     @SerializedName("fhfin")
     private String   fhfin;
-
     @SerializedName("inmueble")
     private Inmueble inmueble;
     @SerializedName("cliente")
@@ -26,6 +27,7 @@ public class Alquiler implements Serializable {
     private Portal portal;
     @SerializedName("empresa")
     private Empresa empresa;
+    private SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
     public Alquiler(){}
 
@@ -39,6 +41,24 @@ public class Alquiler implements Serializable {
         this.cliente = cliente;
         this.portal = portal;
         this.empresa = empresa;
+    }
+
+    public int totaldiasAlquiler (){
+        int totalDias = 0;
+        try {
+            // Parsear las cadenas de texto a objetos Date
+            Date fechaInicio = dateFormat.parse( this.fhinicio );
+            Date fechaFin = dateFormat.parse( this.fhfin );
+
+            // Calcular la duración en días sumando 1 al resultado
+            long duracionMilisegundos = fechaFin.getTime() - fechaInicio.getTime();
+            totalDias = (int) (duracionMilisegundos / (1000 * 60 * 60 * 24))+ 1;
+
+        } catch (ParseException e) { // caso de error al parsear fechas
+            e.printStackTrace();
+        }
+
+        return totalDias;
     }
 
     public int getIdAlquiler() {

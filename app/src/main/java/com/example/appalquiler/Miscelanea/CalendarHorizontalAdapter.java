@@ -7,6 +7,7 @@ import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
@@ -15,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.appalquiler.Clases.Alquiler;
 import com.example.appalquiler.R;
 
+import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
@@ -39,10 +41,7 @@ public class CalendarHorizontalAdapter extends RecyclerView.Adapter<CalendarHori
     private int selectedDay;
     private int selectedMonth;
     private int selectedYear;
-
     SimpleDateFormat sdf = new SimpleDateFormat("EEE", new Locale("es", "ES"));
-
-
     private List<Alquiler> alquileresList = null;
 
     public CalendarHorizontalAdapter(Context context, ArrayList<Date> data,
@@ -111,7 +110,6 @@ public class CalendarHorizontalAdapter extends RecyclerView.Adapter<CalendarHori
         holder.linearLayout.setBackgroundColor(Color.WHITE);
         holder.linearLayout.setEnabled(true);
     }
-
 
     @Override
     public void onBindViewHolder(@NonNull CalendarHorizontalViewHolder holder, int position) {

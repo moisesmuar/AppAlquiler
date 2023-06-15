@@ -21,6 +21,7 @@ import com.example.appalquiler.API.RetrofitClient;
 import com.example.appalquiler.Clases.Alquiler;
 import com.example.appalquiler.APIInterfaces.APIServiceAlquiler;
 import com.example.appalquiler.Clases.Inmueble;
+import com.example.appalquiler.Clases.Usuario;
 import com.example.appalquiler.Miscelanea.CalendarAdapter;
 import com.example.appalquiler.R;
 import com.example.appalquiler.SharedPreferencesManager;
@@ -43,6 +44,8 @@ import retrofit2.Response;
 public class CalendarDetalleFragment extends Fragment implements CalendarAdapter.OnItemListener {
 
     private FragmentCalendarDetalleBinding binding;
+    SharedPreferencesManager sessionManager;
+    private Usuario user;
 
     private TextView monthYearText;
     private RecyclerView calendarRecyclerView;
@@ -67,10 +70,11 @@ public class CalendarDetalleFragment extends Fragment implements CalendarAdapter
         // mostrar barra de navegación botón de retroceso en barra de acción de la actividad actual
         ((AppCompatActivity) requireActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        SharedPreferencesManager sessionManager = new SharedPreferencesManager( requireContext() );
+        sessionManager = new SharedPreferencesManager( requireContext() );
         if ( !sessionManager.isLogin() ) { // Usuario logeado? no. redirigir a fragmento login
             Navigation.findNavController(view).navigate( R.id.loginFragment );
         }
+        user = sessionManager.getSpUser();
 
         return view;
     }
@@ -95,14 +99,14 @@ public class CalendarDetalleFragment extends Fragment implements CalendarAdapter
         binding.tvTituloNombreInmueble.setText(  inmueble.getNombre() );
 
         establecerVistaMes();
-        obtenerAlquileresMesDelInmueble_establecerVistaMes_datosAPI();
+        obtenerAlquileresMesDelInmueble_deEmpresa_establecerVistaMes_datosAPI();
 
         binding.btnIrMesAnterior.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 selectedDate = selectedDate.minusMonths(1);
                 establecerVistaMes();
-                obtenerAlquileresMesDelInmueble_establecerVistaMes_datosAPI();
+                obtenerAlquileresMesDelInmueble_deEmpresa_establecerVistaMes_datosAPI();
             }
         });
         binding.btnIrMesPosterior.setOnClickListener(new View.OnClickListener() {
@@ -110,7 +114,7 @@ public class CalendarDetalleFragment extends Fragment implements CalendarAdapter
             public void onClick(View v) {
                 selectedDate = selectedDate.plusMonths(1);
                 establecerVistaMes();
-                obtenerAlquileresMesDelInmueble_establecerVistaMes_datosAPI();
+                obtenerAlquileresMesDelInmueble_deEmpresa_establecerVistaMes_datosAPI();
             }
         });
     }
@@ -200,14 +204,15 @@ public class CalendarDetalleFragment extends Fragment implements CalendarAdapter
 
     }
 
-    public void obtenerAlquileresMesDelInmueble_establecerVistaMes_datosAPI() {
+    public void obtenerAlquileresMesDelInmueble_deEmpresa_establecerVistaMes_datosAPI() {
         RetrofitClient retrofitClient = RetrofitClient.getInstance();
         APIServiceAlquiler apiService = retrofitClient.getRetrofit().create( APIServiceAlquiler.class );
 
-        Call<List<Alquiler>> call = apiService.getAlquileresMesAnoInmueble(
+        Call<List<Alquiler>> call = apiService.getAlquileresMesAnoInmueble_deEmpresa(
                 selectedDate.getMonthValue(),
                 selectedDate.getYear(),
-                inmueble.getIdInmueble()
+                inmueble.getIdInmueble(),
+                user.getEmpresa().getNombre()
         );
 
         call.enqueue(new Callback<List<Alquiler>>() {     // LAMADA ASINC call.enqueue
@@ -224,9 +229,8 @@ public class CalendarDetalleFragment extends Fragment implements CalendarAdapter
                         Log.d("RESPONSE", "Código: " + response.code() + " Respuesta: " + alquiler.toString() );
 
                     }
-                    establecerVistaMes_datosAPI();  // carga de calendario con datos api
-                    // miAdaptador.setAlquileresList( alquileresList );
-                    // miAdaptador.notifyDataSetChanged();
+                    establecerVistaMes_datosAPI();
+
                 } else {
                     Log.e("onResponse", "Response not succesful");
                 }
@@ -237,32 +241,5 @@ public class CalendarDetalleFragment extends Fragment implements CalendarAdapter
             }
         });
     }
-/*
-    Call<List<Alquiler>> call = apiService.getAlquileres();
-
-        call.enqueue(new Callback<List<Alquiler>>() {     // LAMADA ASINC call.enqueue
-        @Override
-        public void onResponse(Call<List<Alquiler>> call, Response<List<Alquiler>> response) {
-            if (response.isSuccessful()) {
-                alquileresList = response.body();
-
-                for (Alquiler alquiler : alquileresList) {
-                    int idAlquiler = alquiler.getIdAlquiler();
-                    // int dias = alquiler.getDias();
-                    // double precioDia = alquiler.getPrecioDia();
-                    String fhinicio = alquiler.getFhinicio();
-                    String fhfin = alquiler.getFhfin();
-
-                    System.out.println("Fecha inicio: " + fhinicio);
-                    System.out.println("Fecha fin: " + fhfin);
-                }
-                establecerVistaMes_datosAPI();  // carga de calendario con datos api
-                // miAdaptador.setAlquileresList( alquileresList );
-                // miAdaptador.notifyDataSetChanged();
-            } else {
-
-            }
-        }
-        */
 
 }

@@ -71,7 +71,6 @@ public class ClientesFragment extends Fragment {
         }
         user = sessionManager.getSpUser();
 
-
         return view;
     }
 

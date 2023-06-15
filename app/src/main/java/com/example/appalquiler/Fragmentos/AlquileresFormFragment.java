@@ -225,7 +225,7 @@ public class AlquileresFormFragment extends Fragment {
         });
 
         // EditText Clicables, aparece DatePickerDialog
-        binding.editTextFhInicio.setOnClickListener(new View.OnClickListener() {
+        /*binding.editTextFhInicio.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 showDatePickerDialog(binding.editTextFhInicio);
@@ -236,7 +236,7 @@ public class AlquileresFormFragment extends Fragment {
             public void onClick(View v) {
                 showDatePickerDialog(binding.editTextFhFin);
             }
-        });
+        });*/
 
         // Botones para lanzar DatePickerDialog
         binding.ibtnFhini.setOnClickListener(new View.OnClickListener() {
@@ -252,7 +252,8 @@ public class AlquileresFormFragment extends Fragment {
             }
         });
 
-        // Ir a listado para selección de INMUEBLE o CLIENTE o PORTAL   accion crear || accion editar
+
+        // Botones ir listado selección de INMUEBLE || CLIENTE || PORTAL  -  accion crear || accion editar
         binding.ibtnInmuebleAlquilerBuscar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

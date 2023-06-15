@@ -30,7 +30,6 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="12dp"
         android:layout_marginTop="64dp"
-        android:clickable="true"
         android:focusable="false"
         android:hint="Fecha de inicio"
         android:inputType="date"
@@ -44,7 +43,6 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="12dp"
         android:layout_marginTop="15dp"
-        android:clickable="true"
         android:focusable="false"
         android:hint="Fecha de fin"
         android:inputType="date"
@@ -80,6 +78,7 @@
         android:layout_marginStart="12dp"
         android:layout_marginTop="15dp"
         android:hint="Portal"
+        android:focusable="false"
         app:layout_constraintStart_toEndOf="@+id/imageView20"
         app:layout_constraintTop_toBottomOf="@+id/editTextNombreCliente" />
 
@@ -99,6 +98,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="12dp"
         android:layout_marginTop="15dp"
+        android:focusable="false"
         android:hint="Inmueble"
         app:layout_constraintStart_toEndOf="@+id/imageView18"
         app:layout_constraintTop_toBottomOf="@+id/editTextFhFin" />
@@ -110,6 +110,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="12dp"
         android:layout_marginTop="15dp"
+        android:focusable="false"
         android:hint="Cliente"
         app:layout_constraintStart_toEndOf="@+id/imageView19"
         app:layout_constraintTop_toBottomOf="@+id/editTextNombreInmueble" />

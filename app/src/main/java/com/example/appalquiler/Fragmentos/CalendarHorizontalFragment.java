@@ -95,7 +95,6 @@ public class CalendarHorizontalFragment extends Fragment {
         InputMethodManager imm = (InputMethodManager) requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
 
-
         return view;
     }
 
@@ -165,7 +164,7 @@ public class CalendarHorizontalFragment extends Fragment {
                     for ( Inmueble inmueble : listaInmuebles ) {
 
                         listaRvCalendarios.add( new reciclerViewCalendario(
-                                inmueble, linearParaAnadirRecicler, getContext() )
+                                inmueble, linearParaAnadirRecicler, user, getContext() )
                         );
                     }
 
