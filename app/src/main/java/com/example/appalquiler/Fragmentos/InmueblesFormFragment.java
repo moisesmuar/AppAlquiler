@@ -33,9 +33,10 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class InmueblesFormFragment extends Fragment {
 
     private FragmentInmueblesFormBinding binding;
-    private Inmueble inmueble;
     SharedPreferencesManager sessionManager;
+    private Usuario user;
 
+    private Inmueble inmueble;
 
     public InmueblesFormFragment() {
         // Required empty public constructor
@@ -57,6 +58,7 @@ public class InmueblesFormFragment extends Fragment {
         if ( !sessionManager.isLogin() ) { // Usuario logeado? no. redirigir a fragmento login
             Navigation.findNavController(view).navigate( R.id.loginFragment );
         }
+        user = sessionManager.getSpUser();
 
         return view;
     }
@@ -65,19 +67,36 @@ public class InmueblesFormFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        // Obtener bundle de argumentos del fragment
         Bundle bundle = getArguments();
         if( bundle != null ) {
             this.inmueble = (Inmueble) bundle.getSerializable("inmueble");
 
-            APIobtenerInmueble( inmueble.getIdInmueble() );
-            binding.btnGuardar.setText("Modificar");
-            binding.btnEliminar.setText("Eliminar");
+            binding.editTextNombre.setText( inmueble.getNombre() );
+            binding.editTextCalle.setText( inmueble.getCalle() );
+            binding.editTextCiudad.setText( inmueble.getCiudad() );
+            binding.editTextNumPersonas.setText( String.valueOf( inmueble.getNumPersonas() ) );
+            binding.editTextNumHabitaciones.setText( String.valueOf( inmueble.getNumHabitaciones() ) );
+            binding.editTextNumBanos.setText( String.valueOf( inmueble.getNumBanos() ) );
+            binding.editTextNumAseos.setText( String.valueOf( inmueble.getNumAseos() ) );
+
+            //APIobtenerInmueble( inmueble.getIdInmueble() );
+            if ( user.getRol() == 0 ) { // si es admin
+                binding.btnGuardar.setText("Modificar");
+                binding.btnEliminar.setText("Eliminar");
+                configura_btn_et_edicion_creaccion( view );
+            }
         }
         else {
-            binding.btnGuardar.setText("Añadir");
-            binding.btnEliminar.setText("Cancelar");
+            if ( user.getRol() == 0 ) {
+                binding.btnGuardar.setText("Añadir");
+                binding.btnEliminar.setText("Cancelar");
+                configura_btn_et_edicion_creaccion( view );
+            }
         }
+
+    }
+
+    public void configura_btn_et_edicion_creaccion ( @NonNull View view ){
 
         binding.btnGuardar.setOnClickListener(new View.OnClickListener() {  // POST Inmueble API
             @Override
@@ -148,6 +167,7 @@ public class InmueblesFormFragment extends Fragment {
                 }
             }
         });
+
     }
 
     public void guardar( Inmueble inmueble ) {
@@ -224,7 +244,7 @@ public class InmueblesFormFragment extends Fragment {
         binding.editTextNumAseos.setText("");
     }
 
-    public void APIobtenerInmueble( Integer idInmueble ) {
+    /*public void APIobtenerInmueble( Integer idInmueble ) {
         RetrofitClient retrofitClient = RetrofitClient.getInstance();
         APIServiceInmueble apiService = retrofitClient.getRetrofit().create( APIServiceInmueble.class );
 
@@ -255,6 +275,6 @@ public class InmueblesFormFragment extends Fragment {
                 Log.e("Error con Log.e", "¡¡onFailure Error al obtener", t);
             }
         });
-    }
+    }*/
 
 }

@@ -24,32 +24,9 @@ public class CalendarHorizontalViewHolder extends RecyclerView.ViewHolder   {
         txtDay = itemView.findViewById( R.id.txt_date );
         txtDayInWeek = itemView.findViewById( R.id.txt_day );
         linearLayout = itemView.findViewById(R.id.calendar_linear_layout);
-        /*
-            this.onItemListener = onItemListener;
-            itemView.setOnClickListener(this);
-        */
-        /*
-            linearLayout.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick( View v ) {
-                    if ( listener != null ) {
-                        // obtener posicion del elemento en recliclerView
-                        int position = getBindingAdapterPosition();
-                        if ( position != RecyclerView.NO_POSITION ) {
-                            listener.onItemClick(position);
-                        }
-                    }
-                }
-            });
-        */
+
 
     }
-        /*
-            @Override
-            public void onClick( View view ) {
-                onItemListener.onItemClick( getAdapterPosition(), String.valueOf(txtDay), this.alquiler );
-            }
-        */
 
     public void setAlquiler( Alquiler alquiler ) {
         this.alquiler = alquiler;

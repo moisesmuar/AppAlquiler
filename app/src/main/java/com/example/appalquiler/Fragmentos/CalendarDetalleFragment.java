@@ -165,29 +165,18 @@ public class CalendarDetalleFragment extends Fragment implements CalendarAdapter
 
     /**
      * Representación legible de mes y año de una fecha en formato "MMMM yyyy"
-     * in 2023-05-19 out "Mayo 2023"
-     * @param date
-     * @return String
+     * @param date 2023-05-19
+     * @return String "Mayo 2023"
      */
     private String mesyAnoDelaFecha(LocalDate date) {
-        /*// pasar LocalDate a Date
-        Date fecha = Date.from(date.atStartOfDay(ZoneId.systemDefault()).toInstant());
-        SimpleDateFormat formatter = new SimpleDateFormat("MMMM yyyy", new Locale("es", "ES"));
-        return formatter.format(fecha);*/
-
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMMM yyyy", new Locale("es", "ES"));
         return date.format( formatter );
     }
 
     @Override
     public void onItemClick(int position, String dayText, Alquiler alquiler) {
-        /*if( !dayText.equals("") ) {
-            String message = "Dia " + dayText + " " + mesyAnoDelaFecha( selectedDate );
-            Toast.makeText( getContext(), message, Toast.LENGTH_LONG).show();
-        }*/
 
         if ( alquiler != null ) {
-
             LocalDate fechaInicio = LocalDate.parse(alquiler.getFhinicio());
             LocalDate fechaFin = LocalDate.parse(alquiler.getFhfin());
 
@@ -195,13 +184,8 @@ public class CalendarDetalleFragment extends Fragment implements CalendarAdapter
                     + " Salida: " + fechaFin.getDayOfMonth() + "\n"
                     + "Cliente: " + alquiler.getCliente().getNombre();
 
-          /*  String message = "Entrada: " + alquiler.getFhinicio().getDayOfMonth()
-                    + " Salida: " + alquiler.getFhfin().getDayOfMonth() + "\n"
-                    + "Cliente: " + alquiler.getCliente().getNombre();*/
-
             Toast.makeText( getContext(), message, Toast.LENGTH_LONG).show();
         }
-
     }
 
     public void obtenerAlquileresMesDelInmueble_deEmpresa_establecerVistaMes_datosAPI() {
@@ -227,7 +211,6 @@ public class CalendarDetalleFragment extends Fragment implements CalendarAdapter
                         System.out.println("Fecha inicio: " + alquiler.getFhinicio());
                         System.out.println("Fecha fin: " + alquiler.getFhfin());
                         Log.d("RESPONSE", "Código: " + response.code() + " Respuesta: " + alquiler.toString() );
-
                     }
                     establecerVistaMes_datosAPI();
 

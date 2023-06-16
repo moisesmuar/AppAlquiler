@@ -22,7 +22,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-    
+
     <EditText
         android:id="@+id/editTextNombre"
         android:layout_width="250dp"
@@ -30,6 +30,7 @@
         android:layout_marginStart="80dp"
         android:layout_marginTop="50dp"
         android:hint="Nombre"
+        android:maxLength="100"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvTituloCli" />
 
@@ -40,6 +41,7 @@
         android:layout_marginStart="80dp"
         android:layout_marginTop="12dp"
         android:hint="Ciudad"
+        android:maxLength="100"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editTextCalle" />
 
@@ -50,6 +52,7 @@
         android:layout_marginStart="80dp"
         android:layout_marginTop="12dp"
         android:hint="Calle"
+        android:maxLength="100"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editTextEmail" />
 
@@ -60,6 +63,7 @@
         android:layout_marginStart="80dp"
         android:layout_marginTop="12dp"
         android:hint="País"
+        android:maxLength="100"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editTextCiudad" />
 
@@ -82,6 +86,7 @@
         android:layout_marginTop="12dp"
         android:hint="Código Postal"
         android:inputType="number"
+        android:maxLength="5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editTextPais" />
 
@@ -93,6 +98,7 @@
         android:layout_marginTop="12dp"
         android:hint="Teléfono"
         android:inputType="phone"
+        android:maxLength="15"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editTextNombre" />
 
@@ -114,7 +120,7 @@
             style="@style/Widget.Material3.Button.TonalButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Guardar"
+            android:text=""
             android:textSize="16sp" />
 
         <Button
@@ -123,7 +129,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
-            android:text="Eliminar"
+            android:text=""
             android:textSize="16sp" />
 
     </LinearLayout>

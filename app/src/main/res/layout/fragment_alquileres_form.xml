@@ -163,7 +163,7 @@
             android:id="@+id/btnGuardar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Guardar"
+            android:text=""
             android:textSize="16sp" />
 
         <Button
@@ -172,7 +172,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
-            android:text="Eliminar"
+            android:text=""
             android:textSize="16sp" />
 
     </LinearLayout>
@@ -216,9 +216,6 @@
         android:src="@drawable/person_black_24dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView18" />
-
-
-
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

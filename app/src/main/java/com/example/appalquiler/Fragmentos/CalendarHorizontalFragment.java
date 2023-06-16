@@ -61,19 +61,11 @@ public class CalendarHorizontalFragment extends Fragment {
     SharedPreferencesManager sessionManager;
     private Usuario user;
 
-    private List<reciclerViewCalendario> listaRvCalendarios = new ArrayList<>();
-
-    private LinearLayout linearParaAnadirRecicler;
-    // private ScrollView scrollViewContainer;
-
     private Calendar calReferenciaMes = Calendar.getInstance(new Locale("es", "ES"));  // fecha actual
     private SimpleDateFormat sdf = new SimpleDateFormat("MMMM yyyy", new Locale("es", "ES"));
-
-    private List<TextView> tvInmuebles = new ArrayList<>();
-    private List<RecyclerView> rvCalendarios = new ArrayList<>();
-
-    private List<Inmueble> listaInmuebles = new ArrayList<>(); // lista inmuebles API
-    Map<String, List<Alquiler>> alquileresDeInmueblesMap = new HashMap<>();  // almacenar listado alquiler cada inmueble
+    private List<reciclerViewCalendario> listaRvCalendarios = new ArrayList<>();
+    private LinearLayout linearParaAnadirRecicler;
+    private List<Inmueble> listaInmuebles = new ArrayList<>();
 
     public CalendarHorizontalFragment() {
         // Required empty public constructor
@@ -103,8 +95,6 @@ public class CalendarHorizontalFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        // scrollViewContainer = binding.idScrollViewContaniner
-        // linearParaAnadirRecicler = binding.idLinearCalenHorizont;
         linearParaAnadirRecicler = binding.idLinearScrolling;
 
         obtenerInmuebles();
@@ -137,6 +127,10 @@ public class CalendarHorizontalFragment extends Fragment {
         });
     }
 
+    /**
+     * Obtener todos inmuebles de la empresa, hacemos una instancia reciclerViewCalendario por cada inmueble
+     * las instacias se guardan en listaRvCalendarios para llamar a los métodos mesAnterior() mesPosterior()
+     */
     public void obtenerInmuebles( ) {
         RetrofitClient retrofitClient = RetrofitClient.getInstance();
         APIServiceInmueble apiService = retrofitClient.getRetrofit().create( APIServiceInmueble.class );
@@ -145,29 +139,22 @@ public class CalendarHorizontalFragment extends Fragment {
         apiCall.enqueue( new Callback<List<Inmueble>>() {
             @Override
             public void onResponse(Call<List<Inmueble>> call, Response<List<Inmueble>> response) {
+
                 if ( response.isSuccessful() && response.body() != null ) {
-
-                    /*Usuario user = sessionManager.getSpUser();
-                    Log.d("USER SP", "Nombre usuario: " + user.getUserName() + ", Contraseña: " + user.getPassword() );
-                    Log.d("USER SP", "Nombre empresa: " + user.getEmpresa().getNombre() );*/
-
                     List<Inmueble> listaRespuesta = response.body();;
-
-                    Log.d("RESPONSE", "Código: " + response.code() + " obtenerInmuebles(inmueble)" );
+                   /* Log.d("RESPONSE", "Código: " + response.code() + " obtenerInmuebles(inmueble)" );
                     for ( Inmueble inmueble : listaRespuesta ) {
                         Log.d("Lectura ", " " + inmueble.toString() );
-                    }
+                    }*/
 
                     listaInmuebles.clear();
                     listaInmuebles.addAll( listaRespuesta );
 
                     for ( Inmueble inmueble : listaInmuebles ) {
-
                         listaRvCalendarios.add( new reciclerViewCalendario(
                                 inmueble, linearParaAnadirRecicler, user, getContext() )
                         );
                     }
-
                 } else {
                     Log.d("ERROR", "Código: " + response.code() + " Mensaje: " + response.message());
                 }
@@ -179,6 +166,5 @@ public class CalendarHorizontalFragment extends Fragment {
             }
         });
     }
-
 
 }

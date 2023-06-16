@@ -54,16 +54,6 @@ public class InmuebleAdapter extends RecyclerView.Adapter<InmuebleAdapterViewHol
             public void onClick(View v) {
                 Bundle bundle = new Bundle();
 
-               /* if( modoSeleccionActivado ){  //
-                    alquilerEdicion.setInmueble( itemInmueble );  // EDITAR Alquiler NEW Inmueble
-                    bundle.putSerializable("alquilerNuevo" , (Serializable) alquilerEdicion );
-                    Navigation.findNavController(v).navigate( R.id.alquileresFormFragment, bundle );
-                }
-                else{
-                    bundle.putSerializable("inmueble" , (Serializable) itemInmueble );
-                    Navigation.findNavController(v).navigate( R.id.inmueblesFormFragment, bundle );
-                }
-*/
                 switch (modoSeleccion) {
                     case 0:   // Editar Inmueble
                         bundle.putSerializable("inmueble" , (Serializable) itemInmueble );

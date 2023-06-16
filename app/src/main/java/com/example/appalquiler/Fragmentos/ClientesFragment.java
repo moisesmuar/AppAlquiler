@@ -149,7 +149,7 @@ public class ClientesFragment extends Fragment {
     }
 
     /**
-     * Filtro por nombre  Cliente
+     * Filtro en lista por nombre  Cliente, edito en adapter la lista filtrada actual.
      * @param texto
      */
     private void filtrarLista( String texto ) {
@@ -189,6 +189,9 @@ public class ClientesFragment extends Fragment {
         binding.rvClientes.setAdapter( clienteAdapter );
     }
 
+    /**
+     * Petición que obtiene Listado de clientes de la empresa y notifica al adapter de un cambio de datos.
+     */
     public void obtenerClientesDeEmpresa( ) {
         RetrofitClient retrofitClient = RetrofitClient.getInstance();
         APIServiceCliente apiService = retrofitClient.getRetrofit().create( APIServiceCliente.class );
@@ -202,15 +205,13 @@ public class ClientesFragment extends Fragment {
                     List<Cliente> listaRespuesta = response.body();;
                     Log.d("RESPONSE", "Código: " + response.code() + " Respuesta: " + listaRespuesta.toString());
 
-
                     int cantidadElementos = listaRespuesta.size();
                     Log.d("CANTIDAD CLIENTES EMPRESA", " cantidad CLIENTES: "+ cantidadElementos);
 
-                    //Log.d("RESPONSE", "Código: " + response.code() + " Respuesta: " + listaRespuesta.toString());
+                    // Log.d("RESPONSE", "Código: " + response.code() + " Respuesta: " + listaRespuesta.toString());
                     for (Cliente cli : listaRespuesta) {
                         Log.d("Id empresa listado cliente ", String.valueOf( cli.getEmpresa().getIdEmpresa()));
                     }
-
 
                     listaClientes.clear();
                     listaClientes.addAll( listaRespuesta );

@@ -51,22 +51,6 @@ public class ClienteAdapter extends RecyclerView.Adapter<ClienteAdapterViewHolde
 
         Log.d("onBindViewHolder", "modoSeleccion: " + modoSeleccion );
 
-       /* holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Bundle bundle = new Bundle();
-                if( modoSeleccionActivado ){  //
-                    alquilerEdicion.setCliente( itemCliente );  // EDITAR Alquiler NEW Cliente
-                    bundle.putSerializable("alquilerNuevo" , (Serializable) alquilerEdicion );
-                    Navigation.findNavController(v).navigate( R.id.alquileresFormFragment, bundle );
-                }
-                else{
-                    bundle.putSerializable("cliente" , (Serializable) itemCliente );
-                    Navigation.findNavController(v).navigate( R.id.clientesFormFragment, bundle );
-                }
-            }
-        });*/
-
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

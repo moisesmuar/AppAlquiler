@@ -53,7 +53,6 @@ public class RegistroFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        // setContentView( R.layout.activity_login  );
 
         etUsername = binding.etRUserName;
         etPassword = binding.etRPassword;

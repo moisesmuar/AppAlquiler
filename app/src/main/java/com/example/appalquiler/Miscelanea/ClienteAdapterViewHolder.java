@@ -20,10 +20,7 @@ public class ClienteAdapterViewHolder extends RecyclerView.ViewHolder{
     public void render( Cliente cli ) {
         binding.tvNombre.setText( cli.getNombre() );
         binding.tvTlf.setText( cli.getTelefono() );
-
         binding.tvEmail.setText( cli.getEmail() );
-        //binding.tvCalle.setText( cli.getCalle() );
-
         binding.tvCiudad.setText( cli.getCiudad() );
         binding.tvCp.setText( cli.getCp() );
     }

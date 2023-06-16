@@ -41,6 +41,7 @@ public class ConfiguracionFragment extends Fragment {
                              Bundle savedInstanceState) {
         binding = FragmentConfiguracionBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
+
         sessionManager = new SharedPreferencesManager( requireContext() );
         if ( !sessionManager.isLogin() ) {
             Log.e("LOGIN", " false ");

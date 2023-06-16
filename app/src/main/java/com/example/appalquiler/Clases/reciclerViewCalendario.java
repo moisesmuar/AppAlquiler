@@ -37,6 +37,9 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+/**
+ * Obtiene alquileres del mes de un inmueble, lo
+ */
 public class reciclerViewCalendario {
 
     private Calendar lastDayInCalendar = Calendar.getInstance(new Locale("es", "ES"));
@@ -124,53 +127,6 @@ public class reciclerViewCalendario {
         recyclerView.setId( View.generateViewId() ); // Asignar un ID único al RecyclerView
         snapHelper.attachToRecyclerView( recyclerView );
 
-        /*tvNombreInmueble = new TextView( context ); // Crear textView dinámicamente
-        tvNombreInmueble.setText( inmueble.getNombre() );
-        tvNombreInmueble.setOnClickListener(new View.OnClickListener() {  // Ir a CalendarDetalle
-            @Override
-            public void onClick(View view) {
-                Bundle bundle = new Bundle();
-                bundle.putSerializable("inmueble" , (Serializable) inmueble );
-                Navigation.findNavController(view).navigate( R.id.calendarDetalleFagment, bundle );
-                // Navigation.findNavController(view).navigate(R.id.action_calendarHorizontalFragment_to_calendarDetalleFagment,bundle);
-            }
-        });
-        */
-
-        /*materialButton = new MaterialButton(context);
-
-        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(  // Crear parámetros de diseño
-                LinearLayout.LayoutParams.WRAP_CONTENT,
-                LinearLayout.LayoutParams.WRAP_CONTENT
-        );
-        params.setMargins(30, 40, 0, 20);
-        materialButton.setLayoutParams(params);
-        materialButton.setText( inmueble.getNombre() );
-        materialButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                // Crear el Bundle con los datos a pasar al fragmento de destino
-                Bundle bundle = new Bundle();
-                bundle.putSerializable("inmueble", (Serializable) inmueble);
-
-                // Navegar al fragmento de destino
-                Navigation.findNavController(view).navigate(R.id.calendarDetalleFagment, bundle);
-            }
-        });
-
-        tvPorcentajeOcupacion = new TextView(context);
-        tvPorcentajeOcupacion.setText("0 %");  // Insertaré porcentaje ocupación.
-
-        LinearLayout linearHorizontal = new LinearLayout(context);
-        linearHorizontal.setOrientation(LinearLayout.HORIZONTAL);
-        linearHorizontal.setGravity(Gravity.CENTER_VERTICAL);
-
-        linearHorizontal.addView( materialButton );
-        linearHorizontal.addView( tvPorcentajeOcupacion );
-
-        linearParaAnadirRecicler.addView( linearHorizontal );
-        linearParaAnadirRecicler.addView( recyclerView );*/
-
         constraintLayout_btn_tv = new ConstraintLayout(context);
         materialButton = new MaterialButton(context);
         materialButton.setText( inmueble.getNombre() );
@@ -228,8 +184,6 @@ public class reciclerViewCalendario {
      * @param changeMonth
      */
     private void setUpCalendar( Calendar changeMonth ) {
-        // Establecer mes, dia mes año seleccionado
-        // binding.txtCurrentMonth.setText( sdf.format( cal.getTime() ) );
 
         // Copia del obj calendario
         Calendar monthCalendar = (Calendar) cal.clone();
@@ -305,17 +259,13 @@ public class reciclerViewCalendario {
         calendarHorizontalAdapter.setOnItemClickListener(new CalendarHorizontalAdapter.OnItemClickListener() {
             @Override
             public void onItemClick( int position ) {  // Cuando se hace click en elemento
-
             }
         });
-
     }
 
     public void obtenerAlquileresMesDelInmueble(  ){
         RetrofitClient retrofitClient = RetrofitClient.getInstance();
         APIServiceAlquiler apiService = retrofitClient.getRetrofit().create( APIServiceAlquiler.class );
-
-        //Log.d("PETICION Alq Mes Inmueble", "selectedMonth: "  + currentDate.get( Calendar.MONTH )+ " selectedYear: " + selectedYear+" idInmueble: " + inmueble.getIdInmueble() );
 
         Log.d("calReferenciaMes.get(Calendar.MONTH),", ": " + cal.get(Calendar.MONTH )+ 1 );
         Log.d("calReferenciaMes.get(Calendar.YEAR),", ": " + cal.get(Calendar.YEAR) );

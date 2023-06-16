@@ -134,20 +134,8 @@ public class CalendarHorizontalAdapter extends RecyclerView.Adapter<CalendarHori
                 ContextCompat.getColor(context, R.color.md_theme_light_onError )
         );
 
-        /**
-         * Creo que puedes usar "cal.after(currentDate)" y "cal == currentDate",
-         * pero no funcionó correctamente para mí, así que utilicé esta versión más larga. Aquí simplemente pregunto
-         * si la fecha mostrada es posterior a la fecha actual o si es la fecha actual, en ese caso
-         * se habilita el elemento y es posible hacer clic en él, de lo contrario se desactiva.
-         * El valor de selectCurrentDate solo es válido al principio, será el día actual o el primer día,
-         * por ejemplo, al iniciar la aplicación o al cambiar de mes.
-         */
-
         if ( alquileresList != null ) {
             for( Alquiler alquiler : alquileresList ) {
-
-                //Log.d("RECORRO alquileresList en onBindViewHolder del calendario", "....: " );
-                //Log.d("ALQUILERRRR: ", "obj: " + alquiler.toString() );
 
                 LocalDate fechaInicio = LocalDate.parse(alquiler.getFhinicio());
                 LocalDate fechaFin = LocalDate.parse(alquiler.getFhfin());

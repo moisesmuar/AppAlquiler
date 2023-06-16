@@ -33,8 +33,10 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class ClientesFormFragment extends Fragment {
 
     private FragmentClientesFormBinding binding;
-    private Cliente cliente;
     SharedPreferencesManager sessionManager;
+    private Usuario user;
+
+    private Cliente cliente;
 
     public ClientesFormFragment() {
         // Required empty public constructor
@@ -56,6 +58,7 @@ public class ClientesFormFragment extends Fragment {
         if ( !sessionManager.isLogin() ) { // Usuario logeado? no. redirigir a fragmento login
             Navigation.findNavController(view).navigate( R.id.loginFragment );
         }
+        user = sessionManager.getSpUser();
 
         return view;
     }
@@ -64,19 +67,36 @@ public class ClientesFormFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        // Obtener bundle de argumentos del fragment
         Bundle bundle = getArguments();
         if( bundle != null ) {
             this.cliente = (Cliente) bundle.getSerializable("cliente");
 
-            APIobtenerCliente( cliente.getIdCliente() );
-            binding.btnGuardar.setText("Modificar");
-            binding.btnEliminar.setText("Eliminar");
+            binding.editTextNombre.setText( cliente.getNombre() );
+            binding.editTextTelefono.setText( cliente.getTelefono() );
+            binding.editTextEmail.setText( cliente.getEmail() );
+            binding.editTextCalle.setText( cliente.getCalle() );
+            binding.editTextCiudad.setText( cliente.getCiudad() );
+            binding.editTextPais.setText( cliente.getPais() );
+            binding.editTextCP.setText( cliente.getCp() );
+
+            // APIobtenerCliente( cliente.getIdCliente() );
+            if ( user.getRol() == 0 ) { // si es admin
+                binding.btnGuardar.setText("Modificar");
+                binding.btnEliminar.setText("Eliminar");
+                configura_btn_et_edicion_creaccion( view );
+            }
+
+        } else {
+            if ( user.getRol() == 0 ) {
+                binding.btnGuardar.setText("Añadir");
+                binding.btnEliminar.setText("Cancelar");
+                configura_btn_et_edicion_creaccion( view );
+            }
         }
-        else {
-            binding.btnGuardar.setText("Añadir");
-            binding.btnEliminar.setText("Cancelar");
-        }
+
+    }
+
+    public void configura_btn_et_edicion_creaccion ( @NonNull View view ){
 
         binding.btnGuardar.setOnClickListener(new View.OnClickListener() {  // POST CLIENTE API
             @Override
@@ -85,14 +105,14 @@ public class ClientesFormFragment extends Fragment {
 
                 if( binding.btnGuardar.getText().equals("Modificar") ){
                     Cliente cliModificado = new Cliente(
-                        binding.editTextNombre.getText().toString(),
-                        binding.editTextTelefono.getText().toString(),
-                        binding.editTextEmail.getText().toString(),
-                        binding.editTextCalle.getText().toString(),
-                        binding.editTextCiudad.getText().toString(),
-                        binding.editTextPais.getText().toString(),
-                        binding.editTextCP.getText().toString(),
-                        user.getEmpresa()
+                            binding.editTextNombre.getText().toString(),
+                            binding.editTextTelefono.getText().toString(),
+                            binding.editTextEmail.getText().toString(),
+                            binding.editTextCalle.getText().toString(),
+                            binding.editTextCiudad.getText().toString(),
+                            binding.editTextPais.getText().toString(),
+                            binding.editTextCP.getText().toString(),
+                            user.getEmpresa()
                     );
                     editar( cliente.getIdCliente() , cliModificado );
 
@@ -139,7 +159,7 @@ public class ClientesFormFragment extends Fragment {
         RetrofitClient retrofitClient = RetrofitClient.getInstance();
         APIServiceCliente apiService = retrofitClient.getRetrofit().create( APIServiceCliente.class );
 
-       // APIServiceCliente clienteApi = getRetrofit().create( APIServiceCliente.class );
+        // APIServiceCliente clienteApi = getRetrofit().create( APIServiceCliente.class );
         Call<Cliente> call = apiService.createCliente( cli );  //  POST con Retrofit
         call.enqueue( new Callback<Cliente>() {
             @Override
@@ -208,7 +228,7 @@ public class ClientesFormFragment extends Fragment {
         binding.editTextPais.setText("");
         binding.editTextCP.setText("");
     }
-
+/*
     public void APIobtenerCliente( Integer idCliente ) {
         RetrofitClient retrofitClient = RetrofitClient.getInstance();
         APIServiceCliente apiService = retrofitClient.getRetrofit().create( APIServiceCliente.class );
@@ -230,7 +250,6 @@ public class ClientesFormFragment extends Fragment {
                     binding.editTextCP.setText( cli.getCp() );
 
                     Log.d("RESPONSE", "Código: " + response.code() + " Respuesta: " + cli.toString() );
-
                 } else {
                     Log.d("ERROR", "Código: " + response.code() + " Mensaje: " + response.message());
                 }
@@ -240,6 +259,6 @@ public class ClientesFormFragment extends Fragment {
                 Log.e("Error con Log.e", "¡¡onFailure Error al obtener", t);
             }
         });
-    }
+    }*/
 
 }

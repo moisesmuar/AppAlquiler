@@ -59,8 +59,6 @@ public class LoginFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        // setContentView(R.layout.activity_login);
-
         // Ocultar barra de navegación botón de retroceso actividad actual
         // ((AppCompatActivity) requireActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
@@ -107,15 +105,14 @@ public class LoginFragment extends Fragment {
                 if ( response.isSuccessful() && response.body() != null ) {
 
                     LoginResponse loginResponse = response.body();
-                    if (loginResponse != null && loginResponse.getUser() != null) {
+                    if ( loginResponse != null && loginResponse.getUser() != null ) {
 
-                        // Inicio de sesión exitoso
                         Usuario user = loginResponse.getUser();
                         Toast.makeText(getContext(), "¡Usuario conectado!", Toast.LENGTH_LONG).show();
 
                         Log.d("LOGIN", "usuario : " + user.toString() );
 
-                        // Realiza las operaciones necesarias con el usuario y la empresa asociada
+                        // Realizar operaciones necesarias con usuario y empresa asociada...
 
                         // Login + Guardar usuario en SharedPreferences
                         SharedPreferencesManager sessionManager = new SharedPreferencesManager(requireContext());

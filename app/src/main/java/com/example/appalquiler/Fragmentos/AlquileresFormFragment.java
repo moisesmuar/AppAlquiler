@@ -43,8 +43,10 @@ import retrofit2.Response;
 public class AlquileresFormFragment extends Fragment {
 
     private FragmentAlquileresFormBinding binding;
-    private Alquiler alquiler;
     SharedPreferencesManager sessionManager;
+    private Usuario user;
+
+    private Alquiler alquiler;
     Bundle bundle;
     private int modoSeleccion;
     private final SimpleDateFormat sdf_bd = new SimpleDateFormat("yyyy-MM-dd");
@@ -69,6 +71,7 @@ public class AlquileresFormFragment extends Fragment {
         if ( !sessionManager.isLogin() ) { // Usuario logeado? no. redirigir a fragmento login
             Navigation.findNavController(view).navigate( R.id.loginFragment );
         }
+        user = sessionManager.getSpUser();
 
         return view;
     }
@@ -78,7 +81,6 @@ public class AlquileresFormFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         bundle = getArguments();
-
         // Edición
         // key : "alquilerEdicion" proviene de click sobre tarjeta Alquiler
         // o sobre la sucesion de fragments en una "accion" de edición
@@ -93,8 +95,13 @@ public class AlquileresFormFragment extends Fragment {
             binding.editTextNombreCliente.setText( alquiler.getCliente().getNombre() );
             binding.editTextNombrePortal.setText( alquiler.getPortal().getNombre() );
 
-            binding.btnGuardar.setText("Modificar");
-            binding.btnEliminar.setText("Eliminar");
+            // Si usuario es admin configura el layout para edición o creación.
+            if ( user.getRol() == 0 ) {
+                binding.btnGuardar.setText("Modificar");
+                binding.btnEliminar.setText("Eliminar");
+                configura_btn_et_edicion_creaccion( view );
+            }
+
         }
 
         // Creacción
@@ -121,9 +128,17 @@ public class AlquileresFormFragment extends Fragment {
                 binding.editTextNombrePortal.setText( alquiler.getPortal().getNombre() );
             }
 
-            binding.btnGuardar.setText("Añadir");
-            binding.btnEliminar.setText("Cancelar");
+            if ( user.getRol() == 0 ) {
+                binding.btnGuardar.setText("Añadir");
+                binding.btnEliminar.setText("Cancelar");
+                configura_btn_et_edicion_creaccion( view );
+            }
+
         }
+
+    }
+
+    public void configura_btn_et_edicion_creaccion ( @NonNull View view ){
 
         binding.btnGuardar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -141,35 +156,34 @@ public class AlquileresFormFragment extends Fragment {
 
                     if( binding.btnGuardar.getText().equals("Modificar") ){
 
-                        Alquiler alquilerMod = new Alquiler(
-                            alquiler.getFhinicio(),
-                            alquiler.getFhfin(),
-                            alquiler.getInmueble(),
-                            alquiler.getCliente(),
-                            alquiler.getPortal(),
-                            user.getEmpresa()
+                        Alquiler alquilerEditado = new Alquiler(
+                                alquiler.getFhinicio(),
+                                alquiler.getFhfin(),
+                                alquiler.getInmueble(),
+                                alquiler.getCliente(),
+                                alquiler.getPortal(),
+                                user.getEmpresa()
                         );
-                        editar( alquiler.getIdAlquiler() , alquilerMod );
+                        editar( alquiler.getIdAlquiler() , alquilerEditado );
                         Navigation.findNavController(view).navigate( R.id.alquileresFragment );
 
                     } else{   //  Nuevo Alquiler
+                        Alquiler alquilerNuevo = new Alquiler(
+                                alquiler.getFhinicio(),
+                                alquiler.getFhfin(),
+                                alquiler.getInmueble(),
+                                alquiler.getCliente(),
+                                alquiler.getPortal(),
+                                user.getEmpresa()
+                        );
 
-                            Alquiler alquilerNuevo = new Alquiler(
-                                    alquiler.getFhinicio(),
-                                    alquiler.getFhfin(),
-                                    alquiler.getInmueble(),
-                                    alquiler.getCliente(),
-                                    alquiler.getPortal(),
-                                    user.getEmpresa()
-                            );
+                        // ver json para envio
+                        Gson gson = new GsonBuilder().create();
+                        String json = gson.toJson(alquilerNuevo);
+                        System.out.println(json);
 
-                            // ver json para envio
-                            Gson gson = new GsonBuilder().create();
-                            String json = gson.toJson(alquilerNuevo);
-                            System.out.println(json);
-
-                            guardar( alquilerNuevo );
-                            Navigation.findNavController(view).navigate( R.id.alquileresFragment );
+                        guardar( alquilerNuevo );
+                        Navigation.findNavController(view).navigate( R.id.alquileresFragment );
                     }
 
                 } else {
@@ -193,10 +207,6 @@ public class AlquileresFormFragment extends Fragment {
                 }
             }
         });
-
-
-
-
 
         // Guardar en objeto Alquiler la fecha que DatePickerDialog, escribe en EditText
         binding.editTextFhInicio.addTextChangedListener(new TextWatcher() {
@@ -225,7 +235,7 @@ public class AlquileresFormFragment extends Fragment {
         });
 
         // EditText Clicables, aparece DatePickerDialog
-        /*binding.editTextFhInicio.setOnClickListener(new View.OnClickListener() {
+        /* binding.editTextFhInicio.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 showDatePickerDialog(binding.editTextFhInicio);
@@ -236,7 +246,7 @@ public class AlquileresFormFragment extends Fragment {
             public void onClick(View v) {
                 showDatePickerDialog(binding.editTextFhFin);
             }
-        });*/
+        }); */
 
         // Botones para lanzar DatePickerDialog
         binding.ibtnFhini.setOnClickListener(new View.OnClickListener() {
@@ -251,7 +261,6 @@ public class AlquileresFormFragment extends Fragment {
                 showDatePickerDialog(binding.editTextFhFin);
             }
         });
-
 
         // Botones ir listado selección de INMUEBLE || CLIENTE || PORTAL  -  accion crear || accion editar
         binding.ibtnInmuebleAlquilerBuscar.setOnClickListener(new View.OnClickListener() {

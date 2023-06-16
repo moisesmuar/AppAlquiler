@@ -31,6 +31,7 @@
         android:layout_marginStart="12dp"
         android:layout_marginTop="50dp"
         android:hint="Nombre"
+        android:maxLength="100"
         app:layout_constraintStart_toEndOf="@+id/imageView11"
         app:layout_constraintTop_toBottomOf="@+id/tvTituloIn" />
 
@@ -42,6 +43,7 @@
         android:layout_marginTop="16dp"
         android:hint="Número de baños"
         android:inputType="number"
+        android:maxLength="2"
         app:layout_constraintStart_toEndOf="@+id/imageView17"
         app:layout_constraintTop_toBottomOf="@+id/editTextNumHabitaciones" />
 
@@ -52,6 +54,7 @@
         android:layout_marginStart="12dp"
         android:layout_marginTop="16dp"
         android:hint="Calle"
+        android:maxLength="100"
         app:layout_constraintStart_toEndOf="@+id/imageView12"
         app:layout_constraintTop_toBottomOf="@+id/editTextNombre" />
 
@@ -63,6 +66,7 @@
         android:layout_marginTop="16dp"
         android:hint="Número de aseos"
         android:inputType="number"
+        android:maxLength="2"
         app:layout_constraintStart_toEndOf="@+id/imageView2"
         app:layout_constraintTop_toBottomOf="@+id/editTextNumBanos" />
 
@@ -84,6 +88,7 @@
         android:layout_marginTop="16dp"
         android:hint="Número de personas"
         android:inputType="number"
+        android:maxLength="2"
         app:layout_constraintStart_toEndOf="@+id/imageView14"
         app:layout_constraintTop_toBottomOf="@+id/editTextCiudad" />
 
@@ -95,6 +100,7 @@
         android:layout_marginTop="16dp"
         android:hint="Número de habitaciones"
         android:inputType="number"
+        android:maxLength="2"
         app:layout_constraintStart_toEndOf="@+id/imageView15"
         app:layout_constraintTop_toBottomOf="@+id/editTextNumPersonas" />
 
@@ -135,6 +141,7 @@
         android:layout_marginStart="12dp"
         android:layout_marginTop="16dp"
         android:hint="Ciudad"
+        android:maxLength="100"
         app:layout_constraintStart_toEndOf="@+id/imageView13"
         app:layout_constraintTop_toBottomOf="@+id/editTextCalle" />
 
@@ -187,7 +194,7 @@
             style="@style/Widget.Material3.Button.TonalButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Guardar"
+            android:text=""
             android:textSize="16sp" />
         <Button
             android:id="@+id/btnEliminar"
@@ -195,7 +202,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
-            android:text="Eliminar"
+            android:text=""
             android:textSize="16sp" />
 
     </LinearLayout>
