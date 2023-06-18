@@ -6,14 +6,11 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
-import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
-import androidx.navigation.fragment.NavHostFragment;
 //import androidx.navigation.findNavController;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.appalquiler.Clases.Alquiler;
-import com.example.appalquiler.Clases.Cliente;
+import com.example.appalquiler.Models.Alquiler;
 import com.example.appalquiler.R;
 
 import java.io.Serializable;

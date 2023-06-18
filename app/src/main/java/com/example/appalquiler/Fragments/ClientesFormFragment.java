@@ -1,4 +1,4 @@
-package com.example.appalquiler.Fragmentos;
+package com.example.appalquiler.Fragments;
 
 import android.os.Bundle;
 
@@ -14,20 +14,15 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.example.appalquiler.API.RetrofitClient;
-import com.example.appalquiler.APIInterfaces.APIServiceAlquiler;
-import com.example.appalquiler.Clases.Cliente;
+import com.example.appalquiler.Models.Cliente;
 import com.example.appalquiler.APIInterfaces.APIServiceCliente;
-import com.example.appalquiler.Clases.Empresa;
-import com.example.appalquiler.Clases.Usuario;
+import com.example.appalquiler.Models.Usuario;
 import com.example.appalquiler.R;
-import com.example.appalquiler.SharedPreferencesManager;
-import com.example.appalquiler.databinding.FragmentClientesFormBinding;
+import com.example.appalquiler.Utils.SharedPreferencesManager;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 
 public class ClientesFormFragment extends Fragment {

@@ -1,4 +1,4 @@
-package com.example.appalquiler.Fragmentos;
+package com.example.appalquiler.Fragments;
 
 import android.os.Bundle;
 
@@ -18,22 +18,18 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.appalquiler.API.RetrofitClient;
-import com.example.appalquiler.Clases.Alquiler;
+import com.example.appalquiler.Models.Alquiler;
 import com.example.appalquiler.APIInterfaces.APIServiceAlquiler;
-import com.example.appalquiler.Clases.Inmueble;
-import com.example.appalquiler.Clases.Usuario;
+import com.example.appalquiler.Models.Inmueble;
+import com.example.appalquiler.Models.Usuario;
 import com.example.appalquiler.Miscelanea.CalendarAdapter;
 import com.example.appalquiler.R;
-import com.example.appalquiler.SharedPreferencesManager;
-import com.example.appalquiler.databinding.FragmentCalendarDetalleBinding;
+import com.example.appalquiler.Utils.SharedPreferencesManager;
 
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.YearMonth;
-import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 

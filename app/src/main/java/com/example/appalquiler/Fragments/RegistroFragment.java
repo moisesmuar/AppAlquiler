@@ -1,6 +1,5 @@
-package com.example.appalquiler.Fragmentos;
+package com.example.appalquiler.Fragments;
 
-import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -17,11 +16,9 @@ import android.widget.Toast;
 
 import com.example.appalquiler.API.RetrofitClient;
 import com.example.appalquiler.APIInterfaces.APIServiceUsuario;
-import com.example.appalquiler.Clases.Usuario;
+import com.example.appalquiler.Models.Usuario;
 import com.example.appalquiler.R;
-import com.example.appalquiler.databinding.FragmentLoginBinding;
 import com.example.appalquiler.databinding.FragmentRegistroBinding;
-import com.google.gson.GsonBuilder;
 
 import java.io.IOException;
 
@@ -29,8 +26,6 @@ import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 
 public class RegistroFragment extends Fragment {

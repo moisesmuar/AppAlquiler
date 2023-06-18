@@ -10,8 +10,8 @@ import androidx.annotation.NonNull;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.appalquiler.Clases.Alquiler;
-import com.example.appalquiler.Clases.Cliente;
+import com.example.appalquiler.Models.Alquiler;
+import com.example.appalquiler.Models.Cliente;
 import com.example.appalquiler.R;
 
 import java.io.Serializable;

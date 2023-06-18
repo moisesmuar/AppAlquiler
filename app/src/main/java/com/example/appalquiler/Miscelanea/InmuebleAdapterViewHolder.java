@@ -5,8 +5,7 @@ import android.view.View;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.appalquiler.Clases.Alquiler;
-import com.example.appalquiler.Clases.Inmueble;
+import com.example.appalquiler.Models.Inmueble;
 import com.example.appalquiler.databinding.ItemInmuebleBinding;
 
 public class InmuebleAdapterViewHolder extends RecyclerView.ViewHolder{

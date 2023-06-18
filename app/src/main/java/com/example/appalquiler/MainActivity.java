@@ -3,6 +3,7 @@ package com.example.appalquiler;
 import android.os.Bundle;
 import android.view.Menu;
 
+import com.example.appalquiler.Utils.SharedPreferencesManager;
 import com.google.android.material.navigation.NavigationView;
 
 import androidx.appcompat.app.AppCompatDelegate;

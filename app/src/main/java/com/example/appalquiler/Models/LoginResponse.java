@@ -1,4 +1,4 @@
-package com.example.appalquiler.Clases;
+package com.example.appalquiler.Models;
 
 public class LoginResponse {
     private Usuario user;

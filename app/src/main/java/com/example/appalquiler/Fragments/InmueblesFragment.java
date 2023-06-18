@@ -1,4 +1,4 @@
-package com.example.appalquiler.Fragmentos;
+package com.example.appalquiler.Fragments;
 
 import android.os.Bundle;
 
@@ -18,27 +18,22 @@ import android.widget.SearchView;
 import android.widget.Toast;
 
 import com.example.appalquiler.API.RetrofitClient;
-import com.example.appalquiler.Clases.Alquiler;
-import com.example.appalquiler.Clases.Cliente;
-import com.example.appalquiler.Clases.Inmueble;
+import com.example.appalquiler.Models.Alquiler;
+import com.example.appalquiler.Models.Inmueble;
 import com.example.appalquiler.APIInterfaces.APIServiceInmueble;
-import com.example.appalquiler.Clases.Usuario;
+import com.example.appalquiler.Models.Usuario;
 import com.example.appalquiler.Miscelanea.InmuebleAdapter;
 import com.example.appalquiler.R;
-import com.example.appalquiler.SharedPreferencesManager;
+import com.example.appalquiler.Utils.SharedPreferencesManager;
 import com.example.appalquiler.databinding.FragmentInmueblesBinding;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.gson.GsonBuilder;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 public class InmueblesFragment extends Fragment {
 

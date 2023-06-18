@@ -1,4 +1,4 @@
-package com.example.appalquiler.Fragmentos;
+package com.example.appalquiler.Fragments;
 
 import android.os.Bundle;
 
@@ -8,18 +8,14 @@ import androidx.appcompat.app.AppCompatDelegate;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
-import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.widget.RadioGroup;
 
 import com.example.appalquiler.R;
-import com.example.appalquiler.SharedPreferencesManager;
-import com.example.appalquiler.databinding.FragmentClientesBinding;
-import com.example.appalquiler.databinding.FragmentConfiguracionBinding;
+import com.example.appalquiler.Utils.SharedPreferencesManager;
 
 
 public class ConfiguracionFragment extends Fragment {

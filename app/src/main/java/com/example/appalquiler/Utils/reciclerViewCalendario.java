@@ -1,13 +1,9 @@
-package com.example.appalquiler.Clases;
-
-import static java.security.AccessController.getContext;
+package com.example.appalquiler.Utils;
 
 import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -22,6 +18,9 @@ import com.example.appalquiler.API.RetrofitClient;
 import com.example.appalquiler.APIInterfaces.APIServiceAlquiler;
 import com.example.appalquiler.Miscelanea.CalendarHorizontalAdapter;
 import com.example.appalquiler.R;
+import com.example.appalquiler.Models.Alquiler;
+import com.example.appalquiler.Models.Inmueble;
+import com.example.appalquiler.Models.Usuario;
 import com.google.android.material.button.MaterialButton;
 
 import java.io.Serializable;

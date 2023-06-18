@@ -1,7 +1,5 @@
-package com.example.appalquiler.Fragmentos;
+package com.example.appalquiler.Fragments;
 
-import android.content.Context;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -14,9 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.appalquiler.R;
-import com.example.appalquiler.SharedPreferencesManager;
-import com.example.appalquiler.databinding.FragmentLogOutBinding;
-import com.example.appalquiler.databinding.FragmentLoginBinding;
+import com.example.appalquiler.Utils.SharedPreferencesManager;
 
 public class LogOutFragment extends Fragment {
 

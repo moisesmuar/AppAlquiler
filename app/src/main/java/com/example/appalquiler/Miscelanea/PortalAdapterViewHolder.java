@@ -5,7 +5,7 @@ import android.view.View;
 
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.appalquiler.Clases.Portal;
+import com.example.appalquiler.Models.Portal;
 import com.example.appalquiler.databinding.ItemPortalBinding;
 
 public class PortalAdapterViewHolder extends RecyclerView.ViewHolder {

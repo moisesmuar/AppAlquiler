@@ -1,19 +1,16 @@
 package com.example.appalquiler.Miscelanea;
 
 import android.content.Context;
-import android.content.res.ColorStateList;
 import android.graphics.Color;
-import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
-import androidx.core.view.ViewCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.appalquiler.Clases.Alquiler;
+import com.example.appalquiler.Models.Alquiler;
 import com.example.appalquiler.R;
 
 import java.time.LocalDate;

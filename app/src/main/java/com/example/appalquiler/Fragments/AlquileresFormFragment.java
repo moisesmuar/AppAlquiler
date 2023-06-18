@@ -1,4 +1,4 @@
-package com.example.appalquiler.Fragmentos;
+package com.example.appalquiler.Fragments;
 
 import android.app.DatePickerDialog;
 import android.os.Bundle;
@@ -19,21 +19,17 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.appalquiler.API.RetrofitClient;
-import com.example.appalquiler.Clases.Alquiler;
+import com.example.appalquiler.Models.Alquiler;
 import com.example.appalquiler.APIInterfaces.APIServiceAlquiler;
-import com.example.appalquiler.Clases.Usuario;
+import com.example.appalquiler.Models.Usuario;
 import com.example.appalquiler.Dialog.DatePickerFragment;
 import com.example.appalquiler.R;
-import com.example.appalquiler.SharedPreferencesManager;
-import com.example.appalquiler.databinding.FragmentAlquileresFormBinding;
+import com.example.appalquiler.Utils.SharedPreferencesManager;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import java.io.Serializable;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.util.Date;
 
 import retrofit2.Call;
 import retrofit2.Callback;

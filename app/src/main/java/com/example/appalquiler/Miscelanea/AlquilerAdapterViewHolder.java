@@ -4,7 +4,7 @@ import android.view.View;
 
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.appalquiler.Clases.Alquiler;
+import com.example.appalquiler.Models.Alquiler;
 import com.example.appalquiler.databinding.ItemAlquilerBinding;
 
 import java.text.SimpleDateFormat;

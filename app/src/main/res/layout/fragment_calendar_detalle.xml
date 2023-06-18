@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="?android:attr/colorBackground"
-    tools:context=".Fragmentos.CalendarDetalleFragment">
+    tools:context=".Fragments.CalendarDetalleFragment">
 
     <TextView
         android:id="@+id/tvTituloNombreInmueble"

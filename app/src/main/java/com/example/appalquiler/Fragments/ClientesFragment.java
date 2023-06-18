@@ -1,4 +1,4 @@
-package com.example.appalquiler.Fragmentos;
+package com.example.appalquiler.Fragments;
 
 import android.os.Bundle;
 
@@ -18,19 +18,13 @@ import android.widget.SearchView;
 import android.widget.Toast;
 
 import com.example.appalquiler.API.RetrofitClient;
-import com.example.appalquiler.APIInterfaces.APIServiceInmueble;
-import com.example.appalquiler.APIInterfaces.APIServicePortal;
-import com.example.appalquiler.Clases.Alquiler;
-import com.example.appalquiler.Clases.Cliente;
-import com.example.appalquiler.Clases.Inmueble;
-import com.example.appalquiler.Clases.Portal;
-import com.example.appalquiler.Clases.Usuario;
-import com.example.appalquiler.Clases.reciclerViewCalendario;
-import com.example.appalquiler.Miscelanea.AlquilerAdapter;
-import com.example.appalquiler.Miscelanea.PortalesAdapter;
+import com.example.appalquiler.Models.Alquiler;
+import com.example.appalquiler.Models.Cliente;
+import com.example.appalquiler.APIInterfaces.APIServiceCliente;
+import com.example.appalquiler.Models.Usuario;
+import com.example.appalquiler.Miscelanea.ClienteAdapter;
 import com.example.appalquiler.R;
-import com.example.appalquiler.SharedPreferencesManager;
-import com.example.appalquiler.databinding.FragmentPortalesBinding;
+import com.example.appalquiler.Utils.SharedPreferencesManager;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
@@ -40,32 +34,32 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class PortalesFragment extends Fragment {
 
-    private FragmentPortalesBinding binding;
+public class ClientesFragment extends Fragment {
+
+    private FragmentClientesBinding binding;
     SharedPreferencesManager sessionManager;
     private Usuario user;
 
-    private PortalesAdapter portalAdapter;
-    private List<Portal> listaPortales = new ArrayList<>();
+    private ClienteAdapter clienteAdapter;
+    private List<Cliente> listaClientes = new ArrayList<>();
     private Alquiler alquilerEdicion;
     private SearchView searchView;
 
+    private int modoSeleccion = 0;  // 0 listar Clientes
 
-    private int modoSeleccion = 0;
-
-    public PortalesFragment() {
+    public ClientesFragment() {
         // Required empty public constructor
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-       binding = FragmentPortalesBinding.inflate(inflater, container, false);
+        binding = FragmentClientesBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
 
         sessionManager = new SharedPreferencesManager( requireContext() );
-        if ( !sessionManager.isLogin() ) {
+        if ( !sessionManager.isLogin() ) { // Usuario logeado? no. redirigir a fragmento login
             Navigation.findNavController(view).navigate( R.id.loginFragment );
         }
         user = sessionManager.getSpUser();
@@ -78,9 +72,9 @@ public class PortalesFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         initRecyclerView();
-        obtenerPortales();
+        obtenerClientesDeEmpresa();
 
-        searchView = view.findViewById(R.id.idSearchViewPortales);
+        searchView = view.findViewById(R.id.idSearchViewClientes);
         searchView.clearFocus();
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             private String previousQuery = "";
@@ -101,10 +95,12 @@ public class PortalesFragment extends Fragment {
             }
         });
 
+        Log.e("INFO USER", "Fragment Clientes" + user.toString() +" "+ user.getRol());
+
         // Si el usuario es admin (rol 0) permitir crear registros boton +
         if ( user.getRol() == 0 ) {
 
-            ConstraintLayout constraintLayout = view.findViewById(R.id.idLayoutPortales);
+            ConstraintLayout constraintLayout = view.findViewById(R.id.idLayoutClientes);
 
             FloatingActionButton fab = new FloatingActionButton(getContext());
             fab.setLayoutParams(new ConstraintLayout.LayoutParams(
@@ -119,14 +115,14 @@ public class PortalesFragment extends Fragment {
             layoutParams.setMargins(0, 0, 40, 40); // Establece los márgenes
             fab.setLayoutParams(layoutParams);
 
-            fab.setContentDescription("Nuevo Portal");
+            fab.setContentDescription("Nuevo Cliente");
             fab.setImageResource(R.drawable.ic_mas);
 
-            fab.setOnClickListener( new View.OnClickListener() {
+            fab.setOnClickListener( new View.OnClickListener() {  // IR A FORM CLIENTES
                 @Override
                 public void onClick(View view) {
-                    Toast.makeText( getContext() , "No se puede registrar un portal.", Toast.LENGTH_SHORT ).show();
-
+                    NavController navController = Navigation.findNavController( view );
+                    navController.navigate( R.id.clientesFormFragment );
                 }
             });
 
@@ -136,12 +132,22 @@ public class PortalesFragment extends Fragment {
     }
 
     /**
-     * Filtro por nombre Portal
+     * Fragmento listado queda en segundo plano al ir FormFragment
+     * Actualizo datos de lista por si hay un CREATE UPDATE DELETE
+     */
+    @Override
+    public void onResume() {
+        super.onResume();
+        obtenerClientesDeEmpresa();
+    }
+
+    /**
+     * Filtro en lista por nombre  Cliente, edito en adapter la lista filtrada actual.
      * @param texto
      */
     private void filtrarLista( String texto ) {
-        List<Portal> listFiltrada = new ArrayList<>();
-        for( Portal obj : listaPortales ){
+        List<Cliente> listFiltrada = new ArrayList<>();
+        for( Cliente obj : listaClientes ){
             if( obj.getNombre().toLowerCase().contains( texto.toLowerCase() )){
                 listFiltrada.add( obj );
             }
@@ -150,13 +156,13 @@ public class PortalesFragment extends Fragment {
         if( listFiltrada.isEmpty() ){
             Toast.makeText( getContext() , "No existen registros con ese Nombre", Toast.LENGTH_SHORT ).show();
         }else{
-            portalAdapter.setFilteredList( listFiltrada );
+            clienteAdapter.setFilteredList( listFiltrada );
         }
     }
 
     private void initRecyclerView() {
         Bundle bundle = getArguments();
-        if ( bundle != null && bundle.containsKey("modoSeleccion") ) {  // key "seleccionCliente" no es nula
+        if ( bundle != null && bundle.containsKey("modoSeleccion") ) {
             this.modoSeleccion = bundle.getInt("modoSeleccion");
             switch (modoSeleccion) {
                 case 1:     // Creacción
@@ -169,40 +175,48 @@ public class PortalesFragment extends Fragment {
                     break;
             }
         }
+        Log.d("ClientesFragment", "modoSeleccion: " + modoSeleccion );
 
-        Log.d("PortalesFragment", "modoSeleccion: " + modoSeleccion );
-
-        binding.rvPortales.setLayoutManager( new LinearLayoutManager( getContext() ) );
-        portalAdapter = new PortalesAdapter( listaPortales, modoSeleccion, alquilerEdicion );
-        binding.rvPortales.setAdapter( portalAdapter );
+        binding.rvClientes.setLayoutManager( new LinearLayoutManager( getContext() ) );
+        clienteAdapter = new ClienteAdapter( listaClientes , modoSeleccion, alquilerEdicion );
+        binding.rvClientes.setAdapter( clienteAdapter );
     }
 
-    public void obtenerPortales( ) {
+    /**
+     * Petición que obtiene Listado de clientes de la empresa y notifica al adapter de un cambio de datos.
+     */
+    public void obtenerClientesDeEmpresa( ) {
         RetrofitClient retrofitClient = RetrofitClient.getInstance();
-        APIServicePortal apiService = retrofitClient.getRetrofit().create( APIServicePortal.class );
+        APIServiceCliente apiService = retrofitClient.getRetrofit().create( APIServiceCliente.class );
 
-        Call<List<Portal>> apiCall = apiService.getPortales();
-        apiCall.enqueue( new Callback<List<Portal>>() {
+        Call<List<Cliente>> apiCall = apiService.getClientesEmpresa( user.getEmpresa().getNombre() );
+        apiCall.enqueue( new Callback<List<Cliente>>() {
             @Override
-            public void onResponse(Call<List<Portal>> call, Response<List<Portal>> response) {
+            public void onResponse(Call<List<Cliente>> call, Response<List<Cliente>> response) {
                 if ( response.isSuccessful() && response.body() != null ) {
 
-                    List<Portal> listaRespuesta = response.body();;
-                    Log.d("RESPONSE", "Código: " + response.code() + " obtenerPortales()" );
-                    for ( Portal port : listaRespuesta ) {
-                        Log.d("Lectura Portal", "color " + port.getColorHex() + "nombre" + port.getNombre() );
+                    List<Cliente> listaRespuesta = response.body();;
+                    Log.d("RESPONSE", "Código: " + response.code() + " Respuesta: " + listaRespuesta.toString());
+
+                    int cantidadElementos = listaRespuesta.size();
+                    Log.d("CANTIDAD CLIENTES EMPRESA", " cantidad CLIENTES: "+ cantidadElementos);
+
+                    // Log.d("RESPONSE", "Código: " + response.code() + " Respuesta: " + listaRespuesta.toString());
+                    for (Cliente cli : listaRespuesta) {
+                        Log.d("Id empresa listado cliente ", String.valueOf( cli.getEmpresa().getIdEmpresa()));
                     }
-                    listaPortales.clear();
-                    listaPortales.addAll( listaRespuesta );
-                    portalAdapter.notifyDataSetChanged();
+
+                    listaClientes.clear();
+                    listaClientes.addAll( listaRespuesta );
+                    clienteAdapter.notifyDataSetChanged();
                 } else {
                     Log.d("ERROR", "Código: " + response.code() + " Mensaje: " + response.message());
                 }
             }
             @Override
-            public void onFailure(Call<List<Portal>> call, Throwable t) {
-                Log.e("Error con Log.e", "Petición Portales Fallida", t);
-                Toast.makeText( getContext() , "Petición Portales Fallida", Toast.LENGTH_SHORT ).show();
+            public void onFailure(Call<List<Cliente>> call, Throwable t) {
+                Log.e("Error con Log.e", "Petición Clientes Fallida", t);
+                Toast.makeText( getContext() , "Petición Clientes Fallida ", Toast.LENGTH_SHORT ).show();
             }
         });
     }

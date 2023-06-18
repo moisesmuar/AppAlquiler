@@ -1,14 +1,10 @@
-package com.example.appalquiler.Clases;
-
-import android.util.Log;
+package com.example.appalquiler.Models;
 
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
-import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
 import java.util.Date;
 
 public class Alquiler implements Serializable {

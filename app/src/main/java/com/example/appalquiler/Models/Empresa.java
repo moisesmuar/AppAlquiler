@@ -1,4 +1,4 @@
-package com.example.appalquiler.Clases;
+package com.example.appalquiler.Models;
 
 import com.google.gson.annotations.SerializedName;
 

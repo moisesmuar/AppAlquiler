@@ -1,20 +1,12 @@
-package com.example.appalquiler.Fragmentos;
-
-import static java.security.AccessController.getContext;
+package com.example.appalquiler.Fragments;
 
 import android.content.Context;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
-import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.LinearSnapHelper;
-import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -22,33 +14,21 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.LinearLayout;
-import android.widget.ScrollView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.appalquiler.API.RetrofitClient;
-import com.example.appalquiler.APIInterfaces.APIServiceAlquiler;
 import com.example.appalquiler.APIInterfaces.APIServiceInmueble;
-import com.example.appalquiler.Clases.Alquiler;
-import com.example.appalquiler.Clases.Inmueble;
-import com.example.appalquiler.Clases.Usuario;
-import com.example.appalquiler.Clases.reciclerViewCalendario;
-import com.example.appalquiler.Miscelanea.CalendarAdapter;
-import com.example.appalquiler.Miscelanea.CalendarHorizontalAdapter;
+import com.example.appalquiler.Models.Inmueble;
+import com.example.appalquiler.Models.Usuario;
+import com.example.appalquiler.Utils.reciclerViewCalendario;
 import com.example.appalquiler.R;
-import com.example.appalquiler.SharedPreferencesManager;
-import com.example.appalquiler.databinding.FragmentCalendarHorizontalBinding;
+import com.example.appalquiler.Utils.SharedPreferencesManager;
 
-import java.io.Serializable;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 
 import retrofit2.Call;
 import retrofit2.Callback;

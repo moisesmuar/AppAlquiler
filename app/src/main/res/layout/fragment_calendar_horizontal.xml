@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="?android:attr/colorBackground"
-    tools:context=".Fragmentos.CalendarHorizontalFragment">
+    tools:context=".Fragments.CalendarHorizontalFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout"

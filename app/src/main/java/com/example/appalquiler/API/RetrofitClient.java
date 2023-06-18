@@ -10,10 +10,10 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class RetrofitClient {
 
     // Para pc anfitrión, si ejecutamos app en emulador de Android Studio Api + bd en local
-    // private static  final String BASE_URL = "http://10.0.2.2:8082/alquiler/";
+     private static  final String BASE_URL = "http://10.0.2.2:8082/alquiler/";
 
     // Para ejecución en servidor de producción.
-     private static  final String BASE_URL = "http://3.143.50.153:8082/alquiler/";
+    // private static  final String BASE_URL = "http://3.143.50.153:8082/alquiler/";
 
     private static RetrofitClient mInstance;
     private Retrofit retrofit;

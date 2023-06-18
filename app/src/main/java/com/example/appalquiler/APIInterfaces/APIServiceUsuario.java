@@ -1,7 +1,7 @@
 package com.example.appalquiler.APIInterfaces;
 
-import com.example.appalquiler.Clases.LoginResponse;
-import com.example.appalquiler.Clases.Usuario;
+import com.example.appalquiler.Models.LoginResponse;
+import com.example.appalquiler.Models.Usuario;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;

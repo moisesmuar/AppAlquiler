@@ -1,6 +1,6 @@
 package com.example.appalquiler.APIInterfaces;
 
-import com.example.appalquiler.Clases.Portal;
+import com.example.appalquiler.Models.Portal;
 
 import java.util.List;
 

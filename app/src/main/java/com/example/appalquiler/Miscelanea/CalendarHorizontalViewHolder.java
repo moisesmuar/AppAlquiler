@@ -1,14 +1,13 @@
 package com.example.appalquiler.Miscelanea;
 
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.appalquiler.Clases.Alquiler;
+import com.example.appalquiler.Models.Alquiler;
 import com.example.appalquiler.R;
 
 public class CalendarHorizontalViewHolder extends RecyclerView.ViewHolder   {

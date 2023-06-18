@@ -5,7 +5,7 @@ import android.view.View;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.appalquiler.Clases.Cliente;
+import com.example.appalquiler.Models.Cliente;
 import com.example.appalquiler.databinding.ItemClienteBinding;
 
 public class ClienteAdapterViewHolder extends RecyclerView.ViewHolder{

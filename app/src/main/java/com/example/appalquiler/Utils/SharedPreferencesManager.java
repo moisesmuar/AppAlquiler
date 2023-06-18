@@ -1,11 +1,11 @@
-package com.example.appalquiler;
+package com.example.appalquiler.Utils;
 
 import android.content.Context;
 import android.content.SharedPreferences;
 
 import androidx.appcompat.app.AppCompatDelegate;
 
-import com.example.appalquiler.Clases.Usuario;
+import com.example.appalquiler.Models.Usuario;
 import com.google.gson.Gson;
 
 public class SharedPreferencesManager {
