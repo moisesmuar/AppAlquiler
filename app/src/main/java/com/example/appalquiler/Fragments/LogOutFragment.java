@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 
 import com.example.appalquiler.R;
 import com.example.appalquiler.Utils.SharedPreferencesManager;
+import com.example.appalquiler.databinding.FragmentLogOutBinding;
 
 public class LogOutFragment extends Fragment {
 

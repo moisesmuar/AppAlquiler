@@ -25,6 +25,7 @@ import com.example.appalquiler.Models.Usuario;
 import com.example.appalquiler.Miscelanea.CalendarAdapter;
 import com.example.appalquiler.R;
 import com.example.appalquiler.Utils.SharedPreferencesManager;
+import com.example.appalquiler.databinding.FragmentCalendarDetalleBinding;
 
 import java.time.LocalDate;
 import java.time.YearMonth;

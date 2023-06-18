@@ -24,6 +24,7 @@ import com.example.appalquiler.Models.Usuario;
 import com.example.appalquiler.Miscelanea.AlquilerAdapter;
 import com.example.appalquiler.R;
 import com.example.appalquiler.Utils.SharedPreferencesManager;
+import com.example.appalquiler.databinding.FragmentAlquileresBinding;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.gson.Gson;
 

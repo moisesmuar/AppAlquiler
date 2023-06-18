@@ -16,6 +16,7 @@ import android.widget.RadioGroup;
 
 import com.example.appalquiler.R;
 import com.example.appalquiler.Utils.SharedPreferencesManager;
+import com.example.appalquiler.databinding.FragmentConfiguracionBinding;
 
 
 public class ConfiguracionFragment extends Fragment {

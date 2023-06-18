@@ -19,6 +19,7 @@ import com.example.appalquiler.APIInterfaces.APIServiceInmueble;
 import com.example.appalquiler.Models.Usuario;
 import com.example.appalquiler.R;
 import com.example.appalquiler.Utils.SharedPreferencesManager;
+import com.example.appalquiler.databinding.FragmentInmueblesFormBinding;
 
 import retrofit2.Call;
 import retrofit2.Callback;

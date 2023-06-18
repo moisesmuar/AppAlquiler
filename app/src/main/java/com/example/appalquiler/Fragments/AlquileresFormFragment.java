@@ -25,6 +25,7 @@ import com.example.appalquiler.Models.Usuario;
 import com.example.appalquiler.Dialog.DatePickerFragment;
 import com.example.appalquiler.R;
 import com.example.appalquiler.Utils.SharedPreferencesManager;
+import com.example.appalquiler.databinding.FragmentAlquileresFormBinding;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 

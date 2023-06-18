@@ -23,6 +23,7 @@ import com.example.appalquiler.Models.Usuario;
 import com.example.appalquiler.Utils.reciclerViewCalendario;
 import com.example.appalquiler.R;
 import com.example.appalquiler.Utils.SharedPreferencesManager;
+import com.example.appalquiler.databinding.FragmentCalendarHorizontalBinding;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;

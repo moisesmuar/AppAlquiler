@@ -20,6 +20,7 @@ import com.example.appalquiler.Models.LoginResponse;
 import com.example.appalquiler.Models.Usuario;
 import com.example.appalquiler.R;
 import com.example.appalquiler.Utils.SharedPreferencesManager;
+import com.example.appalquiler.databinding.FragmentLoginBinding;
 
 import retrofit2.Call;
 import retrofit2.Callback;

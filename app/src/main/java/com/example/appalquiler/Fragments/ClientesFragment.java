@@ -25,6 +25,7 @@ import com.example.appalquiler.Models.Usuario;
 import com.example.appalquiler.Miscelanea.ClienteAdapter;
 import com.example.appalquiler.R;
 import com.example.appalquiler.Utils.SharedPreferencesManager;
+import com.example.appalquiler.databinding.FragmentClientesBinding;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
